@@ -4,6 +4,7 @@
  */
 package com.mycompany.interfacetest;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 
@@ -29,7 +30,18 @@ public class Mainpage extends javax.swing.JFrame {
             Font accentFont = Font.createFont(Font.TRUETYPE_FONT, importAccentFont);
             
             // Set font for UI **BELOW**
+            // - Font for side panel
             homeSidePanelText.setFont(accentFont.deriveFont(16f));
+            examQuizSidePanelLabel.setFont(accentFont.deriveFont(Font.BOLD, 18f));
+            homeworksSidePanelButton.setFont(accentFont.deriveFont(Font.BOLD, 18f));
+            classlistSidePanelButton.setFont(accentFont.deriveFont(Font.BOLD, 18f));
+            sectionsSidePanelButton.setFont(accentFont.deriveFont(Font.BOLD, 18f));
+            attendanceSidePanelButton.setFont(accentFont.deriveFont(Font.BOLD, 18f));
+            
+            
+            // - Fonts for navbar
+            navbarEdusyncTitle.setFont(titleFont.deriveFont(48f));
+            navbarUsername.setFont(accentFont.deriveFont(18f));
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,13 +60,40 @@ public class Mainpage extends javax.swing.JFrame {
         backgroundPanel = new javax.swing.JPanel();
         mainPageSidePanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
+        examSidePanelButton = new javax.swing.JPanel();
+        examQuizSidePanelLabel = new javax.swing.JLabel();
+        examSidePanelIcon = new javax.swing.JLabel();
+        homeworksSidePanelButton = new javax.swing.JPanel();
+        homeworksSidePanelLabel = new javax.swing.JLabel();
+        homeworkSidePanelIcon = new javax.swing.JLabel();
+        classlistSidePanelButton = new javax.swing.JPanel();
+        classlistSidePanelLabel = new javax.swing.JLabel();
+        classListSidePanelIcon = new javax.swing.JLabel();
+        sectionsSidePanelButton = new javax.swing.JPanel();
+        sectionsSidePanelLabel = new javax.swing.JLabel();
+        sectionsSidePanelIcon = new javax.swing.JLabel();
+        attendanceSidePanelButton = new javax.swing.JPanel();
+        attendanceSidePanelLabel = new javax.swing.JLabel();
+        attendanceSidePanelIcon = new javax.swing.JLabel();
+        homeSidePanelButton = new javax.swing.JPanel();
         mainpageHomeIcon = new javax.swing.JLabel();
         homeSidePanelText = new javax.swing.JLabel();
         mainPageNavbar = new javax.swing.JPanel();
+        userProfileIcon = new javax.swing.JLabel();
+        navbarUsername = new javax.swing.JLabel();
+        navbarEdusyncTitle = new javax.swing.JLabel();
+        mainPageTabbedPane = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        backgroundPanel.setForeground(new java.awt.Color(60, 63, 65));
+        backgroundPanel.setBackground(new java.awt.Color(80, 80, 80));
+        backgroundPanel.setForeground(new java.awt.Color(51, 51, 51));
         backgroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         mainPageSidePanel.setBackground(new java.awt.Color(51, 51, 51));
@@ -63,37 +102,270 @@ public class Mainpage extends javax.swing.JFrame {
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
-        mainPageSidePanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 220, 20));
+        mainPageSidePanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 240, 20));
+
+        examSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        examSidePanelButton.setForeground(new java.awt.Color(60, 63, 65));
+        examSidePanelButton.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                examSidePanelButtonAncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        examSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                examSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                examSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                examSidePanelButtonMousePressed(evt);
+            }
+        });
+        examSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        examQuizSidePanelLabel.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        examQuizSidePanelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        examQuizSidePanelLabel.setText("Exam/Quiz");
+        examSidePanelButton.add(examQuizSidePanelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 70));
+
+        examSidePanelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/examSidePanelIcon.png"))); // NOI18N
+        examSidePanelButton.add(examSidePanelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, -1));
+
+        mainPageSidePanel.add(examSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 240, 70));
+
+        homeworksSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        homeworksSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                homeworksSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                homeworksSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                homeworksSidePanelButtonMousePressed(evt);
+            }
+        });
+        homeworksSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        homeworksSidePanelLabel.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        homeworksSidePanelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        homeworksSidePanelLabel.setText("Homeworks");
+        homeworksSidePanelButton.add(homeworksSidePanelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 60));
+
+        homeworkSidePanelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/homeworksSidePanelIcon.png"))); // NOI18N
+        homeworksSidePanelButton.add(homeworkSidePanelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, -1));
+
+        mainPageSidePanel.add(homeworksSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 240, 70));
+
+        classlistSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        classlistSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                classlistSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                classlistSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                classlistSidePanelButtonMousePressed(evt);
+            }
+        });
+        classlistSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        classlistSidePanelLabel.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        classlistSidePanelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        classlistSidePanelLabel.setText("Class List");
+        classlistSidePanelButton.add(classlistSidePanelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 70));
+
+        classListSidePanelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/classListSidePanelIcon.png"))); // NOI18N
+        classlistSidePanelButton.add(classListSidePanelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, -1));
+
+        mainPageSidePanel.add(classlistSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 240, 70));
+
+        sectionsSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        sectionsSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                sectionsSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                sectionsSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sectionsSidePanelButtonMousePressed(evt);
+            }
+        });
+        sectionsSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        sectionsSidePanelLabel.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        sectionsSidePanelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        sectionsSidePanelLabel.setText("Sections");
+        sectionsSidePanelButton.add(sectionsSidePanelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 70));
+
+        sectionsSidePanelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/sectionsSidePanelIcon.png"))); // NOI18N
+        sectionsSidePanelButton.add(sectionsSidePanelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, -1));
+
+        mainPageSidePanel.add(sectionsSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 240, 70));
+
+        attendanceSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        attendanceSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                attendanceSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                attendanceSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                attendanceSidePanelButtonMousePressed(evt);
+            }
+        });
+        attendanceSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        attendanceSidePanelLabel.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        attendanceSidePanelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        attendanceSidePanelLabel.setText("Attendance");
+        attendanceSidePanelButton.add(attendanceSidePanelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 70));
+
+        attendanceSidePanelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/attendanceSidePanelIcon.png"))); // NOI18N
+        attendanceSidePanelButton.add(attendanceSidePanelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, -1));
+
+        mainPageSidePanel.add(attendanceSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 240, 70));
+
+        homeSidePanelButton.setBackground(new java.awt.Color(51, 51, 51));
+        homeSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                homeSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                homeSidePanelButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                homeSidePanelButtonMousePressed(evt);
+            }
+        });
+        homeSidePanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         mainpageHomeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/HomeMiniIcon.png"))); // NOI18N
-        mainPageSidePanel.add(mainpageHomeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, -1));
+        homeSidePanelButton.add(mainpageHomeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         homeSidePanelText.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        homeSidePanelText.setForeground(new java.awt.Color(255, 255, 255));
         homeSidePanelText.setText("Home");
-        mainPageSidePanel.add(homeSidePanelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 40));
+        homeSidePanelButton.add(homeSidePanelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 50));
+
+        mainPageSidePanel.add(homeSidePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 60));
 
         backgroundPanel.add(mainPageSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 600));
 
         mainPageNavbar.setBackground(new java.awt.Color(0, 0, 102));
+        mainPageNavbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout mainPageNavbarLayout = new javax.swing.GroupLayout(mainPageNavbar);
-        mainPageNavbar.setLayout(mainPageNavbarLayout);
-        mainPageNavbarLayout.setHorizontalGroup(
-            mainPageNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
-        );
-        mainPageNavbarLayout.setVerticalGroup(
-            mainPageNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
+        userProfileIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/userProfile.png"))); // NOI18N
+        mainPageNavbar.add(userProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, 70, 80));
+
+        navbarUsername.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        navbarUsername.setForeground(new java.awt.Color(255, 255, 255));
+        navbarUsername.setText("[Username]");
+        mainPageNavbar.add(navbarUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, -1, 60));
+
+        navbarEdusyncTitle.setFont(new java.awt.Font("Anton", 0, 48)); // NOI18N
+        navbarEdusyncTitle.setForeground(new java.awt.Color(255, 255, 255));
+        navbarEdusyncTitle.setText("EduSync");
+        mainPageNavbar.add(navbarEdusyncTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, -10, -1, 100));
 
         backgroundPanel.add(mainPageNavbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 80));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Home", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Exam/QUiz", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Homeworks", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Class List", jPanel4);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Sections", jPanel5);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 908, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        mainPageTabbedPane.addTab("Attendance", jPanel6);
+
+        backgroundPanel.add(mainPageTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 910, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,6 +375,101 @@ public class Mainpage extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void examSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        examSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_examSidePanelButtonMouseExited
+
+    private void examSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        examSidePanelButton.setBackground(new Color(80,80,80));
+   
+    }//GEN-LAST:event_examSidePanelButtonMouseEntered
+
+    private void examSidePanelButtonAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_examSidePanelButtonAncestorMoved
+
+    }//GEN-LAST:event_examSidePanelButtonAncestorMoved
+
+    private void homeworksSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeworksSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        homeworksSidePanelButton.setBackground(new Color(80,80,80));
+    }//GEN-LAST:event_homeworksSidePanelButtonMouseEntered
+
+    private void homeworksSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeworksSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        homeworksSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_homeworksSidePanelButtonMouseExited
+
+    private void classlistSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_classlistSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        classlistSidePanelButton.setBackground(new Color(80,80,80));
+    }//GEN-LAST:event_classlistSidePanelButtonMouseEntered
+
+    private void classlistSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_classlistSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        classlistSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_classlistSidePanelButtonMouseExited
+
+    private void sectionsSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sectionsSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        sectionsSidePanelButton.setBackground(new Color(80,80,80));
+    }//GEN-LAST:event_sectionsSidePanelButtonMouseEntered
+
+    private void sectionsSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sectionsSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        sectionsSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_sectionsSidePanelButtonMouseExited
+
+    private void attendanceSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        attendanceSidePanelButton.setBackground(new Color(80,80,80));
+    }//GEN-LAST:event_attendanceSidePanelButtonMouseEntered
+
+    private void attendanceSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        attendanceSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_attendanceSidePanelButtonMouseExited
+
+    private void examSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(1);
+    }//GEN-LAST:event_examSidePanelButtonMousePressed
+
+    private void homeSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(0);
+    }//GEN-LAST:event_homeSidePanelButtonMousePressed
+
+    private void homeSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        homeSidePanelButton.setBackground(new Color(80,80,80));
+    }//GEN-LAST:event_homeSidePanelButtonMouseEntered
+
+    private void homeSidePanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        homeSidePanelButton.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_homeSidePanelButtonMouseExited
+
+    private void homeworksSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeworksSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(2);
+    }//GEN-LAST:event_homeworksSidePanelButtonMousePressed
+
+    private void classlistSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_classlistSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(3);
+    }//GEN-LAST:event_classlistSidePanelButtonMousePressed
+
+    private void sectionsSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sectionsSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(4);
+    }//GEN-LAST:event_sectionsSidePanelButtonMousePressed
+
+    private void attendanceSidePanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceSidePanelButtonMousePressed
+        // TODO add your handling code here:
+        mainPageTabbedPane.setSelectedIndex(5);
+    }//GEN-LAST:event_attendanceSidePanelButtonMousePressed
 
     /**
      * @param args the command line arguments
@@ -140,11 +507,37 @@ public class Mainpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel attendanceSidePanelButton;
+    private javax.swing.JLabel attendanceSidePanelIcon;
+    private javax.swing.JLabel attendanceSidePanelLabel;
     private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JLabel classListSidePanelIcon;
+    private javax.swing.JPanel classlistSidePanelButton;
+    private javax.swing.JLabel classlistSidePanelLabel;
+    private javax.swing.JLabel examQuizSidePanelLabel;
+    private javax.swing.JPanel examSidePanelButton;
+    private javax.swing.JLabel examSidePanelIcon;
+    private javax.swing.JPanel homeSidePanelButton;
     private javax.swing.JLabel homeSidePanelText;
+    private javax.swing.JLabel homeworkSidePanelIcon;
+    private javax.swing.JPanel homeworksSidePanelButton;
+    private javax.swing.JLabel homeworksSidePanelLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel mainPageNavbar;
     private javax.swing.JPanel mainPageSidePanel;
+    private javax.swing.JTabbedPane mainPageTabbedPane;
     private javax.swing.JLabel mainpageHomeIcon;
+    private javax.swing.JLabel navbarEdusyncTitle;
+    private javax.swing.JLabel navbarUsername;
+    private javax.swing.JPanel sectionsSidePanelButton;
+    private javax.swing.JLabel sectionsSidePanelIcon;
+    private javax.swing.JLabel sectionsSidePanelLabel;
+    private javax.swing.JLabel userProfileIcon;
     // End of variables declaration//GEN-END:variables
 }
