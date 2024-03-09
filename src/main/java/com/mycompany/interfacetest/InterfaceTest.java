@@ -13,5 +13,6 @@ public class InterfaceTest {
     public static void main(String[] args) {
         LoginPage login = new LoginPage();
         login.setVisible(true);
+        System.out.println("Hi user");
     }
 }
