@@ -84,6 +84,7 @@ public class Mainpage extends javax.swing.JFrame {
         navbarEdusyncTitle = new javax.swing.JLabel();
         mainPageTabbedPane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -278,15 +279,23 @@ public class Mainpage extends javax.swing.JFrame {
 
         backgroundPanel.add(mainPageNavbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 80));
 
+        jLabel1.setText("hello");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 908, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(204, 204, 204)
+                .addComponent(jLabel1)
+                .addContainerGap(680, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(jLabel1)
+                .addContainerGap(423, Short.MAX_VALUE))
         );
 
         mainPageTabbedPane.addTab("Home", jPanel1);
@@ -522,6 +531,7 @@ public class Mainpage extends javax.swing.JFrame {
     private javax.swing.JLabel homeworkSidePanelIcon;
     private javax.swing.JPanel homeworksSidePanelButton;
     private javax.swing.JLabel homeworksSidePanelLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
