@@ -11,6 +11,7 @@ package com.mycompany.interfacetest;
 public class InterfaceTest {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        LoginPage login = new LoginPage();
+        login.setVisible(true);
     }
 }

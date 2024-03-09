@@ -79,15 +79,15 @@ public class LoginPage extends javax.swing.JFrame {
         passLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        bgPenIcon = new javax.swing.JLabel();
+        bgSearchIcon = new javax.swing.JLabel();
+        bgDocumentIcon = new javax.swing.JLabel();
+        bgOpenBookIcon = new javax.swing.JLabel();
+        signupHereLabel = new javax.swing.JLabel();
+        signUpText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("EduSYnc ");
+        setTitle("EduSync ");
         setResizable(false);
 
         bgPanel.setBackground(new java.awt.Color(51, 51, 51));
@@ -132,6 +132,9 @@ public class LoginPage extends javax.swing.JFrame {
         passPaneSeparator.setForeground(new java.awt.Color(255, 255, 255));
         passPaneSeparator.setText("|");
         passPanel.add(passPaneSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 30, 30));
+
+        passField.setForeground(new java.awt.Color(38, 55, 120));
+        passField.setCaretColor(new java.awt.Color(38, 55, 120));
         passPanel.add(passField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 180, 30));
 
         loginPanel.add(passPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 260, 50));
@@ -148,6 +151,8 @@ public class LoginPage extends javax.swing.JFrame {
         emailPaneSeparator.setText("|");
         emailPanel.add(emailPaneSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 30, 30));
 
+        emailField.setForeground(new java.awt.Color(38, 55, 120));
+        emailField.setCaretColor(new java.awt.Color(38, 55, 120));
         emailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailFieldActionPerformed(evt);
@@ -180,31 +185,31 @@ public class LoginPage extends javax.swing.JFrame {
         });
         loginPanel.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 140, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ballpen.png"))); // NOI18N
-        loginPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 110, -1));
+        bgPenIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ballpen.png"))); // NOI18N
+        loginPanel.add(bgPenIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 110, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Search.png"))); // NOI18N
-        loginPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 110, -1));
+        bgSearchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Search.png"))); // NOI18N
+        loginPanel.add(bgSearchIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 110, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Document.png"))); // NOI18N
-        loginPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 380, 100, -1));
+        bgDocumentIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Document.png"))); // NOI18N
+        loginPanel.add(bgDocumentIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 380, 100, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenBook.png"))); // NOI18N
-        loginPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 500, 90, -1));
+        bgOpenBookIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenBook.png"))); // NOI18N
+        loginPanel.add(bgOpenBookIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 500, 90, -1));
 
-        jLabel5.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel5.setText("here");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        signupHereLabel.setForeground(new java.awt.Color(0, 153, 0));
+        signupHereLabel.setText("here");
+        signupHereLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signupHereLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                signupHereLabelMouseClicked(evt);
             }
         });
-        loginPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
+        loginPanel.add(signupHereLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Or sign up");
-        loginPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
+        signUpText.setForeground(new java.awt.Color(255, 255, 255));
+        signUpText.setText("Or sign up");
+        loginPanel.add(signUpText, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
 
         bgPanel.add(loginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 360, 570));
 
@@ -222,6 +227,7 @@ public class LoginPage extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
@@ -233,10 +239,11 @@ public class LoginPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void signupHereLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupHereLabelMouseClicked
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jLabel5MouseClicked
+        SignUp signupPage = new SignUp();
+        signupPage.setVisible(true);
+    }//GEN-LAST:event_signupHereLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -274,7 +281,11 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bgDocumentIcon;
+    private javax.swing.JLabel bgOpenBookIcon;
     private javax.swing.JPanel bgPanel;
+    private javax.swing.JLabel bgPenIcon;
+    private javax.swing.JLabel bgSearchIcon;
     private javax.swing.JLabel ccstLogo;
     private javax.swing.JLabel eduSyncSlogan;
     private javax.swing.JLabel eduSyncTitle;
@@ -282,12 +293,6 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel emailPaneSeparator;
     private javax.swing.JPanel emailPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPasswordField passField;
@@ -296,6 +301,8 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JPanel passPanel;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel sidePanelBgImage;
+    private javax.swing.JLabel signUpText;
+    private javax.swing.JLabel signupHereLabel;
     private javax.swing.JLabel smallKeyIcon;
     private javax.swing.JLabel smallUserIcon;
     private javax.swing.JLabel userIcon;

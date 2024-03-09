@@ -59,16 +59,20 @@ public class SignUp extends javax.swing.JFrame {
         signUpPanel = new javax.swing.JPanel();
         signUpEmailPanel = new RoundedPanel(15,new Color(60,63,65));
         emailMiniIcon = new javax.swing.JLabel();
+        emailEntryField = new javax.swing.JTextField();
         signUpPasswordPanel = new RoundedPanel(15,new Color(60,63,65));
-        jLabel1 = new javax.swing.JLabel();
+        passwordIcon = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
         confirmPasswordPanel = new RoundedPanel(15,new Color(60,63,65));
-        jLabel3 = new javax.swing.JLabel();
+        confirmPasswordIcon = new javax.swing.JLabel();
+        confirmPasswordField = new javax.swing.JPasswordField();
         confirmSignupButton = new javax.swing.JButton();
         signUpTitle = new javax.swing.JLabel();
         signUpBg = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EDUSYNC - SIGN UP");
         setResizable(false);
 
         backgroundPanel.setBackground(new java.awt.Color(51, 51, 51));
@@ -86,27 +90,38 @@ public class SignUp extends javax.swing.JFrame {
         emailMiniIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/mailMiniIcon.png"))); // NOI18N
         signUpEmailPanel.add(emailMiniIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
+        emailEntryField.setForeground(new java.awt.Color(38, 55, 120));
+        signUpEmailPanel.add(emailEntryField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 210, 30));
+
         signUpPanel.add(signUpEmailPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 290, 50));
 
         signUpPasswordPanel.setOpaque(false);
         signUpPasswordPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/passMiniIcon.png"))); // NOI18N
-        signUpPasswordPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/passMiniIcon.png"))); // NOI18N
+        signUpPasswordPanel.add(passwordIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        passwordField.setForeground(new java.awt.Color(38, 55, 120));
+        signUpPasswordPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 210, 30));
 
         signUpPanel.add(signUpPasswordPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 290, 50));
 
         confirmPasswordPanel.setOpaque(false);
         confirmPasswordPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/passMiniIcon.png"))); // NOI18N
-        confirmPasswordPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        confirmPasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/passMiniIcon.png"))); // NOI18N
+        confirmPasswordPanel.add(confirmPasswordIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        confirmPasswordField.setForeground(new java.awt.Color(38, 55, 120));
+        confirmPasswordPanel.add(confirmPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 210, 30));
 
         signUpPanel.add(confirmPasswordPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 290, 50));
 
         confirmSignupButton.setBackground(new java.awt.Color(38, 55, 120));
         confirmSignupButton.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        confirmSignupButton.setForeground(new java.awt.Color(255, 255, 255));
         confirmSignupButton.setText("Confirm");
+        confirmSignupButton.setBorderPainted(false);
         confirmSignupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmSignupButtonActionPerformed(evt);
@@ -140,6 +155,7 @@ public class SignUp extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmSignupButtonActionPerformed
@@ -183,12 +199,15 @@ public class SignUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JPasswordField confirmPasswordField;
+    private javax.swing.JLabel confirmPasswordIcon;
     private javax.swing.JPanel confirmPasswordPanel;
     private javax.swing.JButton confirmSignupButton;
+    private javax.swing.JTextField emailEntryField;
     private javax.swing.JLabel emailMiniIcon;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel passwordIcon;
     private javax.swing.JLabel signUpBg;
     private javax.swing.JPanel signUpEmailPanel;
     private javax.swing.JPanel signUpPanel;
