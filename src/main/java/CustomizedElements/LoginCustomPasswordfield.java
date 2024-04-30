@@ -133,8 +133,8 @@ public class LoginCustomPasswordfield extends JPasswordField {
             }
 
         };
-        eye=new ImageIcon(getClass().getResource("/loginIcons/eye-24px.png")).getImage();
-        eye_hide=new ImageIcon(getClass().getResource("/loginIcons/hide_eye-20px.png")).getImage();
+        eye=new ImageIcon(getClass().getResource("/loginIcons/eye-20px.png")).getImage();
+        eye_hide=new ImageIcon(getClass().getResource("/loginIcons/hide-eye-20px.png")).getImage();
         animator = new Animator(300, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);

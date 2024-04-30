@@ -85,26 +85,29 @@ public class newSignupPage extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1000, 610));
         setResizable(false);
 
-        backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
+        backgroundPanel.setBackground(new java.awt.Color(36, 36, 36));
 
-        sidepanelArt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/signupArtPanel.png"))); // NOI18N
+        sidepanelArt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/Untitled design.png"))); // NOI18N
 
         signupTitle.setFont(new java.awt.Font("Inter", 1, 48)); // NOI18N
-        signupTitle.setForeground(new java.awt.Color(31, 58, 104));
+        signupTitle.setForeground(new java.awt.Color(216, 199, 216));
         signupTitle.setText("Sign Up");
 
-        firstnamePanel.setBackground(new java.awt.Color(159, 198, 216));
+        firstnamePanel.setBackground(new java.awt.Color(87, 38, 114));
         firstnamePanel.setPreferredSize(new java.awt.Dimension(290, 60));
         firstnamePanel.setRoundBottomLeft(55);
         firstnamePanel.setRoundBottomRight(55);
         firstnamePanel.setRoundTopLeft(55);
         firstnamePanel.setRoundTopRight(55);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/smallerUserIcon.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/userIcon-40px.png"))); // NOI18N
 
-        firstnameField.setBackground(new java.awt.Color(159, 198, 216));
-        firstnameField.setForeground(new java.awt.Color(21, 102, 168));
+        firstnameField.setBackground(new java.awt.Color(87, 38, 114));
+        firstnameField.setForeground(new java.awt.Color(255, 255, 255));
+        firstnameField.setCaretColor(new java.awt.Color(216, 199, 216));
         firstnameField.setLabelText("First Name");
+        firstnameField.setLineColor(new java.awt.Color(227, 195, 227));
+        firstnameField.setSelectionColor(new java.awt.Color(158, 109, 182));
 
         javax.swing.GroupLayout firstnamePanelLayout = new javax.swing.GroupLayout(firstnamePanel);
         firstnamePanel.setLayout(firstnamePanelLayout);
@@ -119,24 +122,27 @@ public class newSignupPage extends javax.swing.JFrame {
         );
         firstnamePanelLayout.setVerticalGroup(
             firstnamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addGroup(firstnamePanelLayout.createSequentialGroup()
-                .addComponent(firstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(firstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        lastnamePanel.setBackground(new java.awt.Color(159, 198, 216));
+        lastnamePanel.setBackground(new java.awt.Color(87, 38, 114));
         lastnamePanel.setPreferredSize(new java.awt.Dimension(290, 60));
         lastnamePanel.setRoundBottomLeft(55);
         lastnamePanel.setRoundBottomRight(55);
         lastnamePanel.setRoundTopLeft(55);
         lastnamePanel.setRoundTopRight(55);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/smallerUserIcon.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/userIcon-40px.png"))); // NOI18N
 
-        lastnameField.setBackground(new java.awt.Color(159, 198, 216));
-        lastnameField.setForeground(new java.awt.Color(21, 102, 168));
+        lastnameField.setBackground(new java.awt.Color(87, 38, 114));
+        lastnameField.setForeground(new java.awt.Color(255, 255, 255));
+        lastnameField.setCaretColor(new java.awt.Color(216, 199, 216));
         lastnameField.setLabelText("Last Name");
+        lastnameField.setLineColor(new java.awt.Color(227, 195, 227));
+        lastnameField.setSelectionColor(new java.awt.Color(158, 109, 182));
 
         javax.swing.GroupLayout lastnamePanelLayout = new javax.swing.GroupLayout(lastnamePanel);
         lastnamePanel.setLayout(lastnamePanelLayout);
@@ -151,24 +157,27 @@ public class newSignupPage extends javax.swing.JFrame {
         );
         lastnamePanelLayout.setVerticalGroup(
             lastnamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addGroup(lastnamePanelLayout.createSequentialGroup()
-                .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        usernamePanel.setBackground(new java.awt.Color(159, 198, 216));
+        usernamePanel.setBackground(new java.awt.Color(87, 38, 114));
         usernamePanel.setPreferredSize(new java.awt.Dimension(290, 60));
         usernamePanel.setRoundBottomLeft(55);
         usernamePanel.setRoundBottomRight(55);
         usernamePanel.setRoundTopLeft(55);
         usernamePanel.setRoundTopRight(55);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/smallerUserIcon.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/userIcon-40px.png"))); // NOI18N
 
-        usernameField.setBackground(new java.awt.Color(159, 198, 216));
-        usernameField.setForeground(new java.awt.Color(21, 102, 168));
+        usernameField.setBackground(new java.awt.Color(87, 38, 114));
+        usernameField.setForeground(new java.awt.Color(255, 255, 255));
+        usernameField.setCaretColor(new java.awt.Color(216, 199, 216));
         usernameField.setLabelText("Username");
+        usernameField.setLineColor(new java.awt.Color(227, 195, 227));
+        usernameField.setSelectionColor(new java.awt.Color(158, 109, 182));
 
         javax.swing.GroupLayout usernamePanelLayout = new javax.swing.GroupLayout(usernamePanel);
         usernamePanel.setLayout(usernamePanelLayout);
@@ -183,33 +192,37 @@ public class newSignupPage extends javax.swing.JFrame {
         );
         usernamePanelLayout.setVerticalGroup(
             usernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addGroup(usernamePanelLayout.createSequentialGroup()
-                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        checknameButton.setBackground(new java.awt.Color(109, 201, 183));
+        checknameButton.setBackground(new java.awt.Color(158, 109, 182));
         checknameButton.setForeground(new java.awt.Color(255, 255, 255));
         checknameButton.setText("Check");
+        checknameButton.setShadowColor(new java.awt.Color(158, 109, 182));
         checknameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checknameButtonActionPerformed(evt);
             }
         });
 
-        passwordPanel.setBackground(new java.awt.Color(159, 198, 216));
+        passwordPanel.setBackground(new java.awt.Color(87, 38, 114));
         passwordPanel.setPreferredSize(new java.awt.Dimension(290, 60));
         passwordPanel.setRoundBottomLeft(55);
         passwordPanel.setRoundBottomRight(55);
         passwordPanel.setRoundTopLeft(55);
         passwordPanel.setRoundTopRight(55);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/newerLock.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/lock-40px.png"))); // NOI18N
 
-        passwordField.setBackground(new java.awt.Color(159, 198, 216));
-        passwordField.setForeground(new java.awt.Color(21, 102, 168));
+        passwordField.setBackground(new java.awt.Color(87, 38, 114));
+        passwordField.setForeground(new java.awt.Color(255, 255, 255));
+        passwordField.setCaretColor(new java.awt.Color(216, 199, 216));
         passwordField.setLabelText("Password");
+        passwordField.setLineColor(new java.awt.Color(227, 195, 227));
+        passwordField.setSelectionColor(new java.awt.Color(158, 109, 182));
         passwordField.setShowAndHide(true);
 
         javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
@@ -220,29 +233,32 @@ public class newSignupPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         passwordPanelLayout.setVerticalGroup(
             passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addGroup(passwordPanelLayout.createSequentialGroup()
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        confirmpasswordPanel.setBackground(new java.awt.Color(159, 198, 216));
+        confirmpasswordPanel.setBackground(new java.awt.Color(87, 38, 114));
         confirmpasswordPanel.setPreferredSize(new java.awt.Dimension(290, 60));
         confirmpasswordPanel.setRoundBottomLeft(55);
         confirmpasswordPanel.setRoundBottomRight(55);
         confirmpasswordPanel.setRoundTopLeft(55);
         confirmpasswordPanel.setRoundTopRight(55);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/newerLock.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signupIcons/lock-40px.png"))); // NOI18N
 
-        confirmPasswordField.setBackground(new java.awt.Color(159, 198, 216));
-        confirmPasswordField.setForeground(new java.awt.Color(21, 102, 168));
+        confirmPasswordField.setBackground(new java.awt.Color(87, 38, 114));
+        confirmPasswordField.setForeground(new java.awt.Color(255, 255, 255));
+        confirmPasswordField.setCaretColor(new java.awt.Color(216, 199, 216));
         confirmPasswordField.setLabelText("Confirm Password");
+        confirmPasswordField.setLineColor(new java.awt.Color(227, 195, 227));
+        confirmPasswordField.setSelectionColor(new java.awt.Color(158, 109, 182));
         confirmPasswordField.setShowAndHide(true);
 
         javax.swing.GroupLayout confirmpasswordPanelLayout = new javax.swing.GroupLayout(confirmpasswordPanel);
@@ -253,21 +269,22 @@ public class newSignupPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         confirmpasswordPanelLayout.setVerticalGroup(
             confirmpasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addGroup(confirmpasswordPanelLayout.createSequentialGroup()
-                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        confirmSignupButton.setBackground(new java.awt.Color(109, 201, 183));
+        confirmSignupButton.setBackground(new java.awt.Color(158, 109, 182));
         confirmSignupButton.setForeground(new java.awt.Color(255, 255, 255));
         confirmSignupButton.setText("Confirm");
         confirmSignupButton.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        confirmSignupButton.setShadowColor(new java.awt.Color(158, 109, 182));
         confirmSignupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmSignupButtonActionPerformed(evt);
@@ -275,11 +292,11 @@ public class newSignupPage extends javax.swing.JFrame {
         });
 
         alreadyHaveAccountLabel.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        alreadyHaveAccountLabel.setForeground(new java.awt.Color(21, 102, 168));
+        alreadyHaveAccountLabel.setForeground(new java.awt.Color(216, 199, 216));
         alreadyHaveAccountLabel.setText("Already have an account?");
 
         loginHyperlink.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        loginHyperlink.setForeground(new java.awt.Color(21, 102, 168));
+        loginHyperlink.setForeground(new java.awt.Color(216, 199, 216));
         loginHyperlink.setText("<html>\n<u>Login here</u>\n</html>");
         loginHyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginHyperlink.addMouseListener(new java.awt.event.MouseAdapter() {

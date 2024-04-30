@@ -75,8 +75,8 @@ public class newLoginPage extends javax.swing.JFrame {
         dontHaveAccountLabel = new javax.swing.JLabel();
         signupHyperlink = new javax.swing.JLabel();
         passwordPanel = new CustomizedElements.RoundedPanel();
-        loginPasswordField = new CustomizedElements.LoginCustomPasswordfield();
         jLabel3 = new javax.swing.JLabel();
+        loginPasswordField = new CustomizedElements.LoginCustomPasswordfield();
         usernamePanel = new CustomizedElements.RoundedPanel();
         loginUsernameField = new CustomizedElements.LoginCustomTextfield();
         jLabel1 = new javax.swing.JLabel();
@@ -130,16 +130,15 @@ public class newLoginPage extends javax.swing.JFrame {
         passwordPanel.setRoundTopLeft(55);
         passwordPanel.setRoundTopRight(55);
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loginIcons/password-45px.png"))); // NOI18N
+
         loginPasswordField.setBackground(new java.awt.Color(87, 38, 114));
         loginPasswordField.setForeground(new java.awt.Color(255, 255, 255));
         loginPasswordField.setCaretColor(new java.awt.Color(216, 199, 216));
-        loginPasswordField.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
         loginPasswordField.setLabelText("Password");
         loginPasswordField.setLineColor(new java.awt.Color(227, 195, 227));
         loginPasswordField.setSelectionColor(new java.awt.Color(158, 109, 182));
         loginPasswordField.setShowAndHide(true);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loginIcons/password-45px.png"))); // NOI18N
 
         javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
         passwordPanel.setLayout(passwordPanelLayout);
@@ -155,7 +154,7 @@ public class newLoginPage extends javax.swing.JFrame {
         passwordPanelLayout.setVerticalGroup(
             passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordPanelLayout.createSequentialGroup()
-                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(passwordPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3))
@@ -225,13 +224,14 @@ public class newLoginPage extends javax.swing.JFrame {
                                     .addGap(139, 139, 139)
                                     .addComponent(dontHaveAccountLabel)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(edusyncLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(edusyncTitle))))
-                        .addGap(48, 107, Short.MAX_VALUE)))
+                                    .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(48, 107, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(edusyncLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(edusyncTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(sidepanelArt))
         );
         backgroundPanelLayout.setVerticalGroup(
