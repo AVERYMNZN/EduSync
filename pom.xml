@@ -66,6 +66,18 @@
             <type>jar</type>
         </dependency>
 
+<!--        <dependency>
+            <groupId>raven.popup</groupId>
+            <artifactId>swing-glasspane-popup</artifactId>
+            <version>1.5.0</version>
+            <scope>system</scope>
+            <systemPath>/libs/swing-glasspane-popup-1.5.0.jar</systemPath>
+        </dependency>-->
+        <dependency>
+            <groupId>raven.popup</groupId>
+            <artifactId>swing-glasspane-popup</artifactId>
+            <version>1.5.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
