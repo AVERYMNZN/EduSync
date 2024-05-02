@@ -397,7 +397,7 @@ public class newSignupPage extends javax.swing.JFrame {
         String usernameCheck = usernameField.getText();
         
         try {
-            String sqlquery =  "SELECT * FROM UserLogin WHERE Username='"+usernameCheck+"'";
+            String sqlquery =  "SELECT * FROM Admin_Users WHERE Username='"+usernameCheck+"'";
             pst = conn.prepareStatement(sqlquery);
             rs = pst.executeQuery();
             if(usernameCheck.isEmpty()) {
