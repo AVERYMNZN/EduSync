@@ -13,7 +13,7 @@ public class InterfaceTest {
 
     public static Connection loginConn() {
         try {
-            String url = "jdbc:ucanaccess://C://database//EduSync11.accdb";
+            String url = "jdbc:ucanaccess://src/main/resources/database/EduSync-DB1.accdb";
             Connection conn = DriverManager.getConnection(url);
             return conn;
         } catch (Exception e) {
@@ -24,7 +24,7 @@ public class InterfaceTest {
     
     public static Connection studentConn() {
         try {
-            String url = "jdbc:ucanaccess://C://database//AttendanceSystem.accdb";
+            String url = "jdbc:ucanaccess://src/main/resources/database/EduSync-DB1.accdb";
             Connection conn = DriverManager.getConnection(url);
             return conn;
         } catch (Exception e) {
