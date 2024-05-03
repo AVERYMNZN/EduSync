@@ -37,7 +37,6 @@ public class newerMainPage extends javax.swing.JFrame {
     
     CardLayout mainpageCardLayout;
     
-    int studentAttendanceGrade;
     
     public newerMainPage() {
         FlatRobotoFont.install();
@@ -123,21 +122,21 @@ public class newerMainPage extends javax.swing.JFrame {
         dashboardPanel.setLayout(dashboardPanelLayout);
         dashboardPanelLayout.setHorizontalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardPanelLayout.createSequentialGroup()
-                .addGap(315, 315, 315)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
+                .addContainerGap(380, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(75, 75, 75)
+                .addGap(138, 138, 138)
                 .addComponent(jButton2)
-                .addContainerGap(601, Short.MAX_VALUE))
+                .addGap(473, 473, 473))
         );
         dashboardPanelLayout.setVerticalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(488, Short.MAX_VALUE)
+                .addContainerGap(358, Short.MAX_VALUE)
                 .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(208, 208, 208))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(338, 338, 338))
         );
 
         cardPanel.add(dashboardPanel, "dashboardCard");
@@ -267,8 +266,7 @@ public class newerMainPage extends javax.swing.JFrame {
                 .addGroup(roundedPanel1Layout.createSequentialGroup()
                     .addComponent(jLabel4)
                     .addGap(49, 49, 49)
-                    .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1)))
             .addContainerGap(108, Short.MAX_VALUE))
     );
     roundedPanel1Layout.setVerticalGroup(
@@ -403,7 +401,7 @@ public class newerMainPage extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1105, Short.MAX_VALUE))
+            .addComponent(cardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     backgroundPanelLayout.setVerticalGroup(
         backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

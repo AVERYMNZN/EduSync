@@ -294,7 +294,7 @@ public class newLoginPage extends javax.swing.JFrame {
                 mainPage.show();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);      
         }
         
 //        try {
