@@ -137,21 +137,21 @@ public class newerMainPage extends javax.swing.JFrame {
         dashboardPanel.setLayout(dashboardPanelLayout);
         dashboardPanelLayout.setHorizontalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(339, Short.MAX_VALUE)
+            .addGroup(dashboardPanelLayout.createSequentialGroup()
+                .addGap(321, 321, 321)
                 .addComponent(jButton1)
-                .addGap(138, 138, 138)
+                .addGap(26, 26, 26)
                 .addComponent(jButton2)
-                .addGap(473, 473, 473))
+                .addContainerGap(603, Short.MAX_VALUE))
         );
         dashboardPanelLayout.setVerticalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(367, Short.MAX_VALUE)
+                .addContainerGap(578, Short.MAX_VALUE)
                 .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGap(338, 338, 338))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(127, 127, 127))
         );
 
         cardPanel.add(dashboardPanel, "dashboardCard");
@@ -274,18 +274,18 @@ public class newerMainPage extends javax.swing.JFrame {
                 .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
                     .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                            .addGap(64, 64, 64)
+                            .addGap(54, 54, 54)
                             .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                            .addGap(54, 54, 54)
+                            .addGap(45, 45, 45)
                             .addComponent(jLabel4)))
-                    .addGap(68, 68, 68)
+                    .addGap(77, 77, 77)
                     .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
                             .addGap(9, 9, 9)
                             .addComponent(jLabel1)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 53, Short.MAX_VALUE)))
             .addContainerGap())
     );
     studentsCardStudentsInfoPanelLayout.setVerticalGroup(
@@ -323,23 +323,26 @@ public class newerMainPage extends javax.swing.JFrame {
     studentsCardSendEmailPanel.setRoundTopRight(55);
 
     studentsCardRecipientTextField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardRecipientTextField.setForeground(new java.awt.Color(87, 38, 114));
     studentsCardRecipientTextField.setCaretColor(new java.awt.Color(216, 199, 216));
     studentsCardRecipientTextField.setLabelText("Recipient");
-    studentsCardRecipientTextField.setLineColor(new java.awt.Color(227, 195, 227));
+    studentsCardRecipientTextField.setLineColor(new java.awt.Color(87, 38, 114));
     studentsCardRecipientTextField.setSelectionColor(new java.awt.Color(158, 109, 182));
 
-    jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+    jLabel2.setFont(new java.awt.Font("Comfortaa", 0, 18)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(204, 204, 204));
     jLabel2.setText("Send Email");
 
     studentsCardSubjectTextField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardSubjectTextField.setForeground(new java.awt.Color(87, 38, 114));
     studentsCardSubjectTextField.setCaretColor(new java.awt.Color(216, 199, 216));
     studentsCardSubjectTextField.setLabelText("Subject");
-    studentsCardSubjectTextField.setLineColor(new java.awt.Color(227, 195, 227));
+    studentsCardSubjectTextField.setLineColor(new java.awt.Color(87, 38, 114));
     studentsCardSubjectTextField.setSelectionColor(new java.awt.Color(158, 109, 182));
 
-    studentsCardEmailContentField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardEmailContentField.setBackground(new java.awt.Color(87, 38, 114));
     studentsCardEmailContentField.setColumns(20);
+    studentsCardEmailContentField.setForeground(new java.awt.Color(204, 204, 204));
     studentsCardEmailContentField.setRows(5);
     studentsCardEmailContentField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(227, 195, 227)));
     jScrollPane3.setViewportView(studentsCardEmailContentField);
@@ -374,12 +377,12 @@ public class newerMainPage extends javax.swing.JFrame {
                                     .addComponent(studentsCardSubjectTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(0, 12, Short.MAX_VALUE))))
                 .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
-                    .addGap(173, 173, 173)
+                    .addGap(165, 165, 165)
                     .addComponent(jLabel2)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
         .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
-            .addGap(142, 142, 142)
+            .addGap(145, 145, 145)
             .addComponent(studentsCardSendEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
@@ -395,8 +398,8 @@ public class newerMainPage extends javax.swing.JFrame {
                 .addComponent(studentsCardRecipientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(studentsCardSubjectTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(37, 37, 37)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(studentsCardSendEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
