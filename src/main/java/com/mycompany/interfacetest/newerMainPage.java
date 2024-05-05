@@ -27,6 +27,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import org.springframework.boot.SpringApplication;
+import raven.alerts.MessageAlerts;
+import raven.popup.GlassPanePopup;
+import raven.popup.component.PopupCallbackAction;
+import raven.popup.component.PopupController;
 
 public class newerMainPage extends javax.swing.JFrame {
     
@@ -34,6 +39,10 @@ public class newerMainPage extends javax.swing.JFrame {
     PreparedStatement pst;
     Statement st;
     ResultSet rs;
+    
+    public static String studentsCardEmailRecepient;
+    public static String studentsCardEmailSubject;
+    public static String studentsCardEmailContent;
     
     CardLayout mainpageCardLayout;
     
@@ -48,7 +57,8 @@ public class newerMainPage extends javax.swing.JFrame {
         
         initComponents();
         mainpageCardLayout = (CardLayout)(cardPanel.getLayout());
-    }
+        GlassPanePopup.install(this);
+;    }
 
     @SuppressWarnings("unchecked") 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -58,7 +68,6 @@ public class newerMainPage extends javax.swing.JFrame {
         jTextPane1 = new javax.swing.JTextPane();
         jComboBox1 = new javax.swing.JComboBox<>();
         backgroundPanel = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
         cardPanel = new javax.swing.JPanel();
         dashboardPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -71,7 +80,7 @@ public class newerMainPage extends javax.swing.JFrame {
         studentsCardSectionsCombobox = new javax.swing.JComboBox<>();
         fetchNewDataButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        roundedPanel1 = new CustomizedElements.RoundedPanel();
+        studentsCardStudentsInfoPanel = new CustomizedElements.RoundedPanel();
         studentsCardStudentsNameLabel = new javax.swing.JLabel();
         studentsCardStudentsNumberLabel = new javax.swing.JLabel();
         avatarBorder2 = new CustomizedElements.AvatarBorder();
@@ -81,6 +90,14 @@ public class newerMainPage extends javax.swing.JFrame {
         studentsMonthlyAttendanceGauge = new CustomizedElements.GaugeChart();
         studentsOverallAttendanceGauge = new CustomizedElements.GaugeChart();
         jLabel1 = new javax.swing.JLabel();
+        studentsCardSendEmailPanel = new CustomizedElements.RoundedPanel();
+        studentsCardRecipientTextField = new CustomizedElements.LoginCustomTextfield();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        studentsCardSubjectTextField = new CustomizedElements.LoginCustomTextfield();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        studentsCardEmailContentField = new javax.swing.JTextArea();
+        studentsCardSendEmailButton = new CustomizedElements.CustomizedButton();
         sidePanel = new CustomizedElements.GradientPanel();
         dashboardButtonLabel = new CustomizedElements.CustomizedButton();
         studentsButtonLabel = new CustomizedElements.CustomizedButton();
@@ -97,8 +114,6 @@ public class newerMainPage extends javax.swing.JFrame {
         setResizable(false);
 
         backgroundPanel.setBackground(new java.awt.Color(35, 35, 48));
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         cardPanel.setLayout(new java.awt.CardLayout());
 
@@ -123,7 +138,7 @@ public class newerMainPage extends javax.swing.JFrame {
         dashboardPanelLayout.setHorizontalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(380, Short.MAX_VALUE)
+                .addContainerGap(339, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(138, 138, 138)
                 .addComponent(jButton2)
@@ -132,7 +147,7 @@ public class newerMainPage extends javax.swing.JFrame {
         dashboardPanelLayout.setVerticalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(358, Short.MAX_VALUE)
+                .addContainerGap(367, Short.MAX_VALUE)
                 .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
@@ -185,11 +200,11 @@ public class newerMainPage extends javax.swing.JFrame {
 
     jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-    roundedPanel1.setBackground(new java.awt.Color(119, 119, 176));
-    roundedPanel1.setRoundBottomLeft(55);
-    roundedPanel1.setRoundBottomRight(55);
-    roundedPanel1.setRoundTopLeft(55);
-    roundedPanel1.setRoundTopRight(55);
+    studentsCardStudentsInfoPanel.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardStudentsInfoPanel.setRoundBottomLeft(55);
+    studentsCardStudentsInfoPanel.setRoundBottomRight(55);
+    studentsCardStudentsInfoPanel.setRoundTopLeft(55);
+    studentsCardStudentsInfoPanel.setRoundTopRight(55);
 
     studentsCardStudentsNameLabel.setFont(new java.awt.Font("Comfortaa", 1, 20)); // NOI18N
     studentsCardStudentsNameLabel.setForeground(new java.awt.Color(51, 51, 51));
@@ -233,62 +248,66 @@ public class newerMainPage extends javax.swing.JFrame {
     jLabel1.setForeground(new java.awt.Color(0, 0, 0));
     jLabel1.setText("Overall Grade");
 
-    javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
-    roundedPanel1.setLayout(roundedPanel1Layout);
-    roundedPanel1Layout.setHorizontalGroup(
-        roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(roundedPanel1Layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jSeparator3)
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
-                    .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundedPanel1Layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(studentsCardStudentsSectionLabel)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(roundedPanel1Layout.createSequentialGroup()
-                            .addComponent(studentsCardStudentsNameLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(studentsCardStudentsNumberLabel)
-                            .addGap(9, 9, 9)))))
+    javax.swing.GroupLayout studentsCardStudentsInfoPanelLayout = new javax.swing.GroupLayout(studentsCardStudentsInfoPanel);
+    studentsCardStudentsInfoPanel.setLayout(studentsCardStudentsInfoPanelLayout);
+    studentsCardStudentsInfoPanelLayout.setHorizontalGroup(
+        studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator3)
+                        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                            .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(studentsCardStudentsSectionLabel)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                                    .addComponent(studentsCardStudentsNameLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(studentsCardStudentsNumberLabel)
+                                    .addGap(9, 9, 9))))))
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                            .addGap(64, 64, 64)
+                            .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                            .addGap(54, 54, 54)
+                            .addComponent(jLabel4)))
+                    .addGap(68, 68, 68)
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addComponent(jLabel1)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
-        .addGroup(roundedPanel1Layout.createSequentialGroup()
-            .addGap(81, 81, 81)
-            .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
-                    .addGap(8, 8, 8)
-                    .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(44, 44, 44)
-                    .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
-                    .addComponent(jLabel4)
-                    .addGap(49, 49, 49)
-                    .addComponent(jLabel1)))
-            .addContainerGap(108, Short.MAX_VALUE))
     );
-    roundedPanel1Layout.setVerticalGroup(
-        roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(roundedPanel1Layout.createSequentialGroup()
-            .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
+    studentsCardStudentsInfoPanelLayout.setVerticalGroup(
+        studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
                     .addGap(23, 23, 23)
-                    .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(studentsCardStudentsNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(studentsCardStudentsNameLabel))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(studentsCardStudentsSectionLabel))
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(roundedPanel1Layout.createSequentialGroup()
-                    .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -297,17 +316,104 @@ public class newerMainPage extends javax.swing.JFrame {
             .addContainerGap(25, Short.MAX_VALUE))
     );
 
+    studentsCardSendEmailPanel.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardSendEmailPanel.setRoundBottomLeft(55);
+    studentsCardSendEmailPanel.setRoundBottomRight(55);
+    studentsCardSendEmailPanel.setRoundTopLeft(55);
+    studentsCardSendEmailPanel.setRoundTopRight(55);
+
+    studentsCardRecipientTextField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardRecipientTextField.setCaretColor(new java.awt.Color(216, 199, 216));
+    studentsCardRecipientTextField.setLabelText("Recipient");
+    studentsCardRecipientTextField.setLineColor(new java.awt.Color(227, 195, 227));
+    studentsCardRecipientTextField.setSelectionColor(new java.awt.Color(158, 109, 182));
+
+    jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+    jLabel2.setText("Send Email");
+
+    studentsCardSubjectTextField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardSubjectTextField.setCaretColor(new java.awt.Color(216, 199, 216));
+    studentsCardSubjectTextField.setLabelText("Subject");
+    studentsCardSubjectTextField.setLineColor(new java.awt.Color(227, 195, 227));
+    studentsCardSubjectTextField.setSelectionColor(new java.awt.Color(158, 109, 182));
+
+    studentsCardEmailContentField.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardEmailContentField.setColumns(20);
+    studentsCardEmailContentField.setRows(5);
+    studentsCardEmailContentField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(227, 195, 227)));
+    jScrollPane3.setViewportView(studentsCardEmailContentField);
+
+    studentsCardSendEmailButton.setBackground(new java.awt.Color(87, 38, 114));
+    studentsCardSendEmailButton.setForeground(new java.awt.Color(204, 204, 204));
+    studentsCardSendEmailButton.setText("Send Email");
+    studentsCardSendEmailButton.setShadowColor(new java.awt.Color(87, 38, 114));
+    studentsCardSendEmailButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            studentsCardSendEmailButtonActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout studentsCardSendEmailPanelLayout = new javax.swing.GroupLayout(studentsCardSendEmailPanel);
+    studentsCardSendEmailPanel.setLayout(studentsCardSendEmailPanelLayout);
+    studentsCardSendEmailPanelLayout.setHorizontalGroup(
+        studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+            .addGroup(studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator1)
+                        .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addGroup(studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane3)
+                                .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+                                    .addComponent(studentsCardRecipientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(studentsCardSubjectTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 12, Short.MAX_VALUE))))
+                .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+                    .addGap(173, 173, 173)
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
+        .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+            .addGap(142, 142, 142)
+            .addComponent(studentsCardSendEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    studentsCardSendEmailPanelLayout.setVerticalGroup(
+        studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(studentsCardSendEmailPanelLayout.createSequentialGroup()
+            .addGap(15, 15, 15)
+            .addComponent(jLabel2)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(studentsCardSendEmailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(studentsCardRecipientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(studentsCardSubjectTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(37, 37, 37)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(studentsCardSendEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
     javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
     studentsPanel.setLayout(studentsPanelLayout);
     studentsPanelLayout.setHorizontalGroup(
         studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentsPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(18, 18, 18)
-            .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(studentsCardStudentsInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(studentsCardSendEmailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(studentsPanelLayout.createSequentialGroup()
-                    .addComponent(studentsCardSectionsCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(studentsCardSectionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(fetchNewDataButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(10, 10, 10)
@@ -316,24 +422,28 @@ public class newerMainPage extends javax.swing.JFrame {
                     .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(studentsCardSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(15, 15, 15))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18))
     );
     studentsPanelLayout.setVerticalGroup(
         studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(studentsPanelLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap(15, Short.MAX_VALUE)
             .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(studentsCardSearchButton)
-                    .addComponent(fetchNewDataButton)
-                    .addComponent(studentsCardSectionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(studentsPanelLayout.createSequentialGroup()
+                    .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(studentsCardSearchButton)
+                            .addComponent(fetchNewDataButton)
+                            .addComponent(studentsCardSectionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(studentsPanelLayout.createSequentialGroup()
+                    .addComponent(studentsCardStudentsInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(studentsCardSendEmailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addContainerGap())
     );
 
@@ -347,44 +457,44 @@ public class newerMainPage extends javax.swing.JFrame {
     dashboardButtonLabel.setForeground(new java.awt.Color(217, 217, 217));
     dashboardButtonLabel.setText("Dashboard");
     dashboardButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    dashboardButtonLabel.setShadowColor(new java.awt.Color(60, 60, 133));
+    dashboardButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
     dashboardButtonLabel.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             dashboardButtonLabelActionPerformed(evt);
         }
     });
     sidePanel.add(dashboardButtonLabel);
-    dashboardButtonLabel.setBounds(0, 200, 240, 61);
+    dashboardButtonLabel.setBounds(10, 200, 240, 61);
 
     studentsButtonLabel.setBackground(new java.awt.Color(87, 38, 114));
     studentsButtonLabel.setForeground(new java.awt.Color(204, 204, 204));
     studentsButtonLabel.setText("Students");
     studentsButtonLabel.setToolTipText("");
     studentsButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    studentsButtonLabel.setShadowColor(new java.awt.Color(60, 60, 133));
+    studentsButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
     studentsButtonLabel.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             studentsButtonLabelActionPerformed(evt);
         }
     });
     sidePanel.add(studentsButtonLabel);
-    studentsButtonLabel.setBounds(0, 270, 240, 61);
+    studentsButtonLabel.setBounds(10, 270, 240, 61);
 
     sectionsButtonLabel.setBackground(new java.awt.Color(87, 38, 114));
     sectionsButtonLabel.setForeground(new java.awt.Color(204, 204, 204));
     sectionsButtonLabel.setText("Sections");
     sectionsButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    sectionsButtonLabel.setShadowColor(new java.awt.Color(60, 60, 133));
+    sectionsButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
     sidePanel.add(sectionsButtonLabel);
-    sectionsButtonLabel.setBounds(0, 340, 240, 61);
+    sectionsButtonLabel.setBounds(10, 340, 240, 61);
 
     attendanceButtonLabel.setBackground(new java.awt.Color(87, 38, 114));
     attendanceButtonLabel.setForeground(new java.awt.Color(204, 204, 204));
     attendanceButtonLabel.setText("Attendance");
     attendanceButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    attendanceButtonLabel.setShadowColor(new java.awt.Color(60, 60, 133));
+    attendanceButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
     sidePanel.add(attendanceButtonLabel);
-    attendanceButtonLabel.setBounds(0, 410, 240, 61);
+    attendanceButtonLabel.setBounds(10, 410, 240, 61);
 
     avatarBorder1.setGradientColor1(new java.awt.Color(159, 198, 216));
     avatarBorder1.setGradientColor2(new java.awt.Color(87, 38, 114));
@@ -397,15 +507,13 @@ public class newerMainPage extends javax.swing.JFrame {
     backgroundPanelLayout.setHorizontalGroup(
         backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(backgroundPanelLayout.createSequentialGroup()
-            .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(cardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1064, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(15, 15, 15))
     );
     backgroundPanelLayout.setVerticalGroup(
         backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jSeparator1)
         .addComponent(cardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
@@ -617,6 +725,21 @@ public class newerMainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_studentsCardStudentsTableMouseClicked
 
+    private void studentsCardSendEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsCardSendEmailButtonActionPerformed
+        studentsCardEmailRecepient = studentsCardRecipientTextField.getText();
+        studentsCardEmailSubject = studentsCardSubjectTextField.getText();
+        studentsCardEmailContent = studentsCardEmailContentField.getText();
+        MessageAlerts.getInstance().showMessage("Confirm Email", "This email will be sent to the email specified. Are you sure you want to continue?", MessageAlerts.MessageType.DEFAULT, MessageAlerts.OK_CANCEL_OPTION, new PopupCallbackAction() {
+            @Override
+            public void action(PopupController pc, int i) {
+                if (i==MessageAlerts.OK_OPTION) {
+                    System.out.println("OK pressed");
+                    SpringApplication.run(SpringEmailApplication.class, new String [0]);
+                }
+            }
+        });
+    }//GEN-LAST:event_studentsCardSendEmailButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -641,24 +764,31 @@ public class newerMainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextPane jTextPane1;
-    private CustomizedElements.RoundedPanel roundedPanel1;
     private CustomizedElements.CustomizedButton sectionsButtonLabel;
     private CustomizedElements.GradientPanel sidePanel;
     private CustomizedElements.CustomizedButton studentsButtonLabel;
+    private javax.swing.JTextArea studentsCardEmailContentField;
+    private CustomizedElements.LoginCustomTextfield studentsCardRecipientTextField;
     private javax.swing.JButton studentsCardSearchButton;
     private javax.swing.JComboBox<String> studentsCardSectionsCombobox;
+    private CustomizedElements.CustomizedButton studentsCardSendEmailButton;
+    private CustomizedElements.RoundedPanel studentsCardSendEmailPanel;
+    private CustomizedElements.RoundedPanel studentsCardStudentsInfoPanel;
     private javax.swing.JLabel studentsCardStudentsNameLabel;
     private javax.swing.JLabel studentsCardStudentsNumberLabel;
     private javax.swing.JTextField studentsCardStudentsSearchField;
     private javax.swing.JLabel studentsCardStudentsSectionLabel;
     private javax.swing.JTable studentsCardStudentsTable;
+    private CustomizedElements.LoginCustomTextfield studentsCardSubjectTextField;
     private CustomizedElements.GaugeChart studentsMonthlyAttendanceGauge;
     private CustomizedElements.GaugeChart studentsOverallAttendanceGauge;
     private javax.swing.JPanel studentsPanel;
