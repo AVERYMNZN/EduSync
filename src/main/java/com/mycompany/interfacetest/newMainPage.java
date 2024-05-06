@@ -50,7 +50,7 @@ public class newMainPage extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(FlatLaftest.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         try {
             File importTitleFont = new File("src/main/resources/Fonts/Anton-Regular.ttf");
