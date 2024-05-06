@@ -8,6 +8,8 @@ package com.mycompany.interfacetest;
  *
  * @author avery
  */
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -16,6 +18,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import raven.alerts.MessageAlerts;
+import raven.popup.GlassPanePopup;
+import raven.popup.component.PopupCallbackAction;
 public class newSignupPage extends javax.swing.JFrame {
 
     /**
@@ -25,7 +30,10 @@ public class newSignupPage extends javax.swing.JFrame {
     PreparedStatement pst;
     ResultSet rs;
     public newSignupPage() {
+        FlatLaf.registerCustomDefaultsSource("avery.themes");
+        FlatDarkLaf.setup();
         initComponents();
+        GlassPanePopup.install(this);
         setIconImage();
         conn = InterfaceTest.loginConn();
                         try {
@@ -315,34 +323,36 @@ public class newSignupPage extends javax.swing.JFrame {
                 .addComponent(sidepanelArt)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                                    .addComponent(signupTitle)
-                                    .addGap(50, 50, 50))
-                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                        .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(checknameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(passwordPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(confirmpasswordPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                    .addGap(38, 38, 38)
-                                    .addComponent(alreadyHaveAccountLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(loginHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lastnamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(firstnamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(confirmSignupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(72, 72, 72)))
-                        .addGap(101, 101, 101))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                                            .addComponent(signupTitle)
+                                            .addGap(50, 50, 50))
+                                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                                .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(checknameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(passwordPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(confirmpasswordPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                            .addGap(38, 38, 38)
+                                            .addComponent(alreadyHaveAccountLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(loginHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lastnamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(firstnamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(101, 101, 101))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                                .addComponent(confirmSignupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(172, 172, 172))))))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,9 +378,9 @@ public class newSignupPage extends javax.swing.JFrame {
                 .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(confirmpasswordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(confirmSignupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(alreadyHaveAccountLabel))
@@ -401,11 +411,14 @@ public class newSignupPage extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlquery);
             rs = pst.executeQuery();
             if(usernameCheck.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Empty username. Please enter a valid username", "Check Username", JOptionPane.WARNING_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Empty username. Please enter a valid username", "Check Username", JOptionPane.WARNING_MESSAGE);
+                  MessageAlerts.getInstance().showMessage("Empty Username", "Please enter a valid username.", MessageAlerts.MessageType.WARNING);
             }else if(rs.next()) {
-                JOptionPane.showMessageDialog(null, "Username already exists", "Check Username", JOptionPane.WARNING_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Username already exists", "Check Username", JOptionPane.WARNING_MESSAGE);
+                  MessageAlerts.getInstance().showMessage("Username Already Exists!", "Username has been taken. Please enter another username", MessageAlerts.MessageType.WARNING);
             }else {
-                JOptionPane.showMessageDialog(null, "Username Available!", "Check Username", JOptionPane.INFORMATION_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Username Available!", "Check Username", JOptionPane.INFORMATION_MESSAGE);
+                  MessageAlerts.getInstance().showMessage("Username Available", "You're the first one to use this username!", MessageAlerts.MessageType.SUCCESS);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -428,26 +441,29 @@ public class newSignupPage extends javax.swing.JFrame {
         String signupConfirmPassword = confirmPasswordField.getText();
         
         if (signupFirstname.isEmpty()||signupLastname.isEmpty()||signupUsername.isEmpty()||signupPassword.isEmpty()||signupConfirmPassword.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Empty fields detected. Please fill out all the fields", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Empty fields detected. Please fill out all the fields", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+              MessageAlerts.getInstance().showMessage("Empty Fields", "Please make sure to fill out all the necessary information.", MessageAlerts.MessageType.WARNING);
         }else if (signupPassword.equals(signupConfirmPassword)) {
             try {
-                String checkQuery = "SELECT * FROM UserLogin WHERE FirstName = '"+signupFirstname+"' AND LastName = '"+signupLastname+"'";
+                String checkQuery = "SELECT * FROM Admin_Users WHERE FirstName = '"+signupFirstname+"' AND LastName = '"+signupLastname+"'";
                 pst = conn.prepareStatement(checkQuery);
                 ResultSet rs = pst.executeQuery();
                 if(rs.next()){
-                    JOptionPane.showMessageDialog(null, "A user with the same first and last name already exists.", "Duplicate Name", JOptionPane.WARNING_MESSAGE);
+//                    JOptionPane.showMessageDialog(null, "A user with the same first and last name already exists.", "Duplicate Name", JOptionPane.WARNING_MESSAGE);
+                      MessageAlerts.getInstance().showMessage("User Already Exists", "A user with the same first and last name already exists.", MessageAlerts.MessageType.ERROR);
                 }else{
                     try {
-                        String usernameConfirmationQuery =  "SELECT * FROM UserLogin WHERE Username='"+signupUsername+"'";
+                        String usernameConfirmationQuery =  "SELECT * FROM Admin_Users WHERE Username='"+signupUsername+"'";
                         pst = conn.prepareStatement(usernameConfirmationQuery);
                         ResultSet usernameConfirmationResultSet = pst.executeQuery();
                         if(usernameConfirmationResultSet.next()) {
-                            JOptionPane.showMessageDialog(null, "Username already exists", "Check Username", JOptionPane.WARNING_MESSAGE);
+//                            JOptionPane.showMessageDialog(null, "Username already exists", "Check Username", JOptionPane.WARNING_MESSAGE);
+                              MessageAlerts.getInstance().showMessage("Check Username", "A user with the same name already exists!", MessageAlerts.MessageType.WARNING);
                         }else{
-                            String sqlquery = "INSERT INTO UserLogin (FirstName, LastName, Username, UserPassword) VALUES ('"+signupFirstname+"','"+signupLastname+"','"+signupUsername+"','"+signupConfirmPassword+"')";
+                            String sqlquery = "INSERT INTO Admin_Users (FirstName, LastName, Username, UserPassword) VALUES ('"+signupFirstname+"','"+signupLastname+"','"+signupUsername+"','"+signupConfirmPassword+"')";
                             pst = conn.prepareStatement(sqlquery);
                             pst.execute();
-                            JOptionPane.showMessageDialog(null, "Registration Successful");
+                            MessageAlerts.getInstance().showMessage("Sign Up", "Account successfully created! Welcome to EduSync!", MessageAlerts.MessageType.SUCCESS);
                             newLoginPage loginPage = new newLoginPage();
                             loginPage.show();
                             this.dispose();
@@ -462,7 +478,8 @@ public class newSignupPage extends javax.swing.JFrame {
         }else {
             System.out.println(signupPassword);
             System.out.println(signupConfirmPassword);
-            JOptionPane.showMessageDialog(null, "Error", "Password does not match",  JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Error", "Password does not match",  JOptionPane.ERROR_MESSAGE);
+            MessageAlerts.getInstance().showMessage("Password Mismatch", "Please make sure that the passwords match.", MessageAlerts.MessageType.ERROR);
         }
     }//GEN-LAST:event_confirmSignupButtonActionPerformed
 
