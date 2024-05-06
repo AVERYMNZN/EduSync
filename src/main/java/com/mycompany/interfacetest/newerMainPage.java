@@ -51,7 +51,7 @@ public class newerMainPage extends javax.swing.JFrame {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
-        FlatLightLaf.setup();
+        FlatDarkLaf.setup();
         
         studentConn = InterfaceTest.studentConn();
         
@@ -345,6 +345,7 @@ public class newerMainPage extends javax.swing.JFrame {
     studentsCardEmailContentField.setForeground(new java.awt.Color(204, 204, 204));
     studentsCardEmailContentField.setRows(5);
     studentsCardEmailContentField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(227, 195, 227)));
+    studentsCardEmailContentField.setCaretColor(new java.awt.Color(216, 199, 216));
     jScrollPane3.setViewportView(studentsCardEmailContentField);
 
     studentsCardSendEmailButton.setBackground(new java.awt.Color(87, 38, 114));
@@ -678,7 +679,7 @@ public class newerMainPage extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(FlatLaftest.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         });
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -689,7 +690,7 @@ public class newerMainPage extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(FlatLaftest.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         });
     }//GEN-LAST:event_jButton1ActionPerformed
