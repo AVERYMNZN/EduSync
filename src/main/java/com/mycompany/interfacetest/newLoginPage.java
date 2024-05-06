@@ -8,6 +8,10 @@ package com.mycompany.interfacetest;
  *
  * @author avery
  */
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -17,6 +21,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import raven.alerts.MessageAlerts;
+import raven.popup.GlassPanePopup;
+import raven.popup.component.PopupCallbackAction;
+import raven.popup.component.PopupController;
 public class newLoginPage extends javax.swing.JFrame {
 
     /**
@@ -25,9 +34,15 @@ public class newLoginPage extends javax.swing.JFrame {
         Connection conn;
         PreparedStatement pst;
         ResultSet rs;
+        
     public newLoginPage() {
+        FlatRobotoFont.install();
+        FlatLaf.registerCustomDefaultsSource("avery.themes");
+        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
+        FlatDarkLaf.setup();
         initComponents();
-       
+
+        GlassPanePopup.install(this);
         conn = InterfaceTest.loginConn();
         
         setIconImage();
@@ -153,12 +168,12 @@ public class newLoginPage extends javax.swing.JFrame {
         );
         passwordPanelLayout.setVerticalGroup(
             passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordPanelLayout.createSequentialGroup()
+            .addGroup(passwordPanelLayout.createSequentialGroup()
                 .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(passwordPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordPanelLayout.createSequentialGroup()
+                        .addGap(0, 9, Short.MAX_VALUE)
                         .addComponent(jLabel3))
-                    .addComponent(loginPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+                    .addComponent(loginPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -210,9 +225,6 @@ public class newLoginPage extends javax.swing.JFrame {
                             .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addGap(163, 163, 163)
-                                .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
                                 .addGap(103, 103, 103)
                                 .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
@@ -227,7 +239,10 @@ public class newLoginPage extends javax.swing.JFrame {
                         .addComponent(edusyncTitle))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(loginTitle)))
+                        .addComponent(loginTitle))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addComponent(sidepanelArt))
         );
@@ -250,9 +265,9 @@ public class newLoginPage extends javax.swing.JFrame {
                 .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(45, 45, 45)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dontHaveAccountLabel)
                     .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -286,12 +301,13 @@ public class newLoginPage extends javax.swing.JFrame {
             rs = pst.executeQuery();
             
             if(!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+//                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+                MessageAlerts.getInstance().showMessage("Login Error", "Please enter a vali Username or Password", MessageAlerts.MessageType.ERROR);
             }else {
-                JOptionPane.showMessageDialog(null, "Login Successful");
                 newerMainPage mainPage = new newerMainPage();
-//                mainPage.dashboardUsernameLabel.setText("Hello " + loginUsername);
                 mainPage.show();
+                this.dispose();
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);      
