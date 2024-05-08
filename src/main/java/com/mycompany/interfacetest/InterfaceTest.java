@@ -15,7 +15,8 @@ import javax.swing.UIManager;
 
 
 public class InterfaceTest {
-
+    
+    
     public static Connection loginConn() {
         try {
             String url = "jdbc:ucanaccess://src/main/resources/database/EduSync-DB1.accdb";
