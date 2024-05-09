@@ -46,6 +46,6 @@ public class InterfaceTest {
         FlatDarkLaf.setup();
         newLoginPage login = new newLoginPage();
         login.setVisible(true);
-        
+        System.out.println("hi");
     }
 }
