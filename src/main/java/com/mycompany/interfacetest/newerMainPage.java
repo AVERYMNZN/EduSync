@@ -138,20 +138,20 @@ public class newerMainPage extends javax.swing.JFrame {
         dashboardPanelLayout.setHorizontalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardPanelLayout.createSequentialGroup()
-                .addGap(321, 321, 321)
+                .addGap(390, 390, 390)
                 .addComponent(jButton1)
-                .addGap(26, 26, 26)
+                .addGap(75, 75, 75)
                 .addComponent(jButton2)
-                .addContainerGap(603, Short.MAX_VALUE))
+                .addContainerGap(485, Short.MAX_VALUE))
         );
         dashboardPanelLayout.setVerticalGroup(
             dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(578, Short.MAX_VALUE)
+            .addGroup(dashboardPanelLayout.createSequentialGroup()
+                .addContainerGap(557, Short.MAX_VALUE)
                 .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(127, 127, 127))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(148, 148, 148))
         );
 
         cardPanel.add(dashboardPanel, "dashboardCard");
