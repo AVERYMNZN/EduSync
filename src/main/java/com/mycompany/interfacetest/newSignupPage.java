@@ -464,9 +464,6 @@ public class newSignupPage extends javax.swing.JFrame {
                             pst = conn.prepareStatement(sqlquery);
                             pst.execute();
                             MessageAlerts.getInstance().showMessage("Sign Up", "Account successfully created! Welcome to EduSync!", MessageAlerts.MessageType.SUCCESS);
-                            newLoginPage loginPage = new newLoginPage();
-                            loginPage.show();
-                            this.dispose();
                         }
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e);
