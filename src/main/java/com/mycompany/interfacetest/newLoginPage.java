@@ -15,6 +15,7 @@ import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -154,6 +155,11 @@ public class newLoginPage extends javax.swing.JFrame {
         loginPasswordField.setLineColor(new java.awt.Color(227, 195, 227));
         loginPasswordField.setSelectionColor(new java.awt.Color(158, 109, 182));
         loginPasswordField.setShowAndHide(true);
+        loginPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginPasswordFieldKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
         passwordPanel.setLayout(passwordPanelLayout);
@@ -191,6 +197,11 @@ public class newLoginPage extends javax.swing.JFrame {
         loginUsernameField.setLabelText("Username");
         loginUsernameField.setLineColor(new java.awt.Color(227, 195, 227));
         loginUsernameField.setSelectionColor(new java.awt.Color(158, 109, 182));
+        loginUsernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginUsernameFieldKeyPressed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loginIcons/UserIcon-48px.png"))); // NOI18N
 
@@ -219,31 +230,34 @@ public class newLoginPage extends javax.swing.JFrame {
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                        .addGap(103, 103, 103)
+                                        .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                        .addGap(139, 139, 139)
+                                        .addComponent(dontHaveAccountLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(edusyncLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(edusyncTitle))
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addGap(139, 139, 139)
-                                .addComponent(dontHaveAccountLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(edusyncLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(edusyncTitle))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(loginTitle))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                                .addGap(171, 171, 171)
+                                .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(loginTitle)
+                        .addGap(180, 180, 180)))
                 .addComponent(sidepanelArt))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -259,9 +273,9 @@ public class newLoginPage extends javax.swing.JFrame {
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(edusyncTitle)))
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addComponent(loginTitle)
-                .addGap(35, 35, 35)
+                .addGap(36, 36, 36)
                 .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,7 +316,7 @@ public class newLoginPage extends javax.swing.JFrame {
             
             if(!rs.next()) {
 //                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
-                MessageAlerts.getInstance().showMessage("Login Error", "Please enter a vali Username or Password", MessageAlerts.MessageType.ERROR);
+                MessageAlerts.getInstance().showMessage("Login Error", "Please enter a valid username or password", MessageAlerts.MessageType.ERROR);
             }else {
                 newerMainPage mainPage = new newerMainPage();
                 mainPage.show();
@@ -341,6 +355,20 @@ public class newLoginPage extends javax.swing.JFrame {
         newSignupPage signupPage = new newSignupPage();
         signupPage.setVisible(true);
     }//GEN-LAST:event_signupHyperlinkMouseClicked
+
+    private void loginUsernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginUsernameFieldKeyPressed
+        String loginFieldValue = loginUsernameField.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && loginFieldValue.isEmpty() == false) {
+           loginPasswordField.requestFocus();
+       }
+    }//GEN-LAST:event_loginUsernameFieldKeyPressed
+
+    private void loginPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginPasswordFieldKeyPressed
+        String loginFieldValue = loginUsernameField.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && loginPasswordField.getText().isEmpty() == false && loginFieldValue.isEmpty() == false) {
+            loginConfirmButton.doClick();
+        }
+    }//GEN-LAST:event_loginPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments
