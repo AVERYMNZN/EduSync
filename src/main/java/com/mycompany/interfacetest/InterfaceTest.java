@@ -13,7 +13,6 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-
 public class InterfaceTest {
     
     public static Connection loginConn() {
