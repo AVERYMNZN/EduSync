@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.interfacetest;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -80,6 +76,7 @@ public class newerMainPage extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         backgroundPanel = new javax.swing.JPanel();
         cardPanel = new javax.swing.JPanel();
+        attendancePanel = new javax.swing.JPanel();
         dashboardPanel = new javax.swing.JPanel();
         roundedPanel1 = new CustomizedElements.RoundedPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -166,6 +163,19 @@ public class newerMainPage extends javax.swing.JFrame {
         backgroundPanel.setBackground(new java.awt.Color(35, 35, 48));
 
         cardPanel.setLayout(new java.awt.CardLayout());
+
+        javax.swing.GroupLayout attendancePanelLayout = new javax.swing.GroupLayout(attendancePanel);
+        attendancePanel.setLayout(attendancePanelLayout);
+        attendancePanelLayout.setHorizontalGroup(
+            attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1064, Short.MAX_VALUE)
+        );
+        attendancePanelLayout.setVerticalGroup(
+            attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 737, Short.MAX_VALUE)
+        );
+
+        cardPanel.add(attendancePanel, "card4");
 
         dashboardPanel.setBackground(new java.awt.Color(35, 35, 48));
 
@@ -1266,6 +1276,7 @@ public class newerMainPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
+    private javax.swing.JPanel attendancePanel;
     private CustomizedElements.AvatarBorder avatarBorder1;
     private CustomizedElements.AvatarBorder avatarBorder2;
     private CustomizedElements.AvatarBorder avatarBorder3;
