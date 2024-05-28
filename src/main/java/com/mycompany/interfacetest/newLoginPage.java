@@ -10,7 +10,6 @@ package com.mycompany.interfacetest;
  */
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -18,15 +17,12 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import raven.alerts.MessageAlerts;
 import raven.popup.GlassPanePopup;
-import raven.popup.component.PopupCallbackAction;
-import raven.popup.component.PopupController;
 public class newLoginPage extends javax.swing.JFrame {
 
     /**
