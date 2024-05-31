@@ -2,27 +2,37 @@ package com.mycompany.interfacetest;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -33,7 +43,7 @@ import raven.popup.component.PopupCallbackAction;
 import raven.popup.component.PopupController;
 
 public class newerMainPage extends javax.swing.JFrame {
-    
+
     Connection studentConn;
     PreparedStatement pst;
     Statement st;
@@ -57,7 +67,7 @@ public class newerMainPage extends javax.swing.JFrame {
         setIconImage();
         initComponents();
         mainpageCardLayout = (CardLayout)(cardPanel.getLayout());
-        mainpageCardLayout.show(cardPanel, "studentsCard");
+        mainpageCardLayout.show(cardPanel, "attendanceCard");
         GlassPanePopup.install(this);
         
         studentsCardStudentsTable.getTableHeader().setBackground(new Color(119,119,176));
@@ -164,6 +174,8 @@ public class newerMainPage extends javax.swing.JFrame {
 
         cardPanel.setLayout(new java.awt.CardLayout());
 
+        attendancePanel.setBackground(new java.awt.Color(35, 35, 48));
+
         javax.swing.GroupLayout attendancePanelLayout = new javax.swing.GroupLayout(attendancePanel);
         attendancePanel.setLayout(attendancePanelLayout);
         attendancePanelLayout.setHorizontalGroup(
@@ -175,7 +187,7 @@ public class newerMainPage extends javax.swing.JFrame {
             .addGap(0, 737, Short.MAX_VALUE)
         );
 
-        cardPanel.add(attendancePanel, "card4");
+        cardPanel.add(attendancePanel, "attendanceCard");
 
         dashboardPanel.setBackground(new java.awt.Color(35, 35, 48));
 
@@ -1014,6 +1026,11 @@ public class newerMainPage extends javax.swing.JFrame {
     attendanceButtonLabel.setText("Attendance");
     attendanceButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
     attendanceButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
+    attendanceButtonLabel.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            attendanceButtonLabelActionPerformed(evt);
+        }
+    });
     sidePanel.add(attendanceButtonLabel);
     attendanceButtonLabel.setBounds(10, 410, 240, 61);
 
@@ -1263,9 +1280,13 @@ public class newerMainPage extends javax.swing.JFrame {
         mainpageCardLayout.show(cardPanel, "dashboardCard");
     }//GEN-LAST:event_dashboardButtonLabelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void attendanceButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonLabelActionPerformed
+//        mainpageCardLayout.show(cardPanel, "attendanceCard");
+          QRScanner qrAttendance = new QRScanner();
+          qrAttendance.show();
+          this.dispose();
+    }//GEN-LAST:event_attendanceButtonLabelActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1273,7 +1294,6 @@ public class newerMainPage extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
     private javax.swing.JPanel attendancePanel;
