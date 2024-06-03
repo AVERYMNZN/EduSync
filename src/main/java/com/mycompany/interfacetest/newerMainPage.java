@@ -18,20 +18,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -42,8 +48,15 @@ import raven.popup.GlassPanePopup;
 import raven.popup.component.PopupCallbackAction;
 import raven.popup.component.PopupController;
 
-public class newerMainPage extends javax.swing.JFrame {
+public class newerMainPage extends javax.swing.JFrame implements Runnable, ThreadFactory {
+    
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
 
+    Timer timer;
+    SimpleDateFormat sTime;
+        
     Connection studentConn;
     PreparedStatement pst;
     Statement st;
@@ -66,27 +79,63 @@ public class newerMainPage extends javax.swing.JFrame {
         
         setIconImage();
         initComponents();
+        dateInit();
+        timeInit();
         mainpageCardLayout = (CardLayout)(cardPanel.getLayout());
         mainpageCardLayout.show(cardPanel, "attendanceCard");
         GlassPanePopup.install(this);
         
         studentsCardStudentsTable.getTableHeader().setBackground(new Color(119,119,176));
+        initWebcam();
 ;    }
     
     private void setIconImage() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/loginIcons/EduSync-Logo.png")));
+    }
+    
+    public void dateInit(){
+        Date tempDate = new Date();
+        SimpleDateFormat mainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formatDate = mainDateFormat.format(tempDate);
+        dateLabel.setText(formatDate);
+    }
+    
+    public void timeInit(){
+        
+        timer = new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                  Date dt = new Date();
+                  sTime = new SimpleDateFormat("hh:mm:ss a");
+                  String tt = sTime.format(dt);
+                  timeLabel.setText(tt);
+            }
+        });
+        timer.start();
     }
 
     @SuppressWarnings("unchecked") 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         backgroundPanel = new javax.swing.JPanel();
         cardPanel = new javax.swing.JPanel();
         attendancePanel = new javax.swing.JPanel();
+        roundedPanel9 = new CustomizedElements.RoundedPanel();
+        cameraPanel = new javax.swing.JPanel();
+        roundedPanel10 = new CustomizedElements.RoundedPanel();
+        qrStudentImage = new CustomizedElements.AvatarBorder();
+        qrStudentName = new javax.swing.JLabel();
+        qrStudentSection = new javax.swing.JLabel();
+        qrStudentNumber = new javax.swing.JLabel();
+        timeInPointerLabel = new javax.swing.JLabel();
+        timeInLabel = new javax.swing.JLabel();
+        presentRadioButton = new javax.swing.JRadioButton();
+        absentRadioButton = new javax.swing.JRadioButton();
+        lateRadioButton = new javax.swing.JRadioButton();
+        gaugeChart3 = new CustomizedElements.GaugeChart();
         dashboardPanel = new javax.swing.JPanel();
         roundedPanel1 = new CustomizedElements.RoundedPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -160,11 +209,9 @@ public class newerMainPage extends javax.swing.JFrame {
         sectionsButtonLabel = new CustomizedElements.CustomizedButton();
         attendanceButtonLabel = new CustomizedElements.CustomizedButton();
         teacherAvatarBorder = new CustomizedElements.AvatarBorder();
-        jButton3 = new javax.swing.JButton();
-
-        jScrollPane1.setViewportView(jTextPane1);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        logoutButton = new javax.swing.JButton();
+        timeLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EduSync");
@@ -176,15 +223,153 @@ public class newerMainPage extends javax.swing.JFrame {
 
         attendancePanel.setBackground(new java.awt.Color(35, 35, 48));
 
+        roundedPanel9.setBackground(new java.awt.Color(119, 119, 176));
+        roundedPanel9.setRoundBottomLeft(55);
+        roundedPanel9.setRoundBottomRight(55);
+        roundedPanel9.setRoundTopLeft(55);
+        roundedPanel9.setRoundTopRight(55);
+
+        cameraPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout roundedPanel9Layout = new javax.swing.GroupLayout(roundedPanel9);
+        roundedPanel9.setLayout(roundedPanel9Layout);
+        roundedPanel9Layout.setHorizontalGroup(
+            roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel9Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(cameraPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        roundedPanel9Layout.setVerticalGroup(
+            roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cameraPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+        );
+
+        roundedPanel10.setBackground(new java.awt.Color(119, 119, 176));
+        roundedPanel10.setRoundBottomLeft(55);
+        roundedPanel10.setRoundBottomRight(55);
+        roundedPanel10.setRoundTopLeft(55);
+        roundedPanel10.setRoundTopRight(55);
+
+        qrStudentImage.setBorderSpace(0);
+        qrStudentImage.setGradientColor1(new java.awt.Color(160, 118, 213));
+        qrStudentImage.setGradientColor2(new java.awt.Color(87, 38, 114));
+
+        qrStudentName.setFont(new java.awt.Font("Inter", 1, 20)); // NOI18N
+        qrStudentName.setText("[Student Name]");
+
+        qrStudentSection.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        qrStudentSection.setText("[Student Section]");
+
+        qrStudentNumber.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        qrStudentNumber.setText("[Student Num]");
+
+        timeInPointerLabel.setFont(new java.awt.Font("Comfortaa", 0, 18)); // NOI18N
+        timeInPointerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeInPointerLabel.setText("Time in:");
+
+        timeInLabel.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        timeInLabel.setText("[Time]");
+
+        buttonGroup1.add(presentRadioButton);
+        presentRadioButton.setText("Present");
+        presentRadioButton.setOpaque(false);
+
+        buttonGroup1.add(absentRadioButton);
+        absentRadioButton.setText("Absent");
+        absentRadioButton.setOpaque(false);
+
+        buttonGroup1.add(lateRadioButton);
+        lateRadioButton.setText("Late");
+        lateRadioButton.setOpaque(false);
+
+        gaugeChart3.setColor1(new java.awt.Color(51, 51, 51));
+        gaugeChart3.setColor2(new java.awt.Color(78, 78, 186));
+
+        javax.swing.GroupLayout roundedPanel10Layout = new javax.swing.GroupLayout(roundedPanel10);
+        roundedPanel10.setLayout(roundedPanel10Layout);
+        roundedPanel10Layout.setHorizontalGroup(
+            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(qrStudentImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(presentRadioButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundedPanel10Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(qrStudentName)
+                            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(timeInPointerLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(timeInLabel))
+                            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(qrStudentNumber)
+                                .addGap(18, 18, 18)
+                                .addComponent(qrStudentSection)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(absentRadioButton)
+                        .addGap(47, 47, 47)
+                        .addComponent(lateRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))))
+            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        roundedPanel10Layout.setVerticalGroup(
+            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(roundedPanel10Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(qrStudentImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundedPanel10Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(qrStudentName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(qrStudentNumber)
+                            .addComponent(qrStudentSection))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(timeInPointerLabel)
+                            .addComponent(timeInLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(presentRadioButton)
+                    .addComponent(absentRadioButton)
+                    .addComponent(lateRadioButton))
+                .addGap(18, 18, 18)
+                .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout attendancePanelLayout = new javax.swing.GroupLayout(attendancePanel);
         attendancePanel.setLayout(attendancePanelLayout);
         attendancePanelLayout.setHorizontalGroup(
             attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1064, Short.MAX_VALUE)
+            .addGroup(attendancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(roundedPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(688, Short.MAX_VALUE))
         );
         attendancePanelLayout.setVerticalGroup(
             attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendancePanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         cardPanel.add(attendancePanel, "attendanceCard");
@@ -1040,16 +1225,28 @@ public class newerMainPage extends javax.swing.JFrame {
     sidePanel.add(teacherAvatarBorder);
     teacherAvatarBorder.setBounds(40, 20, 170, 150);
 
-    jButton3.setBackground(new java.awt.Color(87, 38, 114));
-    jButton3.setForeground(new java.awt.Color(204, 204, 204));
-    jButton3.setText("Log Out");
-    jButton3.addActionListener(new java.awt.event.ActionListener() {
+    logoutButton.setBackground(new java.awt.Color(87, 38, 114));
+    logoutButton.setForeground(new java.awt.Color(204, 204, 204));
+    logoutButton.setText("Log Out");
+    logoutButton.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton3ActionPerformed(evt);
+            logoutButtonActionPerformed(evt);
         }
     });
-    sidePanel.add(jButton3);
-    jButton3.setBounds(30, 710, 190, 24);
+    sidePanel.add(logoutButton);
+    logoutButton.setBounds(30, 710, 190, 24);
+
+    timeLabel.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
+    timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    timeLabel.setText("0");
+    sidePanel.add(timeLabel);
+    timeLabel.setBounds(40, 630, 180, 30);
+
+    dateLabel.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+    dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    dateLabel.setText("0");
+    sidePanel.add(dateLabel);
+    dateLabel.setBounds(40, 670, 180, 30);
 
     javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
     backgroundPanel.setLayout(backgroundPanelLayout);
@@ -1083,7 +1280,9 @@ public class newerMainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void studentsButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsButtonLabelActionPerformed
-        // TODO add your handling code here:
+        if(webcam.open())  {
+            webcam.close();
+        }
         mainpageCardLayout.show(cardPanel, "studentsCard");
     }//GEN-LAST:event_studentsButtonLabelActionPerformed
 
@@ -1270,21 +1469,25 @@ public class newerMainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_customizedButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         newLoginPage backToLogin = new newLoginPage();
         backToLogin.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void dashboardButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonLabelActionPerformed
+        if (webcam.open()) {
+            webcam.close();
+        }
         mainpageCardLayout.show(cardPanel, "dashboardCard");
     }//GEN-LAST:event_dashboardButtonLabelActionPerformed
 
     private void attendanceButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonLabelActionPerformed
-//        mainpageCardLayout.show(cardPanel, "attendanceCard");
-          QRScanner qrAttendance = new QRScanner();
-          qrAttendance.show();
-          this.dispose();
+        mainpageCardLayout.show(cardPanel, "attendanceCard");
+        initWebcam();
+//          QRScanner qrAttendance = new QRScanner();
+//          qrAttendance.show();
+//          this.dispose();
     }//GEN-LAST:event_attendanceButtonLabelActionPerformed
 
     public static void main(String args[]) {
@@ -1294,7 +1497,90 @@ public class newerMainPage extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void initWebcam() {
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0);
+        webcam.setViewSize(size);
+        
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+        
+        cameraPanel.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,0,400,267));
+        
+        executor.execute(this);
+    }
+    
+    @Override
+    public void run(){
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(QRScanner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            Result result = null;
+            BufferedImage image = null;
+            
+            if (webcam.isOpen()) {
+                if((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+            
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            
+            try { 
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (NotFoundException ex) {
+                Logger.getLogger(QRScanner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            if(result != null) {
+//                result_field.setText(result.getText());
+                try {
+                    String tryStudentNum = result.getText();
+                    
+                    String sqlQuery = "SELECT Student_First_Name, Student_Last_Name, Gender, Grade_and_Section, Student_Image_Path FROM ICT_12D WHERE Student_Number = ?";
+                    pst = studentConn.prepareStatement(sqlQuery);
+                    pst.setString(1, tryStudentNum);
+                    rs = pst.executeQuery();
+                    
+                    if (rs.next()) {
+                        String qrFetchedStudentFirstName = rs.getString("Student_First_Name");
+                        String qrFetchedStudentLastName = rs.getString("Student_Last_Name");
+                        String qrFetchedStudentGender = rs.getString("Gender");
+                        String qrFetchedGradeAndSection = rs.getString("Grade_And_Section");
+                        String qrFetchedStudentImagePath = rs.getString("Student_Image_Path");
+                        
+                        qrStudentName.setText(qrFetchedStudentFirstName + " " + qrFetchedStudentLastName);
+                        qrStudentSection.setText(qrFetchedGradeAndSection);
+                        qrStudentNumber.setText(qrFetchedStudentGender);
+                        qrStudentImage.setImage(new ImageIcon(getClass().getResource(qrFetchedStudentImagePath)));
+                    } else {
+                        System.out.println("no");
+                    }
+                } catch (Exception e) {
+                }
+                Date timeInDate = new Date();
+                SimpleDateFormat timeInFormat = new SimpleDateFormat("hh:mm:ss a");
+                String timeInTime = timeInFormat.format(timeInDate);
+                timeInLabel.setText(timeInTime);
+            }
+        } while (true);
+    }
+    
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton absentRadioButton;
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
     private javax.swing.JPanel attendancePanel;
     private CustomizedElements.AvatarBorder avatarBorder1;
@@ -1304,15 +1590,17 @@ public class newerMainPage extends javax.swing.JFrame {
     private CustomizedElements.AvatarBorder avatarBorder5;
     private CustomizedElements.AvatarBorder avatarBorder6;
     private javax.swing.JPanel backgroundPanel;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JPanel cameraPanel;
     private javax.swing.JPanel cardPanel;
     private CustomizedElements.CustomizedButton customizedButton1;
     private CustomizedElements.CustomizedButton customizedButton3;
     private CustomizedElements.CustomizedButton dashboardButtonLabel;
     private javax.swing.JPanel dashboardPanel;
+    private javax.swing.JLabel dateLabel;
     private CustomizedElements.GaugeChart gaugeChart1;
     private CustomizedElements.GaugeChart gaugeChart2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private CustomizedElements.GaugeChart gaugeChart3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1339,15 +1627,21 @@ public class newerMainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JRadioButton lateRadioButton;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JRadioButton presentRadioButton;
+    private CustomizedElements.AvatarBorder qrStudentImage;
+    private javax.swing.JLabel qrStudentName;
+    private javax.swing.JLabel qrStudentNumber;
+    private javax.swing.JLabel qrStudentSection;
     private CustomizedElements.RoundedPanel roundedPanel1;
+    private CustomizedElements.RoundedPanel roundedPanel10;
     private CustomizedElements.RoundedPanel roundedPanel2;
     private CustomizedElements.RoundedPanel roundedPanel3;
     private CustomizedElements.RoundedPanel roundedPanel4;
@@ -1355,6 +1649,7 @@ public class newerMainPage extends javax.swing.JFrame {
     private CustomizedElements.RoundedPanel roundedPanel6;
     private CustomizedElements.RoundedPanel roundedPanel7;
     private CustomizedElements.RoundedPanel roundedPanel8;
+    private CustomizedElements.RoundedPanel roundedPanel9;
     private CustomizedElements.CustomizedButton sectionsButtonLabel;
     private CustomizedElements.GradientPanel sidePanel;
     private CustomizedElements.AvatarBorder studentsAvatarBorder;
@@ -1375,5 +1670,8 @@ public class newerMainPage extends javax.swing.JFrame {
     private CustomizedElements.GaugeChart studentsOverallAttendanceGauge;
     private javax.swing.JPanel studentsPanel;
     private CustomizedElements.AvatarBorder teacherAvatarBorder;
+    private javax.swing.JLabel timeInLabel;
+    private javax.swing.JLabel timeInPointerLabel;
+    private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }
