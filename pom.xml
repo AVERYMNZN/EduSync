@@ -30,11 +30,6 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>net.sf.ucanaccess</groupId>
-            <artifactId>ucanaccess</artifactId>
-            <version>4.0.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
             <version>3.4.1</version>
@@ -127,6 +122,11 @@
             <groupId>net.glxn</groupId>
             <artifactId>qrgen</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ucanaccess</groupId>
+            <artifactId>ucanaccess</artifactId>
+            <version>5.0.1</version>
         </dependency>
     </dependencies>
     <properties>
