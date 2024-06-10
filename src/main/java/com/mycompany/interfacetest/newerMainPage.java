@@ -37,6 +37,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
@@ -91,7 +92,8 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         GlassPanePopup.install(this);
         
         studentsCardStudentsTable.getTableHeader().setBackground(new Color(119,119,176));
-        initWebcam();
+//        initWebcam();
+//        updateDashboardLabels();
 ;    }
     
     private void setIconImage() {
@@ -119,6 +121,36 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         });
         timer.start();
     }
+    
+    public void updateDashboardLabels() {
+        String fetchMaleSexCount = "SELECT COUNT(*) AS maleCount FROM ICT_12D WHERE Gender = ?";
+        String fetchFemaleSexCount = "SELECT COUNT(*) as femaleCount FROM ICT_12D WHERE Gender = ?";
+        
+        try {
+            pst = studentConn.prepareStatement(fetchMaleSexCount);
+            pst.setString(1, "Male");
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int  count = rs.getInt("maleCount");
+//                JOptionPane.showMessageDialog(null, String.valueOf(count));
+//                SwingUtilities.invokeLater(() -> jLabel8.setText(String.valueOf(count)));
+                dashboardTotalMaleCount.setText(String.valueOf(count));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            pst = studentConn.prepareStatement(fetchFemaleSexCount);
+            pst.setString(1, "Female");
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("femaleCount");
+                dashboardTotalFemaleCount.setText(String.valueOf(count));
+            }
+        } catch (Exception e) {
+        }
+        
+    }
 
     @SuppressWarnings("unchecked") 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -130,11 +162,11 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         dashboardPanel = new javax.swing.JPanel();
         roundedPanel1 = new CustomizedElements.RoundedPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        dashboardTotalFemaleCount = new javax.swing.JLabel();
         avatarBorder1 = new CustomizedElements.AvatarBorder();
         roundedPanel2 = new CustomizedElements.RoundedPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        dashboardTotalMaleCount = new javax.swing.JLabel();
         avatarBorder2 = new CustomizedElements.AvatarBorder();
         roundedPanel3 = new CustomizedElements.RoundedPanel();
         roundedPanel5 = new CustomizedElements.RoundedPanel();
@@ -162,6 +194,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         jLabel9 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        roundedPanel12 = new CustomizedElements.RoundedPanel();
         roundedPanel8 = new CustomizedElements.RoundedPanel();
         gaugeChart1 = new CustomizedElements.GaugeChart();
         gaugeChart2 = new CustomizedElements.GaugeChart();
@@ -239,8 +272,9 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         jLabel3.setFont(new java.awt.Font("Comfortaa", 0, 18)); // NOI18N
         jLabel3.setText("Total Female");
 
-        jLabel5.setFont(new java.awt.Font("Comfortaa", 1, 48)); // NOI18N
-        jLabel5.setText("500");
+        dashboardTotalFemaleCount.setFont(new java.awt.Font("Comfortaa", 1, 48)); // NOI18N
+        dashboardTotalFemaleCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboardTotalFemaleCount.setText("500");
 
         avatarBorder1.setBorderSize(0);
         avatarBorder1.setGradientColor1(new java.awt.Color(119, 119, 176));
@@ -254,10 +288,10 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(avatarBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel5))
+                    .addComponent(dashboardTotalFemaleCount, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
         roundedPanel1Layout.setVerticalGroup(
@@ -267,7 +301,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(avatarBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundedPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(dashboardTotalFemaleCount)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)))
                 .addContainerGap())
@@ -284,8 +318,9 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         jLabel7.setFont(new java.awt.Font("Comfortaa", 0, 18)); // NOI18N
         jLabel7.setText("Total Male");
 
-        jLabel8.setFont(new java.awt.Font("Comfortaa", 1, 48)); // NOI18N
-        jLabel8.setText("500");
+        dashboardTotalMaleCount.setFont(new java.awt.Font("Comfortaa", 1, 48)); // NOI18N
+        dashboardTotalMaleCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboardTotalMaleCount.setText("500");
 
         avatarBorder2.setBorderSize(0);
         avatarBorder2.setGradientColor1(new java.awt.Color(119, 119, 176));
@@ -301,7 +336,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
+                    .addComponent(dashboardTotalMaleCount)
                     .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -312,7 +347,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundedPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(dashboardTotalMaleCount)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)))
                 .addGap(15, 15, 15))
@@ -320,13 +355,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
 
         dashboardPanel.add(roundedPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(779, 158, 279, -1));
 
-        roundedPanel3.setBackground(new java.awt.Color(119, 119, 176));
+        roundedPanel3.setBackground(new java.awt.Color(55, 5, 75));
         roundedPanel3.setRoundBottomLeft(55);
         roundedPanel3.setRoundBottomRight(55);
         roundedPanel3.setRoundTopLeft(55);
         roundedPanel3.setRoundTopRight(55);
 
-        roundedPanel5.setBackground(new java.awt.Color(87, 38, 114));
+        roundedPanel5.setBackground(new java.awt.Color(119, 119, 176));
         roundedPanel5.setRoundBottomLeft(55);
         roundedPanel5.setRoundBottomRight(55);
         roundedPanel5.setRoundTopLeft(55);
@@ -380,13 +415,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addContainerGap())
         );
 
-        jSeparator4.setForeground(new java.awt.Color(87, 38, 114));
+        jSeparator4.setForeground(new java.awt.Color(202, 197, 192));
 
         jLabel16.setFont(new java.awt.Font("Comfortaa", 0, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel16.setForeground(new java.awt.Color(161, 88, 183));
         jLabel16.setText("Most Improved in Attendance");
 
-        roundedPanel4.setBackground(new java.awt.Color(87, 38, 114));
+        roundedPanel4.setBackground(new java.awt.Color(119, 119, 176));
         roundedPanel4.setRoundBottomLeft(55);
         roundedPanel4.setRoundBottomRight(55);
         roundedPanel4.setRoundTopLeft(55);
@@ -440,7 +475,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addContainerGap())
         );
 
-        roundedPanel7.setBackground(new java.awt.Color(87, 38, 114));
+        roundedPanel7.setBackground(new java.awt.Color(119, 119, 176));
         roundedPanel7.setRoundBottomLeft(55);
         roundedPanel7.setRoundBottomRight(55);
         roundedPanel7.setRoundTopLeft(55);
@@ -485,7 +520,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        roundedPanel6.setBackground(new java.awt.Color(87, 38, 114));
+        roundedPanel6.setBackground(new java.awt.Color(119, 119, 176));
         roundedPanel6.setRoundBottomLeft(55);
         roundedPanel6.setRoundBottomRight(55);
         roundedPanel6.setRoundTopLeft(55);
@@ -531,23 +566,23 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         );
 
         jLabel22.setFont(new java.awt.Font("Comfortaa", 0, 12)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel22.setForeground(new java.awt.Color(161, 88, 183));
         jLabel22.setText("Best in Attendance");
 
         jLabel17.setFont(new java.awt.Font("Comfortaa", 0, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel17.setForeground(new java.awt.Color(161, 88, 183));
         jLabel17.setText("Best in Attendance");
 
         jLabel9.setFont(new java.awt.Font("Comfortaa", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel9.setForeground(new java.awt.Color(161, 88, 183));
         jLabel9.setText("Most Improved in Attendance");
 
         jLabel23.setFont(new java.awt.Font("Anton", 0, 18)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel23.setForeground(new java.awt.Color(202, 197, 192));
         jLabel23.setText("SECTIONS");
 
         jLabel6.setFont(new java.awt.Font("Anton", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(87, 38, 114));
+        jLabel6.setForeground(new java.awt.Color(202, 197, 192));
         jLabel6.setText("STUDENT");
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
@@ -616,7 +651,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        dashboardPanel.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 321, -1, -1));
+        dashboardPanel.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, -1, -1));
+
+        roundedPanel12.setBackground(new java.awt.Color(119, 119, 176));
+        roundedPanel12.setRoundBottomLeft(55);
+        roundedPanel12.setRoundBottomRight(55);
+        roundedPanel12.setLayout(null);
+        dashboardPanel.add(roundedPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 680, 540, 30));
 
         roundedPanel8.setBackground(new java.awt.Color(55, 5, 75));
         roundedPanel8.setRoundBottomLeft(55);
@@ -634,7 +675,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         gaugeChart2.setColor2(new java.awt.Color(137, 35, 163));
         gaugeChart2.setValue(90);
 
-        jLabel24.setFont(new java.awt.Font("Inter", 0, 48)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("Anton", 0, 48)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(202, 197, 192));
         jLabel24.setText("Attendance");
 
@@ -657,23 +698,22 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                 .addComponent(jLabel26)
                 .addGap(87, 87, 87))
             .addGroup(roundedPanel8Layout.createSequentialGroup()
-                .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundedPanel8Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundedPanel8Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel24)))
+                .addGap(35, 35, 35)
+                .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel24)
+                .addGap(123, 123, 123))
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel8Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(28, 28, 28)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel26)
                     .addComponent(jLabel25))
@@ -697,6 +737,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         studentsPanel.setBackground(new java.awt.Color(24, 26, 27));
 
         studentsCardStudentsTable.setBackground(new java.awt.Color(119, 119, 176));
+        studentsCardStudentsTable.setForeground(new java.awt.Color(202, 197, 192));
         studentsCardStudentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -728,33 +769,35 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
 
     jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-    studentsCardStudentsInfoPanel.setBackground(new java.awt.Color(119, 119, 176));
+    studentsCardStudentsInfoPanel.setBackground(new java.awt.Color(55, 5, 75));
     studentsCardStudentsInfoPanel.setRoundBottomLeft(55);
     studentsCardStudentsInfoPanel.setRoundBottomRight(55);
     studentsCardStudentsInfoPanel.setRoundTopLeft(55);
     studentsCardStudentsInfoPanel.setRoundTopRight(55);
 
     studentsCardStudentsNameLabel.setFont(new java.awt.Font("Comfortaa", 1, 20)); // NOI18N
-    studentsCardStudentsNameLabel.setForeground(new java.awt.Color(51, 51, 51));
+    studentsCardStudentsNameLabel.setForeground(new java.awt.Color(202, 197, 192));
     studentsCardStudentsNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     studentsCardStudentsNameLabel.setText("Avery Manzon");
 
     studentsCardStudentsNumberLabel.setFont(new java.awt.Font("Comfortaa Light", 0, 14)); // NOI18N
-    studentsCardStudentsNumberLabel.setForeground(new java.awt.Color(51, 51, 51));
+    studentsCardStudentsNumberLabel.setForeground(new java.awt.Color(202, 197, 192));
     studentsCardStudentsNumberLabel.setText("05-00-3542");
 
     studentsAvatarBorder.setBorderSize(2);
     studentsAvatarBorder.setBorderSpace(2);
-    studentsAvatarBorder.setGradientColor1(new java.awt.Color(0, 0, 0));
-    studentsAvatarBorder.setGradientColor2(new java.awt.Color(0, 0, 0));
+    studentsAvatarBorder.setGradientColor1(new java.awt.Color(119, 119, 176));
+    studentsAvatarBorder.setGradientColor2(new java.awt.Color(119, 119, 176));
     studentsAvatarBorder.setImage(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/StudentIcon.png"))); // NOI18N
 
     studentsCardStudentsSectionLabel.setFont(new java.awt.Font("Comfortaa Light", 0, 12)); // NOI18N
-    studentsCardStudentsSectionLabel.setForeground(new java.awt.Color(51, 51, 51));
+    studentsCardStudentsSectionLabel.setForeground(new java.awt.Color(202, 197, 192));
     studentsCardStudentsSectionLabel.setText("ICT-12D");
 
+    jSeparator3.setForeground(new java.awt.Color(119, 119, 176));
+
     jLabel4.setFont(new java.awt.Font("Comfortaa", 1, 13)); // NOI18N
-    jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+    jLabel4.setForeground(new java.awt.Color(161, 88, 183));
     jLabel4.setText("Monthly Attendance");
 
     studentsMonthlyAttendanceGauge.setForeground(new java.awt.Color(51, 51, 51));
@@ -773,7 +816,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     studentsOverallAttendanceGauge.setValue(70);
 
     jLabel1.setFont(new java.awt.Font("Comfortaa", 1, 12)); // NOI18N
-    jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+    jLabel1.setForeground(new java.awt.Color(161, 88, 183));
     jLabel1.setText("Overall Grade");
 
     javax.swing.GroupLayout studentsCardStudentsInfoPanelLayout = new javax.swing.GroupLayout(studentsCardStudentsInfoPanel);
@@ -1024,7 +1067,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         .addGroup(roundedPanel9Layout.createSequentialGroup()
             .addGap(22, 22, 22)
             .addComponent(cameraPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(26, Short.MAX_VALUE))
     );
     roundedPanel9Layout.setVerticalGroup(
         roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1077,12 +1120,14 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     roundedPanel10Layout.setHorizontalGroup(
         roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(roundedPanel10Layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(qrStudentImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(presentRadioButton, javax.swing.GroupLayout.Alignment.TRAILING))
+            .addGap(74, 74, 74)
+            .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
+        .addGroup(roundedPanel10Layout.createSequentialGroup()
             .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(roundedPanel10Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(qrStudentImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(qrStudentName)
@@ -1095,18 +1140,15 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                             .addGap(6, 6, 6)
                             .addComponent(qrStudentNumber)
                             .addGap(18, 18, 18)
-                            .addComponent(qrStudentSection)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
+                            .addComponent(qrStudentSection))))
+                .addGroup(roundedPanel10Layout.createSequentialGroup()
+                    .addGap(33, 33, 33)
+                    .addComponent(presentRadioButton)
                     .addGap(36, 36, 36)
                     .addComponent(absentRadioButton)
                     .addGap(47, 47, 47)
-                    .addComponent(lateRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(41, 41, 41))))
-        .addGroup(roundedPanel10Layout.createSequentialGroup()
-            .addGap(75, 75, 75)
-            .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lateRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     roundedPanel10Layout.setVerticalGroup(
         roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1126,12 +1168,12 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                     .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(timeInPointerLabel)
                         .addComponent(timeInLabel))))
-            .addGap(0, 18, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
             .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(presentRadioButton)
                 .addComponent(absentRadioButton)
                 .addComponent(lateRadioButton))
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(57, Short.MAX_VALUE))
     );
@@ -1218,7 +1260,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
 
     teacherAvatarBorder.setGradientColor1(new java.awt.Color(159, 198, 216));
     teacherAvatarBorder.setGradientColor2(new java.awt.Color(87, 38, 114));
-    teacherAvatarBorder.setImage(new javax.swing.ImageIcon(getClass().getResource("/mainPageIcons/TeacherIcon.png"))); // NOI18N
+    teacherAvatarBorder.setImage(new javax.swing.ImageIcon(getClass().getResource("/studentImages/AvMNZN.png"))); // NOI18N
     sidePanel.add(teacherAvatarBorder);
     teacherAvatarBorder.setBounds(40, 20, 170, 150);
 
@@ -1485,6 +1527,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void dashboardButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonLabelActionPerformed
+        updateDashboardLabels();
         // set the button to enabled
         dashboardButtonLabel.setBackground(enabledButtonColor);
         dashboardButtonLabel.setForeground(enabledButtonTextColor);
@@ -1499,7 +1542,10 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
         
         webcam.close();
+
         mainpageCardLayout.show(cardPanel, "dashboardCard");
+        
+        
     }//GEN-LAST:event_dashboardButtonLabelActionPerformed
 
     private void attendanceButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonLabelActionPerformed
@@ -1541,6 +1587,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                FlatDarkLaf.setup();
                 new newerMainPage().setVisible(true);
             }
         });
@@ -1645,6 +1692,8 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private CustomizedElements.CustomizedButton customizedButton3;
     private CustomizedElements.CustomizedButton dashboardButtonLabel;
     private javax.swing.JPanel dashboardPanel;
+    private javax.swing.JLabel dashboardTotalFemaleCount;
+    private javax.swing.JLabel dashboardTotalMaleCount;
     private javax.swing.JLabel dateLabel;
     private CustomizedElements.GaugeChart gaugeChart1;
     private CustomizedElements.GaugeChart gaugeChart2;
@@ -1670,10 +1719,8 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1691,6 +1738,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private CustomizedElements.RoundedPanel roundedPanel1;
     private CustomizedElements.RoundedPanel roundedPanel10;
     private CustomizedElements.RoundedPanel roundedPanel11;
+    private CustomizedElements.RoundedPanel roundedPanel12;
     private CustomizedElements.RoundedPanel roundedPanel2;
     private CustomizedElements.RoundedPanel roundedPanel3;
     private CustomizedElements.RoundedPanel roundedPanel4;
