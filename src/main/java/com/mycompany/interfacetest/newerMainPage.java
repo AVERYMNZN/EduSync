@@ -242,6 +242,9 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         absentRadioButton = new javax.swing.JRadioButton();
         lateRadioButton = new javax.swing.JRadioButton();
         gaugeChart3 = new CustomizedElements.GaugeChart();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        schedTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         sidePanel = new CustomizedElements.GradientPanel();
         dashboardButtonLabel = new CustomizedElements.CustomizedButton();
         studentsButtonLabel = new CustomizedElements.CustomizedButton();
@@ -1178,6 +1181,45 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addContainerGap(57, Short.MAX_VALUE))
     );
 
+    schedTable.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {"7:00-7:30", null, null, null, null, null},
+            {"7:30-8:00", null, null, null, null, null},
+            {"8:00-8:30", null, null, null, null, null},
+            {"8:30-9:00", null, null, null, null, null},
+            {"9:00-9:30", null, null, null, null, null},
+            {"9:30-10:00", null, null, null, null, null},
+            {"10:00-10:30", null, null, null, null, null},
+            {"10:30-11:00", null, null, null, null, null},
+            {"11:00-11:30", null, null, null, null, null},
+            {"11:30-12:00", null, null, null, null, null},
+            {"12:00-12:30", null, null, null, null, null},
+            {"12:30-1:00", null, null, null, null, null},
+            {"1:00-1:30", null, null, null, null, null},
+            {"1:30-2:00", null, null, null, null, null},
+            {"2:00-:2:30", null, null, null, null, null},
+            {"2:30-3:00", null, null, null, null, null},
+            {"3:00-3:30", null, null, null, null, null},
+            {"3:30-4:00", null, null, null, null, null},
+            {"4:00-4:30", null, null, null, null, null},
+            {"4:30-5:00", null, null, null, null, null},
+            {"5:00-5:30", null, null, null, null, null},
+            {"5:30-6:00", null, null, null, null, null}
+        },
+        new String [] {
+            "Time", "M", "T", "W", "Th", "F"
+        }
+    ));
+    schedTable.setRowHeight(30);
+    jScrollPane1.setViewportView(schedTable);
+
+    jButton1.setText("jButton1");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton1ActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout attendancePanelLayout = new javax.swing.GroupLayout(attendancePanel);
     attendancePanel.setLayout(attendancePanelLayout);
     attendancePanelLayout.setHorizontalGroup(
@@ -1187,7 +1229,15 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(roundedPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(688, Short.MAX_VALUE))
+            .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(attendancePanelLayout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+                    .addContainerGap())
+                .addGroup(attendancePanelLayout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jButton1)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     attendancePanelLayout.setVerticalGroup(
         attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1197,6 +1247,12 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
+        .addGroup(attendancePanelLayout.createSequentialGroup()
+            .addGap(9, 9, 9)
+            .addComponent(jButton1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     cardPanel.add(attendancePanel, "attendanceCard");
@@ -1584,6 +1640,10 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
     }//GEN-LAST:event_sectionsButtonLabelActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1655,6 +1715,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                         qrStudentSection.setText(qrFetchedGradeAndSection);
                         qrStudentNumber.setText(qrFetchedStudentGender);
                         qrStudentImage.setImage(new ImageIcon(getClass().getResource(qrFetchedStudentImagePath)));
+                        updateSchedTable(qrFetchedGradeAndSection);
                     } else {
                         System.out.println("no");
                     }
@@ -1674,6 +1735,40 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         t.setDaemon(true);
         return t;
     }
+    
+    public void updateSchedTable(String section) {
+        String newSec = section.replace("-", "_");
+        try {
+            String fetchSchedQuery = "SELECT Time, M, T, W, Th, F FROM "+newSec+"_SCHEDULE";
+            pst = studentConn.prepareStatement(fetchSchedQuery);
+            rs = pst.executeQuery();
+            
+            DefaultTableModel scheduleTableModel = (DefaultTableModel)schedTable.getModel();
+            scheduleTableModel.setRowCount(0);
+            
+            while (rs.next()) {
+//                String time = String.valueOf(rs.getString("Time"));
+//                String monday = String.valueOf(rs.getString("M"));
+//                String tuesday = String.valueOf(rs.getString("T"));
+//                String wednesday = String.valueOf(rs.getString("W"));
+//                String thursday = String.valueOf(rs.getString("Th"));
+//                String friday = String.valueOf(rs.getString("F"));
+                String time = rs.getString("Time") != null ? rs.getString("Time") : "";
+                String monday = rs.getString("M") != null ? rs.getString("M") : "";
+                String tuesday = rs.getString("T") != null ? rs.getString("T") : "";
+                String wednesday = rs.getString("W") != null ? rs.getString("W") : "";
+                String thursday = rs.getString("Th") != null ? rs.getString("Th") : "";
+                String friday = rs.getString("F") != null ? rs.getString("F") : "";
+                
+                String schedTbData[] = {time, monday, tuesday, wednesday, thursday, friday};
+                scheduleTableModel.addRow(schedTbData);
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton absentRadioButton;
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
@@ -1698,6 +1793,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private CustomizedElements.GaugeChart gaugeChart1;
     private CustomizedElements.GaugeChart gaugeChart2;
     private CustomizedElements.GaugeChart gaugeChart3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1722,6 +1818,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
@@ -1747,6 +1844,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private CustomizedElements.RoundedPanel roundedPanel7;
     private CustomizedElements.RoundedPanel roundedPanel8;
     private CustomizedElements.RoundedPanel roundedPanel9;
+    private javax.swing.JTable schedTable;
     private CustomizedElements.CustomizedButton sectionsButtonLabel;
     private CustomizedElements.GradientPanel sidePanel;
     private CustomizedElements.AvatarBorder studentsAvatarBorder;
