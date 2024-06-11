@@ -1797,7 +1797,6 @@
                           <ComponentRef name="buttonGroup1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Present"/>
-                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="absentRadioButton">
@@ -1806,7 +1805,6 @@
                           <ComponentRef name="buttonGroup1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Absent"/>
-                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="lateRadioButton">
@@ -1815,7 +1813,6 @@
                           <ComponentRef name="buttonGroup1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Late"/>
-                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Container class="CustomizedElements.GaugeChart" name="gaugeChart3">
@@ -1885,6 +1882,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable() {&#xa;    public Component prepareRenderer(TableCellRenderer r, int rw, int col) {&#xa;        Component c = super.prepareRenderer(r, rw, col);&#xa;        if (!isRowSelected(rw)) {&#xa;            c.setBackground(new Color(24,26,27));&#xa;            Object value = getModel().getValueAt(rw, col);&#xa;            if (value != null) {&#xa;                String sValue = value.toString();&#xa;                if (sValue.equals(&quot;INQUIRIES&quot;)) {&#xa;                    c.setBackground(Color.YELLOW);&#xa;                } else if (sValue.equals(&quot;EAPP&quot;)) {&#xa;                    c.setBackground(Color.BLUE);&#xa;                } else if (sValue.equals(&quot;Good Morning&quot;)) {&#xa;                    c.setBackground(Color.GREEN);&#xa;                }&#xa;            }&#xa;        }&#xa;        return c;&#xa;    }&#xa;}"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>

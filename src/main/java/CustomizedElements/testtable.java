@@ -34,9 +34,41 @@ public class testtable extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable(){
             public Component prepareRenderer(TableCellRenderer r, int rw, int col) {
                 Component c = super.prepareRenderer(r, rw, col);
-                c.setBackground(Color.WHITE);
-                if (col == 0) {
-                    c.setBackground(Color.GREEN);
+                Object value = getModel().getValueAt(rw, col);
+
+                if (value == null) {
+                    // Set background color for null values
+                    c.setBackground(Color.WHITE);
+                } else {
+                    // Set different background colors for non-null values
+                    // You can add your own logic here to set different colors based on the cell value
+                    if (col == 0) {
+                        c.setBackground(Color.GREEN);
+                    } else {
+                        c.setBackground(Color.YELLOW);
+                    }
+                }
+                return c;
+            }
+
+        };
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable(){
+            public Component prepareRenderer(TableCellRenderer r, int rw, int col) {
+                Component c = super.prepareRenderer(r, rw, col);
+                if (!isRowSelected(rw)) {
+                    c.setBackground(Color.WHITE);
+                    Object value = getModel().getValueAt(rw, col);
+                    if (value != null) {
+                        String sValue = value.toString();
+                        if (sValue.equals("Hello")) {
+                            c.setBackground(Color.YELLOW);
+                        } else if (sValue.equals("Hi")) {
+                            c.setBackground(Color.BLUE);
+                        } else if (sValue.equals("Good Morning")) {
+                            c.setBackground(Color.GREEN);
+                        }
+                    }
                 }
                 return c;
             }
@@ -48,8 +80,8 @@ public class testtable extends javax.swing.JFrame {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"hi", "hi", "HI", "HI"},
-                {null, null, null, null},
-                {null, null, null, null},
+                {"sdfasdf", "sadfsad", "safs", "asdf"},
+                {null, "dfffgsad", "sd", "sadf"},
                 {null, null, null, null}
             },
             new String [] {
@@ -58,21 +90,38 @@ public class testtable extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Hi", "Hi", "Hello", "HI"},
+                {"sdfasdf", "sadfsad", "safs", "Hello"},
+                {null, "dfffgsad", "Good Morning", "sadf"},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,6 +164,8 @@ public class testtable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

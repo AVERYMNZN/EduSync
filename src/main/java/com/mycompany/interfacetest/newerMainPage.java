@@ -15,6 +15,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -33,14 +34,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.springframework.boot.SpringApplication;
@@ -243,7 +243,26 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         lateRadioButton = new javax.swing.JRadioButton();
         gaugeChart3 = new CustomizedElements.GaugeChart();
         jScrollPane1 = new javax.swing.JScrollPane();
-        schedTable = new javax.swing.JTable();
+        schedTable = new javax.swing.JTable() {
+            public Component prepareRenderer(TableCellRenderer r, int rw, int col) {
+                Component c = super.prepareRenderer(r, rw, col);
+                if (!isRowSelected(rw)) {
+                    c.setBackground(new Color(24,26,27));
+                    Object value = getModel().getValueAt(rw, col);
+                    if (value != null) {
+                        String sValue = value.toString();
+                        if (sValue.equals("INQUIRIES")) {
+                            c.setBackground(Color.YELLOW);
+                        } else if (sValue.equals("EAPP")) {
+                            c.setBackground(Color.BLUE);
+                        } else if (sValue.equals("Good Morning")) {
+                            c.setBackground(Color.GREEN);
+                        }
+                    }
+                }
+                return c;
+            }
+        };
         sidePanel = new CustomizedElements.GradientPanel();
         dashboardButtonLabel = new CustomizedElements.CustomizedButton();
         studentsButtonLabel = new CustomizedElements.CustomizedButton();
@@ -1104,15 +1123,12 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
 
     buttonGroup1.add(presentRadioButton);
     presentRadioButton.setText("Present");
-    presentRadioButton.setOpaque(false);
 
     buttonGroup1.add(absentRadioButton);
     absentRadioButton.setText("Absent");
-    absentRadioButton.setOpaque(false);
 
     buttonGroup1.add(lateRadioButton);
     lateRadioButton.setText("Late");
-    lateRadioButton.setOpaque(false);
 
     gaugeChart3.setColor1(new java.awt.Color(51, 51, 51));
     gaugeChart3.setColor2(new java.awt.Color(78, 78, 186));
@@ -1320,13 +1336,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         }
     });
     sidePanel.add(logoutButton);
-    logoutButton.setBounds(30, 710, 190, 24);
+    logoutButton.setBounds(30, 710, 190, 23);
 
     timeLabel.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
     timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     timeLabel.setText("0");
     sidePanel.add(timeLabel);
-    timeLabel.setBounds(40, 630, 180, 30);
+    timeLabel.setBounds(40, 630, 180, 32);
 
     dateLabel.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
     dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
