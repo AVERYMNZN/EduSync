@@ -244,7 +244,6 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         gaugeChart3 = new CustomizedElements.GaugeChart();
         jScrollPane1 = new javax.swing.JScrollPane();
         schedTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         sidePanel = new CustomizedElements.GradientPanel();
         dashboardButtonLabel = new CustomizedElements.CustomizedButton();
         studentsButtonLabel = new CustomizedElements.CustomizedButton();
@@ -1209,16 +1208,15 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         new String [] {
             "Time", "M", "T", "W", "Th", "F"
         }
-    ));
+    )
+    {
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+    );
     schedTable.setRowHeight(30);
     jScrollPane1.setViewportView(schedTable);
-
-    jButton1.setText("jButton1");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton1ActionPerformed(evt);
-        }
-    });
 
     javax.swing.GroupLayout attendancePanelLayout = new javax.swing.GroupLayout(attendancePanel);
     attendancePanel.setLayout(attendancePanelLayout);
@@ -1229,30 +1227,23 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(roundedPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(attendancePanelLayout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-                    .addContainerGap())
-                .addGroup(attendancePanelLayout.createSequentialGroup()
-                    .addGap(49, 49, 49)
-                    .addComponent(jButton1)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+            .addContainerGap())
     );
     attendancePanelLayout.setVerticalGroup(
         attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendancePanelLayout.createSequentialGroup()
-            .addGap(19, 19, 19)
-            .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
         .addGroup(attendancePanelLayout.createSequentialGroup()
-            .addGap(9, 9, 9)
-            .addComponent(jButton1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(19, 19, 19)
+            .addGroup(attendancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(attendancePanelLayout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 702, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendancePanelLayout.createSequentialGroup()
+                    .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap())
     );
 
     cardPanel.add(attendancePanel, "attendanceCard");
@@ -1640,10 +1631,6 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
     }//GEN-LAST:event_sectionsButtonLabelActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1793,7 +1780,6 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     private CustomizedElements.GaugeChart gaugeChart1;
     private CustomizedElements.GaugeChart gaugeChart2;
     private CustomizedElements.GaugeChart gaugeChart3;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -1581,36 +1581,28 @@
                               <Component id="roundedPanel10" max="32767" attributes="0"/>
                               <Component id="roundedPanel9" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" pref="664" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" pref="664" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="roundedPanel9" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="roundedPanel10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jScrollPane1" min="-2" pref="702" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="roundedPanel9" max="32767" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="roundedPanel10" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="682" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1851,38 +1843,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="schedTable">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="22">
-                            <Column editable="true" title="Time" type="java.lang.Object">
-                              <Data value="7:00-7:30"/>
-                              <Data value="7:30-8:00"/>
-                              <Data value="8:00-8:30"/>
-                              <Data value="8:30-9:00"/>
-                              <Data value="9:00-9:30"/>
-                              <Data value="9:30-10:00"/>
-                              <Data value="10:00-10:30"/>
-                              <Data value="10:30-11:00"/>
-                              <Data value="11:00-11:30"/>
-                              <Data value="11:30-12:00"/>
-                              <Data value="12:00-12:30"/>
-                              <Data value="12:30-1:00"/>
-                              <Data value="1:00-1:30"/>
-                              <Data value="1:30-2:00"/>
-                              <Data value="2:00-:2:30"/>
-                              <Data value="2:30-3:00"/>
-                              <Data value="3:00-3:30"/>
-                              <Data value="3:30-4:00"/>
-                              <Data value="4:00-4:30"/>
-                              <Data value="4:30-5:00"/>
-                              <Data value="5:00-5:30"/>
-                              <Data value="5:30-6:00"/>
-                            </Column>
-                            <Column editable="true" title="M" type="java.lang.Object"/>
-                            <Column editable="true" title="T" type="java.lang.Object"/>
-                            <Column editable="true" title="W" type="java.lang.Object"/>
-                            <Column editable="true" title="Th" type="java.lang.Object"/>
-                            <Column editable="true" title="F" type="java.lang.Object"/>
-                          </Table>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;7:00-7:30&quot;, null, null, null, null, null},&#xa;        {&quot;7:30-8:00&quot;, null, null, null, null, null},&#xa;        {&quot;8:00-8:30&quot;, null, null, null, null, null},&#xa;        {&quot;8:30-9:00&quot;, null, null, null, null, null},&#xa;        {&quot;9:00-9:30&quot;, null, null, null, null, null},&#xa;        {&quot;9:30-10:00&quot;, null, null, null, null, null},&#xa;        {&quot;10:00-10:30&quot;, null, null, null, null, null},&#xa;        {&quot;10:30-11:00&quot;, null, null, null, null, null},&#xa;        {&quot;11:00-11:30&quot;, null, null, null, null, null},&#xa;        {&quot;11:30-12:00&quot;, null, null, null, null, null},&#xa;        {&quot;12:00-12:30&quot;, null, null, null, null, null},&#xa;        {&quot;12:30-1:00&quot;, null, null, null, null, null},&#xa;        {&quot;1:00-1:30&quot;, null, null, null, null, null},&#xa;        {&quot;1:30-2:00&quot;, null, null, null, null, null},&#xa;        {&quot;2:00-:2:30&quot;, null, null, null, null, null},&#xa;        {&quot;2:30-3:00&quot;, null, null, null, null, null},&#xa;        {&quot;3:00-3:30&quot;, null, null, null, null, null},&#xa;        {&quot;3:30-4:00&quot;, null, null, null, null, null},&#xa;        {&quot;4:00-4:30&quot;, null, null, null, null, null},&#xa;        {&quot;4:30-5:00&quot;, null, null, null, null, null},&#xa;        {&quot;5:00-5:30&quot;, null, null, null, null, null},&#xa;        {&quot;5:30-6:00&quot;, null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Time&quot;, &quot;M&quot;, &quot;T&quot;, &quot;W&quot;, &quot;Th&quot;, &quot;F&quot;&#xa;    }&#xa;)&#xa;{&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false;&#xa;    }&#xa;}&#xa;" type="code"/>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
@@ -1926,14 +1888,6 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="jButton1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-                  </Events>
-                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
