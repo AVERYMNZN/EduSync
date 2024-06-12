@@ -35,7 +35,7 @@ public class newSignupPage extends javax.swing.JFrame {
         initComponents();
         GlassPanePopup.install(this);
         setIconImage();
-        conn = InterfaceTest.loginConn();
+        conn = DBConnection.loginConn();
                         try {
             // Import fonts
             File importAccentFont = new File("src/main/resources/Fonts/Inter-bold.ttf");
@@ -428,7 +428,7 @@ public class newSignupPage extends javax.swing.JFrame {
     private void loginHyperlinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginHyperlinkMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        newLoginPage newLogin = new newLoginPage();
+        LoginPage newLogin = new LoginPage();
         newLogin.show();
     }//GEN-LAST:event_loginHyperlinkMouseClicked
 

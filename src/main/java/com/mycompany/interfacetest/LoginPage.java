@@ -23,16 +23,16 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import raven.alerts.MessageAlerts;
 import raven.popup.GlassPanePopup;
-public class newLoginPage extends javax.swing.JFrame {
+public class LoginPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form newLoginPage
+     * Creates new form LoginPage
      */
         Connection conn;
         PreparedStatement pst;
         ResultSet rs;
         
-    public newLoginPage() {
+    public LoginPage() {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
@@ -40,7 +40,7 @@ public class newLoginPage extends javax.swing.JFrame {
         initComponents();
 
         GlassPanePopup.install(this);
-        conn = InterfaceTest.loginConn();
+        conn = DBConnection.loginConn();
         
         setIconImage();
                 try {
@@ -314,7 +314,7 @@ public class newLoginPage extends javax.swing.JFrame {
 //                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
                 MessageAlerts.getInstance().showMessage("Login Error", "Please enter a valid username or password", MessageAlerts.MessageType.ERROR);
             }else {
-                newerMainPage mainPage = new newerMainPage();
+                MainPage mainPage = new MainPage();
                 mainPage.show();
                 this.dispose();
 
@@ -383,20 +383,21 @@ public class newLoginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(newLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(newLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(newLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(newLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new newLoginPage().setVisible(true);
+                new LoginPage().setVisible(true);
             }
         });
     }

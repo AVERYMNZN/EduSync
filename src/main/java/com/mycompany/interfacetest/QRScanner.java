@@ -39,7 +39,7 @@ public class QRScanner extends javax.swing.JFrame implements Runnable, ThreadFac
     public QRScanner() {
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         FlatDarkLaf.setup();
-        studentConn = InterfaceTest.studentConn();
+        studentConn = DBConnection.studentConn();
         initComponents();
         initWebcam();
     }

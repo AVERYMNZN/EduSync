@@ -49,7 +49,7 @@ import raven.popup.GlassPanePopup;
 import raven.popup.component.PopupCallbackAction;
 import raven.popup.component.PopupController;
 
-public class newerMainPage extends javax.swing.JFrame implements Runnable, ThreadFactory {
+public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFactory {
     
     private WebcamPanel panel = null;
     private Webcam webcam = null;
@@ -75,13 +75,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
     Color disabledButtonColor = new Color(56,0,79);
     Color disabledButtonTextColor = new Color(214,118,243);
     
-    public newerMainPage() {
+    public MainPage() {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
         FlatDarkLaf.setup();
         
-        studentConn = InterfaceTest.studentConn();
+        studentConn = DBConnection.studentConn();
         
         setIconImage();
         initComponents();
@@ -252,11 +252,19 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
                     if (value != null) {
                         String sValue = value.toString();
                         if (sValue.equals("INQUIRIES")) {
-                            c.setBackground(Color.YELLOW);
+                            c.setBackground(new Color(0,153,153));
                         } else if (sValue.equals("EAPP")) {
-                            c.setBackground(Color.BLUE);
-                        } else if (sValue.equals("Good Morning")) {
-                            c.setBackground(Color.GREEN);
+                            c.setBackground(new Color(0,51,153));
+                        } else if (sValue.equals("ENTREPRENEURSHIP")) {
+                            c.setBackground(new Color(204,102,0));
+                        } else if (sValue.equals("ICT")){
+                            c.setBackground(new Color(102,0,0));
+                        } else if (sValue.equals("CON ARTS")) {
+                            c.setBackground(new Color(102,102,0));
+                        } else if (sValue.equals("PE")) {
+                            c.setBackground(new Color(153,0,153));
+                        } else if (sValue.equals("IMMERSION")) {
+                            c.setBackground(new Color(102,0,153));
                         }
                     }
                 }
@@ -1196,6 +1204,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
             .addContainerGap(57, Short.MAX_VALUE))
     );
 
+    schedTable.setForeground(new java.awt.Color(204, 204, 204));
     schedTable.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
             {"7:00-7:30", null, null, null, null, null},
@@ -1336,13 +1345,13 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         }
     });
     sidePanel.add(logoutButton);
-    logoutButton.setBounds(30, 710, 190, 23);
+    logoutButton.setBounds(30, 710, 190, 24);
 
     timeLabel.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
     timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     timeLabel.setText("0");
     sidePanel.add(timeLabel);
-    timeLabel.setBounds(40, 630, 180, 32);
+    timeLabel.setBounds(40, 630, 180, 30);
 
     dateLabel.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
     dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1584,7 +1593,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         webcam.close();
-        newLoginPage backToLogin = new newLoginPage();
+        LoginPage backToLogin = new LoginPage();
         backToLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
@@ -1651,7 +1660,7 @@ public class newerMainPage extends javax.swing.JFrame implements Runnable, Threa
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 FlatDarkLaf.setup();
-                new newerMainPage().setVisible(true);
+                new MainPage().setVisible(true);
             }
         });
     }

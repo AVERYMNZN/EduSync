@@ -16,6 +16,6 @@ public class SpringEmailApplication {
     
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
-        senderService.sendEmail(newerMainPage.studentsCardEmailRecepient, newerMainPage.studentsCardEmailSubject, newerMainPage.studentsCardEmailContent);
+        senderService.sendEmail(MainPage.studentsCardEmailRecepient, MainPage.studentsCardEmailSubject, MainPage.studentsCardEmailContent);
     }
 }

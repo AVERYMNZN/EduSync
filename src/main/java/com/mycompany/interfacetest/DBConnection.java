@@ -13,7 +13,7 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-public class InterfaceTest {
+public class DBConnection {
     
     public static Connection loginConn() {
         try {
@@ -42,7 +42,7 @@ public class InterfaceTest {
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
         FlatDarkLaf.setup();
-        newLoginPage login = new newLoginPage();
+        LoginPage login = new LoginPage();
         login.setVisible(true);
         System.out.println("hi");
     }
