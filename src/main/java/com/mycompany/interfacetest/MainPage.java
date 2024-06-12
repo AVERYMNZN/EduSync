@@ -29,11 +29,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Enumeration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -48,6 +55,7 @@ import raven.alerts.MessageAlerts;
 import raven.popup.GlassPanePopup;
 import raven.popup.component.PopupCallbackAction;
 import raven.popup.component.PopupController;
+import raven.toast.Notifications;
 
 public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFactory {
     
@@ -239,9 +247,11 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         timeInPointerLabel = new javax.swing.JLabel();
         timeInLabel = new javax.swing.JLabel();
         presentRadioButton = new javax.swing.JRadioButton();
-        absentRadioButton = new javax.swing.JRadioButton();
         lateRadioButton = new javax.swing.JRadioButton();
         gaugeChart3 = new CustomizedElements.GaugeChart();
+        gaugeChart4 = new CustomizedElements.GaugeChart();
+        qrSubjectSelectionRecord = new javax.swing.JComboBox<>();
+        qrConfirmButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         schedTable = new javax.swing.JTable() {
             public Component prepareRenderer(TableCellRenderer r, int rw, int col) {
@@ -704,7 +714,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         gaugeChart2.setColor2(new java.awt.Color(137, 35, 163));
         gaugeChart2.setValue(90);
 
-        jLabel24.setFont(new java.awt.Font("Anton", 0, 48)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("Anton", 1, 48)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(202, 197, 192));
         jLabel24.setText("Attendance");
 
@@ -735,14 +745,14 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel24)
-                .addGap(123, 123, 123))
+                .addGap(97, 97, 97))
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel8Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(36, 36, 36)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel26)
                     .addComponent(jLabel25))
@@ -750,7 +760,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         dashboardPanel.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, 385));
@@ -1100,10 +1110,10 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     );
     roundedPanel9Layout.setVerticalGroup(
         roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(cameraPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+        .addComponent(cameraPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
     );
 
-    roundedPanel10.setBackground(new java.awt.Color(119, 119, 176));
+    roundedPanel10.setBackground(new java.awt.Color(55, 5, 75));
     roundedPanel10.setRoundBottomLeft(55);
     roundedPanel10.setRoundBottomRight(55);
     roundedPanel10.setRoundTopLeft(55);
@@ -1132,48 +1142,67 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     buttonGroup1.add(presentRadioButton);
     presentRadioButton.setText("Present");
 
-    buttonGroup1.add(absentRadioButton);
-    absentRadioButton.setText("Absent");
-
     buttonGroup1.add(lateRadioButton);
     lateRadioButton.setText("Late");
 
     gaugeChart3.setColor1(new java.awt.Color(51, 51, 51));
     gaugeChart3.setColor2(new java.awt.Color(78, 78, 186));
 
+    gaugeChart4.setColor1(new java.awt.Color(51, 51, 51));
+    gaugeChart4.setColor2(new java.awt.Color(78, 78, 186));
+
+    qrSubjectSelectionRecord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT SUBJECT", "INQUIRIES", "EAPP", "ICT", "CON ARTS", "ENTREPRENEURSHIP", "PHYSICAL EDUCATION", "IMMERSION" }));
+
+    qrConfirmButton.setBackground(new java.awt.Color(160, 118, 213));
+    qrConfirmButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+    qrConfirmButton.setText("CONFIRM");
+    qrConfirmButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            qrConfirmButtonActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout roundedPanel10Layout = new javax.swing.GroupLayout(roundedPanel10);
     roundedPanel10.setLayout(roundedPanel10Layout);
     roundedPanel10Layout.setHorizontalGroup(
         roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(roundedPanel10Layout.createSequentialGroup()
-            .addGap(74, 74, 74)
-            .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
-        .addGroup(roundedPanel10Layout.createSequentialGroup()
+            .addContainerGap()
             .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(roundedPanel10Layout.createSequentialGroup()
-                    .addContainerGap()
                     .addComponent(qrStudentImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(qrStudentName)
                         .addGroup(roundedPanel10Layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addComponent(timeInPointerLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(timeInLabel))
-                        .addGroup(roundedPanel10Layout.createSequentialGroup()
                             .addGap(6, 6, 6)
                             .addComponent(qrStudentNumber)
                             .addGap(18, 18, 18)
-                            .addComponent(qrStudentSection))))
+                            .addComponent(qrStudentSection))
+                        .addGroup(roundedPanel10Layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(timeInPointerLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(timeInLabel)))
+                    .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(roundedPanel10Layout.createSequentialGroup()
-                    .addGap(33, 33, 33)
-                    .addComponent(presentRadioButton)
-                    .addGap(36, 36, 36)
-                    .addComponent(absentRadioButton)
-                    .addGap(47, 47, 47)
-                    .addComponent(lateRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundedPanel10Layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(qrSubjectSelectionRecord, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(gaugeChart4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
+                            .addComponent(presentRadioButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(lateRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(7, 7, 7)))))
+            .addContainerGap())
+        .addGroup(roundedPanel10Layout.createSequentialGroup()
+            .addGap(110, 110, 110)
+            .addComponent(qrConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     roundedPanel10Layout.setVerticalGroup(
@@ -1194,14 +1223,18 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(timeInPointerLabel)
                         .addComponent(timeInLabel))))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
             .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(qrSubjectSelectionRecord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(presentRadioButton)
-                .addComponent(absentRadioButton)
                 .addComponent(lateRadioButton))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(57, Short.MAX_VALUE))
+            .addGap(5, 5, 5)
+            .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gaugeChart4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(qrConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(18, Short.MAX_VALUE))
     );
 
     schedTable.setForeground(new java.awt.Color(204, 204, 204));
@@ -1345,13 +1378,13 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         }
     });
     sidePanel.add(logoutButton);
-    logoutButton.setBounds(30, 710, 190, 24);
+    logoutButton.setBounds(30, 710, 190, 27);
 
     timeLabel.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
     timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     timeLabel.setText("0");
     sidePanel.add(timeLabel);
-    timeLabel.setBounds(40, 630, 180, 30);
+    timeLabel.setBounds(40, 630, 180, 32);
 
     dateLabel.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
     dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1656,6 +1689,75 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
     }//GEN-LAST:event_sectionsButtonLabelActionPerformed
 
+    private void qrConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qrConfirmButtonActionPerformed
+        String qrStudentNum = qrStudentNumber.getText();
+        String qrStudentSec = qrStudentSection.getText().replace("-", "_");
+        String selectedSubject = (String) qrSubjectSelectionRecord.getSelectedItem();
+        
+        
+        try {
+            String checkDataQuery = "SELECT Student_First_Name, Student_Last_Name, Grade_and_Section FROM "+qrStudentSec+" WHERE Student_Number = ?";
+            pst = studentConn.prepareStatement(checkDataQuery);
+            pst.setString(1, qrStudentNum);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                System.out.println("Checked");
+                String studentFirstName = rs.getString("Student_First_Name");
+                String studentLastName = rs.getString("Student_Last_Name");
+                String gradeAndSection = rs.getString("Grade_And_Section");
+                
+                Date tempDate = new Date();
+                SimpleDateFormat mainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                 String timeInDate = mainDateFormat.format(tempDate);
+                
+                String timeInRecord = timeInLabel.getText();
+                String attendanceStatus = getSelectedButtonText(buttonGroup1);
+                
+                if (buttonGroup1.getSelection() != null && selectedSubject != "SELECT SUBJECT") {
+                    try {
+                    String checkRepeatLogQuery = "SELECT Date_Log, Subject FROM " + qrStudentSec + "_Logs WHERE Student_Number = ? AND Date_Log = ? AND Subject = ?";
+                    pst = studentConn.prepareStatement(checkRepeatLogQuery);
+                    pst.setString(1, qrStudentNum);
+                    pst.setString(2, timeInDate);
+                    pst.setString(3, selectedSubject);
+                    rs = pst.executeQuery();
+
+                    if (!rs.next()) { // No existing record with the same Date_Log and Subject
+                        // Insert the new record
+                        String timeInLogQuery = "INSERT INTO " + qrStudentSec + "_Logs (Student_Number, Last_Name, First_Name, Date_Log, Time_In, Attendance_Status, Subject)"
+                                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                        pst = studentConn.prepareStatement(timeInLogQuery);
+                        pst.setString(1, qrStudentNum);
+                        pst.setString(2, studentLastName);
+                        pst.setString(3, studentFirstName);
+                        pst.setString(4, timeInDate);
+                        pst.setString(5, timeInRecord);
+                        pst.setString(6, attendanceStatus);
+                        pst.setString(7, selectedSubject);
+                        pst.execute();
+                        Notifications.getInstance().setJFrame(this);
+                        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT, "Attendance Record Success");
+                    } else {
+                        // Record already exists
+                        MessageAlerts.getInstance().showMessage("Duplicate Record Detected", "Unable to record, make sure that there are no duplicate entries", MessageAlerts.MessageType.WARNING);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                    }
+                } else {
+                    Notifications.getInstance().setJFrame(this);
+                    Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, "Please select a valid attendance status.");
+                }
+                
+                
+            } else {
+                System.out.println("Failed check");
+            }
+        } catch (Exception e) {
+            MessageAlerts.getInstance().showMessage("Invalid Entry", "Please Please make sure to scan properly.", MessageAlerts.MessageType.WARNING);
+        }
+    }//GEN-LAST:event_qrConfirmButtonActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1664,6 +1766,16 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             }
         });
     }
+    
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+    for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+        AbstractButton button = buttons.nextElement();
+        if (button.isSelected()) {
+            return button.getText();
+        }
+    }
+    return null;
+}
     
     private void initWebcam() {
         Dimension size = WebcamResolution.QVGA.getSize();
@@ -1725,7 +1837,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                         
                         qrStudentName.setText(qrFetchedStudentFirstName + " " + qrFetchedStudentLastName);
                         qrStudentSection.setText(qrFetchedGradeAndSection);
-                        qrStudentNumber.setText(qrFetchedStudentGender);
+                        qrStudentNumber.setText(tryStudentNum);
                         qrStudentImage.setImage(new ImageIcon(getClass().getResource(qrFetchedStudentImagePath)));
                         updateSchedTable(qrFetchedGradeAndSection);
                     } else {
@@ -1737,6 +1849,57 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 SimpleDateFormat timeInFormat = new SimpleDateFormat("hh:mm:ss a");
                 String timeInTime = timeInFormat.format(timeInDate);
                 timeInLabel.setText(timeInTime);
+                
+                LocalTime currentTime = LocalTime.now(ZoneId.of("Asia/Manila"));
+//                System.out.println(currentTime);
+                
+                String[] cellTimeRanges = {
+                    "7:00AM-7:30AM",
+                    "7:30AM-8:00AM",
+                    "8:00AM-8:30AM",
+                    "8:30AM-9:00AM",
+                    "9:00AM-9:30AM",
+                    "9:30AM-10:00AM",
+                    "10:00AM-10:30AM",
+                    "10:30AM-11:00AM",
+                    "11:00AM-11:30AM",
+                    "11:30AM-12:00PM",
+                    "12:00PM-12:30PM",
+                    "12:30PM-1:00PM",
+                    "1:00PM-1:30PM",
+                    "1:30PM-2:00PM",
+                    "2:00PM-2:30PM",
+                    "2:30PM-3:00PM",
+                    "3:00PM-3:30PM",
+                    "3:30PM-4:00PM",
+                    "4:00PM-4:30PM",
+                    "4:30PM-5:00PM",
+                    "5:00PM-5:30PM",
+                    "10:00PM-11:30PM",
+                };
+                
+                 for (String cellTimeRange : cellTimeRanges) {
+            String[] times = cellTimeRange.split("-");
+            LocalTime startTime = parseTime(times[0]);
+            LocalTime endTime = parseTime(times[1]);
+
+            if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+                long minutesDifference = ChronoUnit.MINUTES.between(currentTime, endTime);
+                if (minutesDifference <= 5) {
+                    System.out.println("Present");
+                    presentRadioButton.setSelected(true);
+                    lateRadioButton.setSelected(false);
+                    
+                } else {
+                    System.out.println("Late");
+                    lateRadioButton.setSelected(true);
+                    presentRadioButton.setSelected(false);
+                }
+                break; // Exit the loop
+            } else {
+                System.out.println("Time does not match");
+            }
+        }
             }
         } while (true);
     }
@@ -1780,9 +1943,14 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private static LocalTime parseTime(String timeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma");
+        return LocalTime.parse(timeString, formatter);
+    }
+
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton absentRadioButton;
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
     private javax.swing.JPanel attendancePanel;
     private CustomizedElements.AvatarBorder avatarBorder1;
@@ -1805,6 +1973,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private CustomizedElements.GaugeChart gaugeChart1;
     private CustomizedElements.GaugeChart gaugeChart2;
     private CustomizedElements.GaugeChart gaugeChart3;
+    private CustomizedElements.GaugeChart gaugeChart4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1839,10 +2008,12 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private javax.swing.JRadioButton lateRadioButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JRadioButton presentRadioButton;
+    private javax.swing.JButton qrConfirmButton;
     private CustomizedElements.AvatarBorder qrStudentImage;
     private javax.swing.JLabel qrStudentName;
     private javax.swing.JLabel qrStudentNumber;
     private javax.swing.JLabel qrStudentSection;
+    private javax.swing.JComboBox<String> qrSubjectSelectionRecord;
     private CustomizedElements.RoundedPanel roundedPanel1;
     private CustomizedElements.RoundedPanel roundedPanel10;
     private CustomizedElements.RoundedPanel roundedPanel11;

@@ -101,7 +101,7 @@ public class QRMaker extends javax.swing.JFrame {
                 
                 ByteArrayOutputStream out = net.glxn.qrgen.QRCode.from(studentNum).to(net.glxn.qrgen.image.ImageType.PNG).stream();
                 String f_name = studentNum;
-                String Path_name = "D:\\dsfsadifuhsadfsdfasdf\\12DQR\\";
+                String Path_name = "C:\\QR\\ICT12D\\";
                 FileOutputStream fout = new FileOutputStream(new File(Path_name + (f_name + ".PNG")));
                 fout.write(out.toByteArray());
                 fout.flush();
