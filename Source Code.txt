@@ -1,0 +1,36 @@
+// Db Connection
+
+public static Connection loginConn() {
+        try {
+            String url = "jdbc:ucanaccess://src/main/resources/database/EduSync-DB1.accdb";
+            Connection conn = DriverManager.getConnection(url);
+            return conn;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+    }
+
+// Variables
+        Connection conn;
+        PreparedStatement pst;
+        ResultSet rs;
+
+// Try catch
+try {
+            String sqlquery = "[input sql query here];
+            pst = conn.prepareStatement(sqlquery);
+            pst.setString(1, [input user name variable here]);
+            pst.setString(2, [input password variable here]);
+            rs = pst.executeQuery();
+            
+            if(!rs.next()) {
+                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+            }else {
+                JOptionPane.showMessageDialog(null, "Login Success");
+                this.dispose();
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);      
+        }
