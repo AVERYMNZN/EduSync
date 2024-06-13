@@ -58,65 +58,66 @@ import raven.popup.component.PopupController;
 import raven.toast.Notifications;
 
 public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFactory {
-    
+
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
 
     Timer timer;
     SimpleDateFormat sTime;
-        
+
     Connection studentConn;
     PreparedStatement pst;
     Statement st;
     ResultSet rs;
-    
+
     public static String studentsCardEmailRecepient;
     public static String studentsCardEmailSubject;
     public static String studentsCardEmailContent;
-    
+
     CardLayout mainpageCardLayout;
-    
+
     Color enabledButtonColor = new Color(116,26,136);
     Color enabledButtonTextColor = new Color(217,217,217);
-    
+
     Color disabledButtonColor = new Color(56,0,79);
     Color disabledButtonTextColor = new Color(214,118,243);
-    
+
     public MainPage() {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("avery.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 14));
         FlatDarkLaf.setup();
-        
+
         studentConn = DBConnection.studentConn();
-        
+
         setIconImage();
         initComponents();
         dateInit();
         timeInit();
         mainpageCardLayout = (CardLayout)(cardPanel.getLayout());
-        mainpageCardLayout.show(cardPanel, "dashboardCard");
+        mainpageCardLayout.show(cardPanel, "attendanceCard");
+        initWebcam();
         GlassPanePopup.install(this);
-        
+
         studentsCardStudentsTable.getTableHeader().setBackground(new Color(119,119,176));
 //        initWebcam();
 //        updateDashboardLabels();
 ;    }
-    
+
     private void setIconImage() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/loginIcons/EduSync-Logo.png")));
     }
-    
+
     public void dateInit(){
         Date tempDate = new Date();
         SimpleDateFormat mainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formatDate = mainDateFormat.format(tempDate);
         dateLabel.setText(formatDate);
     }
-    
+
     public void timeInit(){
-        
+
         timer = new Timer(0, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,11 +130,11 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         });
         timer.start();
     }
-    
+
     public void updateDashboardLabels() {
         String fetchMaleSexCount = "SELECT COUNT(*) AS maleCount FROM ICT_12D WHERE Gender = ?";
         String fetchFemaleSexCount = "SELECT COUNT(*) as femaleCount FROM ICT_12D WHERE Gender = ?";
-        
+
         try {
             pst = studentConn.prepareStatement(fetchMaleSexCount);
             pst.setString(1, "Male");
@@ -157,10 +158,64 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             }
         } catch (Exception e) {
         }
+
+    }
+    
+    public void updateDashboardGauge() {
+        try {
+            String query = "SELECT COUNT(*) AS attendance_count FROM ICT_12D_Logs WHERE Attendance_Status = 'Present'";
+            pst = studentConn.prepareStatement(query);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int presentData = rs.getInt("attendance_count");
+                
+                try {
+                    String divisorQuery = "SELECT COUNT(*) AS total_count from ICT_12D_Logs";
+                    pst = studentConn.prepareStatement(divisorQuery);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        int totalData = rs.getInt("total_count");
+                        
+                        double presentDataPercent = ((double) presentData / totalData) * 100;
+                        int overallPresent = (int) Math.round(presentDataPercent);
+                        dashboardPresentGauge.setValueWithAnimation(overallPresent);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         
+        try {
+            String query = "SELECT COUNT(*) AS attendance_count FROM ICT_12D_Logs WHERE Attendance_Status = 'Late'";
+            pst = studentConn.prepareStatement(query);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int lateData = rs.getInt("attendance_count");
+                
+                try {
+                    String divisorQuery = "SELECT COUNT(*) AS total_count from ICT_12D_Logs";
+                    pst = studentConn.prepareStatement(divisorQuery);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        int totalData = rs.getInt("total_count");
+                        
+                        double lateDataPercent = ((double) lateData / totalData) * 100;
+                        int overallLate = (int) Math.round(lateDataPercent);
+                        dashboardLategauge.setValueWithAnimation(overallLate);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -204,8 +259,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         jLabel6 = new javax.swing.JLabel();
         roundedPanel12 = new CustomizedElements.RoundedPanel();
         roundedPanel8 = new CustomizedElements.RoundedPanel();
-        gaugeChart1 = new CustomizedElements.GaugeChart();
-        gaugeChart2 = new CustomizedElements.GaugeChart();
+        dashboardPresentGauge = new CustomizedElements.GaugeChart();
+        dashboardLategauge = new CustomizedElements.GaugeChart();
         jLabel24 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -236,6 +291,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         studentsCardSendEmailButton = new CustomizedElements.CustomizedButton();
         customizedButton1 = new CustomizedElements.CustomizedButton();
         customizedButton3 = new CustomizedElements.CustomizedButton();
+        subjectSelectionBox = new javax.swing.JComboBox<>();
         attendancePanel = new javax.swing.JPanel();
         roundedPanel9 = new CustomizedElements.RoundedPanel();
         cameraPanel = new javax.swing.JPanel();
@@ -248,8 +304,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         timeInLabel = new javax.swing.JLabel();
         presentRadioButton = new javax.swing.JRadioButton();
         lateRadioButton = new javax.swing.JRadioButton();
-        gaugeChart3 = new CustomizedElements.GaugeChart();
-        gaugeChart4 = new CustomizedElements.GaugeChart();
+        qrMonthlyAttendanceGauge = new CustomizedElements.GaugeChart();
+        qrOverallAttendanceGauge = new CustomizedElements.GaugeChart();
         qrSubjectSelectionRecord = new javax.swing.JComboBox<>();
         qrConfirmButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -284,7 +340,6 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         sidePanel = new CustomizedElements.GradientPanel();
         dashboardButtonLabel = new CustomizedElements.CustomizedButton();
         studentsButtonLabel = new CustomizedElements.CustomizedButton();
-        sectionsButtonLabel = new CustomizedElements.CustomizedButton();
         attendanceButtonLabel = new CustomizedElements.CustomizedButton();
         teacherAvatarBorder = new CustomizedElements.AvatarBorder();
         logoutButton = new javax.swing.JButton();
@@ -373,11 +428,14 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(avatarBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dashboardTotalMaleCount)
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(roundedPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7))
+                    .addGroup(roundedPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(dashboardTotalMaleCount, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         roundedPanel2Layout.setVerticalGroup(
             roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +492,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     .addGroup(roundedPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel15)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         roundedPanel5Layout.setVerticalGroup(
             roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +552,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     .addGroup(roundedPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel12)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,17 +688,22 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator4)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundedPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundedPanel3Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(39, 39, 39)
+                        .addComponent(roundedPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundedPanel3Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addComponent(jLabel22)))
-                .addGap(27, 27, 27)
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(roundedPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
+                    .addGroup(roundedPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16)
+                        .addGap(93, 93, 93))
+                    .addGroup(roundedPanel3Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(roundedPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(roundedPanel3Layout.createSequentialGroup()
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundedPanel3Layout.createSequentialGroup()
@@ -704,15 +767,13 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         roundedPanel8.setRoundTopLeft(55);
         roundedPanel8.setRoundTopRight(55);
 
-        gaugeChart1.setForeground(new java.awt.Color(202, 197, 192));
-        gaugeChart1.setColor1(new java.awt.Color(51, 51, 51));
-        gaugeChart1.setColor2(new java.awt.Color(137, 35, 163));
-        gaugeChart1.setValue(10);
+        dashboardPresentGauge.setForeground(new java.awt.Color(202, 197, 192));
+        dashboardPresentGauge.setColor1(new java.awt.Color(51, 51, 51));
+        dashboardPresentGauge.setColor2(new java.awt.Color(137, 35, 163));
 
-        gaugeChart2.setForeground(new java.awt.Color(202, 197, 192));
-        gaugeChart2.setColor1(new java.awt.Color(51, 51, 51));
-        gaugeChart2.setColor2(new java.awt.Color(137, 35, 163));
-        gaugeChart2.setValue(90);
+        dashboardLategauge.setForeground(new java.awt.Color(202, 197, 192));
+        dashboardLategauge.setColor1(new java.awt.Color(51, 51, 51));
+        dashboardLategauge.setColor2(new java.awt.Color(137, 35, 163));
 
         jLabel24.setFont(new java.awt.Font("Anton", 1, 48)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(202, 197, 192));
@@ -720,11 +781,11 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
 
         jLabel26.setFont(new java.awt.Font("Comfortaa", 0, 24)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(161, 88, 183));
-        jLabel26.setText("Present");
+        jLabel26.setText("Late");
 
         jLabel25.setFont(new java.awt.Font("Comfortaa", 0, 24)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(161, 88, 183));
-        jLabel25.setText("Absent");
+        jLabel25.setText("Present");
 
         javax.swing.GroupLayout roundedPanel8Layout = new javax.swing.GroupLayout(roundedPanel8);
         roundedPanel8.setLayout(roundedPanel8Layout);
@@ -735,12 +796,12 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel26)
-                .addGap(87, 87, 87))
+                .addGap(114, 114, 114))
             .addGroup(roundedPanel8Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dashboardPresentGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dashboardLategauge, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -758,8 +819,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     .addComponent(jLabel25))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dashboardPresentGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dashboardLategauge, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
@@ -839,24 +900,22 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     jLabel4.setForeground(new java.awt.Color(161, 88, 183));
     jLabel4.setText("Monthly Attendance");
 
-    studentsMonthlyAttendanceGauge.setForeground(new java.awt.Color(51, 51, 51));
+    studentsMonthlyAttendanceGauge.setForeground(new java.awt.Color(161, 88, 183));
     studentsMonthlyAttendanceGauge.setColor1(new java.awt.Color(51, 51, 51));
     studentsMonthlyAttendanceGauge.setColor2(new java.awt.Color(78, 78, 186));
     studentsMonthlyAttendanceGauge.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
     studentsMonthlyAttendanceGauge.setGaugeSize(10);
-    studentsMonthlyAttendanceGauge.setValue(70);
 
     studentsOverallAttendanceGauge.setBackground(new java.awt.Color(69, 69, 211));
-    studentsOverallAttendanceGauge.setForeground(new java.awt.Color(51, 51, 51));
+    studentsOverallAttendanceGauge.setForeground(new java.awt.Color(161, 88, 183));
     studentsOverallAttendanceGauge.setColor1(new java.awt.Color(51, 51, 51));
     studentsOverallAttendanceGauge.setColor2(new java.awt.Color(78, 78, 186));
     studentsOverallAttendanceGauge.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
     studentsOverallAttendanceGauge.setGaugeSize(10);
-    studentsOverallAttendanceGauge.setValue(70);
 
     jLabel1.setFont(new java.awt.Font("Comfortaa", 1, 12)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(161, 88, 183));
-    jLabel1.setText("Overall Grade");
+    jLabel1.setText("Overall Attendance");
 
     javax.swing.GroupLayout studentsCardStudentsInfoPanelLayout = new javax.swing.GroupLayout(studentsCardStudentsInfoPanel);
     studentsCardStudentsInfoPanel.setLayout(studentsCardStudentsInfoPanelLayout);
@@ -881,22 +940,17 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                             .addGap(9, 9, 9)))))
             .addContainerGap())
         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(54, 54, 54)
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addGap(54, 54, 54)
-                    .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addGap(83, 83, 83)
+                    .addComponent(jLabel1))
                 .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addGap(45, 45, 45)
-                    .addComponent(jLabel4)))
-            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(77, 77, 77)
-                    .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 59, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(75, 75, 75))))
+                    .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(0, 69, Short.MAX_VALUE))
     );
     studentsCardStudentsInfoPanelLayout.setVerticalGroup(
         studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1037,6 +1091,9 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         }
     });
 
+    subjectSelectionBox.setBackground(new java.awt.Color(87, 38, 114));
+    subjectSelectionBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Subject", "INQUIRIES", "EAPP", "ICT", "CON ARTS", "ENTREPRENEURSHIP", "PHYSICAL EDUCATION", "IMMERSION" }));
+
     javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
     studentsPanel.setLayout(studentsPanelLayout);
     studentsPanelLayout.setHorizontalGroup(
@@ -1050,14 +1107,16 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(studentsPanelLayout.createSequentialGroup()
-                    .addGap(6, 6, 6)
-                    .addComponent(studentsCardStudentsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(12, 12, 12)
+                    .addComponent(studentsCardStudentsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(subjectSelectionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(customizedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(2, 2, 2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(customizedButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGap(18, 18, 18))
@@ -1074,14 +1133,16 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 .addGroup(studentsPanelLayout.createSequentialGroup()
                     .addGap(18, 18, 18)
                     .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(customizedButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(customizedButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(customizedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(studentsCardStudentsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subjectSelectionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(studentsPanelLayout.createSequentialGroup()
                             .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(studentsCardStudentsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(studentsCardStudentsSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(customizedButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGap(0, 0, Short.MAX_VALUE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
@@ -1145,11 +1206,11 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     buttonGroup1.add(lateRadioButton);
     lateRadioButton.setText("Late");
 
-    gaugeChart3.setColor1(new java.awt.Color(51, 51, 51));
-    gaugeChart3.setColor2(new java.awt.Color(78, 78, 186));
+    qrMonthlyAttendanceGauge.setColor1(new java.awt.Color(51, 51, 51));
+    qrMonthlyAttendanceGauge.setColor2(new java.awt.Color(78, 78, 186));
 
-    gaugeChart4.setColor1(new java.awt.Color(51, 51, 51));
-    gaugeChart4.setColor2(new java.awt.Color(78, 78, 186));
+    qrOverallAttendanceGauge.setColor1(new java.awt.Color(51, 51, 51));
+    qrOverallAttendanceGauge.setColor2(new java.awt.Color(78, 78, 186));
 
     qrSubjectSelectionRecord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT SUBJECT", "INQUIRIES", "EAPP", "ICT", "CON ARTS", "ENTREPRENEURSHIP", "PHYSICAL EDUCATION", "IMMERSION" }));
 
@@ -1190,10 +1251,10 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundedPanel10Layout.createSequentialGroup()
                             .addGap(8, 8, 8)
                             .addComponent(qrSubjectSelectionRecord, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(qrMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(gaugeChart4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(qrOverallAttendanceGauge, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
                             .addComponent(presentRadioButton)
                             .addGap(18, 18, 18)
@@ -1230,8 +1291,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 .addComponent(lateRadioButton))
             .addGap(5, 5, 5)
             .addGroup(roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(gaugeChart4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(qrMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(qrOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(qrConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(18, Short.MAX_VALUE))
@@ -1337,19 +1398,6 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     sidePanel.add(studentsButtonLabel);
     studentsButtonLabel.setBounds(10, 270, 240, 61);
 
-    sectionsButtonLabel.setBackground(new java.awt.Color(56, 0, 79));
-    sectionsButtonLabel.setForeground(new java.awt.Color(214, 118, 243));
-    sectionsButtonLabel.setText("Sections");
-    sectionsButtonLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-    sectionsButtonLabel.setShadowColor(new java.awt.Color(87, 38, 114));
-    sectionsButtonLabel.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            sectionsButtonLabelActionPerformed(evt);
-        }
-    });
-    sidePanel.add(sectionsButtonLabel);
-    sectionsButtonLabel.setBounds(10, 340, 240, 61);
-
     attendanceButtonLabel.setBackground(new java.awt.Color(56, 0, 79));
     attendanceButtonLabel.setForeground(new java.awt.Color(214, 118, 243));
     attendanceButtonLabel.setText("Attendance");
@@ -1361,7 +1409,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         }
     });
     sidePanel.add(attendanceButtonLabel);
-    attendanceButtonLabel.setBounds(10, 410, 240, 61);
+    attendanceButtonLabel.setBounds(10, 340, 240, 61);
 
     teacherAvatarBorder.setGradientColor1(new java.awt.Color(159, 198, 216));
     teacherAvatarBorder.setGradientColor2(new java.awt.Color(87, 38, 114));
@@ -1427,202 +1475,19 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         // set the button to enabled
         studentsButtonLabel.setBackground(enabledButtonColor);
         studentsButtonLabel.setForeground(enabledButtonTextColor);
-        
+
         //set other buttons to disabled
         dashboardButtonLabel.setBackground(disabledButtonColor);
-        sectionsButtonLabel.setBackground(disabledButtonColor);
+
         attendanceButtonLabel.setBackground(disabledButtonColor);
-        
+
         dashboardButtonLabel.setForeground(disabledButtonTextColor);
-        sectionsButtonLabel.setForeground(disabledButtonTextColor);
+
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
-        
+
         webcam.close();
         mainpageCardLayout.show(cardPanel, "studentsCard");
     }//GEN-LAST:event_studentsButtonLabelActionPerformed
-
-    private void studentsCardStudentsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentsCardStudentsTableMouseClicked
-        // TODO add your handling code here:
-        int index = studentsCardStudentsTable.getSelectedRow();
-        TableModel  tableModel = studentsCardStudentsTable.getModel();
-        String firstNameValue = (String) tableModel.getValueAt(index, 0);
-        String lastNameValue = (String) tableModel.getValueAt(index, 1);
-        String studentNumberValue = (String) tableModel.getValueAt(index, 2);
-        String gradeLevelValue = (String) tableModel.getValueAt(index, 3);
-        String studentComboBoxSelection = (String) studentsCardStudentsCombobox.getSelectedItem();
-        
-        studentsCardStudentsNameLabel.setText(firstNameValue+" "+lastNameValue);
-        studentsCardStudentsNumberLabel.setText(studentNumberValue);
-        studentsCardStudentsSectionLabel.setText(gradeLevelValue);
-        
-        try {
-            String sqlQuery = "SELECT Monthly_Attendance_Grade, Overall_Attendance_Grade, Gender, Guardian_Email from " +studentComboBoxSelection+" where Student_Number = ?";
-            pst = studentConn.prepareStatement(sqlQuery);
-            pst.setString(1, studentNumberValue);
-            rs = pst.executeQuery();
-            if(rs.next()){
-                int finalMonthlyAttendanceGrade = rs.getInt("Monthly_Attendance_Grade");
-                int  finalOverallAttendanceGrade = rs.getInt("Overall_Attendance_Grade");
-                String studentGender = rs.getString("Gender");
-                String guardianEmail = rs.getString("Guardian_Email");
-                if ("Female".equals(studentGender)) {
-                    studentsAvatarBorder.setImage(new ImageIcon(getClass().getResource("/mainPageIcons/GirlStudentIcon.png")));
-                } else if ("Male".equals(studentGender)) {
-                    studentsAvatarBorder.setImage(new ImageIcon(getClass().getResource("/mainPageIcons/StudentIcon.png")));
-                }
-                System.out.println(finalMonthlyAttendanceGrade);
-                studentsCardRecipientTextField.setText(guardianEmail);
-                studentsMonthlyAttendanceGauge.setValueWithAnimation(finalMonthlyAttendanceGrade);
-                studentsOverallAttendanceGauge.setValueWithAnimation(finalOverallAttendanceGrade);
-            } else{
-                System.out.println("no");
-            }
-            
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_studentsCardStudentsTableMouseClicked
-
-    private void studentsCardSendEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsCardSendEmailButtonActionPerformed
-        studentsCardEmailRecepient = studentsCardRecipientTextField.getText();
-        studentsCardEmailSubject = studentsCardSubjectTextField.getText();
-        studentsCardEmailContent = studentsCardEmailContentField.getText();
-        MessageAlerts.getInstance().showMessage("Confirm Email", "This email will be sent to the email specified. Are you sure you want to continue?", MessageAlerts.MessageType.DEFAULT, MessageAlerts.OK_CANCEL_OPTION, new PopupCallbackAction() {
-            @Override
-            public void action(PopupController pc, int i) {
-                if (i==MessageAlerts.OK_OPTION) {
-                    System.out.println("OK pressed");
-                    SpringApplication.run(SpringEmailApplication.class, new String [0]);
-                }
-            }
-        });
-    }//GEN-LAST:event_studentsCardSendEmailButtonActionPerformed
-
-    private void customizedButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizedButton3ActionPerformed
-        DefaultTableModel ob = (DefaultTableModel) studentsCardStudentsTable.getModel();
-        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(ob);
-        studentsCardStudentsTable.setRowSorter(obj);
-        obj.setRowFilter(RowFilter.regexFilter(studentsCardStudentsSearchField.getText()));
-    }//GEN-LAST:event_customizedButton3ActionPerformed
-
-    private void customizedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizedButton1ActionPerformed
-        String selectedSection = (String) studentsCardStudentsCombobox.getSelectedItem();
-        
-        if ("ICT_12D".equals(selectedSection)) {
-            try {
-                String sqlQuery = "SELECT * FROM ICT_12D";
-                st = studentConn.createStatement();
-                rs = st.executeQuery(sqlQuery);
-
-                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
-                studentsTableModel.setRowCount(0);
-
-                while (rs.next()) {
-                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
-                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
-                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
-                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
-                    
-                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
-                    studentsTableModel.addRow(studentTbData);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-
-//        if("ICT 12 A".equals(selectedSection)) {
-////            System.out.println("Hello A");
-//            try {
-//                String sqlQuery = "SELECT * FROM ICT_12A";
-//                st = studentConn.createStatement();
-//                rs = st.executeQuery(sqlQuery);
-//
-//                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
-//                studentsTableModel.setRowCount(0);
-//
-//                while (rs.next()) {
-//                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
-//                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
-//                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
-//                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
-//
-//                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
-//                    studentsTableModel.addRow(studentTbData);
-//                }
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//        else if("ICT 12 B".equals(selectedSection)) {
-////            System.out.println("Hello B");
-//            try {
-//                String sqlQuery = "SELECT * FROM ICT_12B";
-//                st = studentConn.createStatement();
-//                rs = st.executeQuery(sqlQuery);
-//
-//                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
-//                studentsTableModel.setRowCount(0);
-//
-//                while (rs.next()) {
-//                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
-//                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
-//                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
-//                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
-//
-//                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
-//                    studentsTableModel.addRow(studentTbData);
-//                }
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//        else if("ICT 12 C".equals(selectedSection)) {
-////            System.out.println("Hello C");
-//            try {
-//                String sqlQuery = "SELECT * FROM ICT_12C";
-//                st = studentConn.createStatement();
-//                rs = st.executeQuery(sqlQuery);
-//
-//                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
-//                studentsTableModel.setRowCount(0);
-//
-//                while (rs.next()) {
-//                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
-//                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
-//                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
-//                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
-//
-//                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
-//                    studentsTableModel.addRow(studentTbData);
-//                }
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//        else if ("ICT_12D".equals(selectedSection)) {
-////            System.out.println("Hello D");
-//            try {
-//                String sqlQuery = "SELECT * FROM ICT_12D";
-//                st = studentConn.createStatement();
-//                rs = st.executeQuery(sqlQuery);
-//
-//                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
-//                studentsTableModel.setRowCount(0);
-//
-//                while (rs.next()) {
-//                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
-//                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
-//                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
-//                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
-//                    
-//                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
-//                    studentsTableModel.addRow(studentTbData);
-//                }
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-        }
-    }//GEN-LAST:event_customizedButton1ActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         webcam.close();
@@ -1633,40 +1498,41 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
 
     private void dashboardButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonLabelActionPerformed
         updateDashboardLabels();
+        updateDashboardGauge();
         // set the button to enabled
         dashboardButtonLabel.setBackground(enabledButtonColor);
         dashboardButtonLabel.setForeground(enabledButtonTextColor);
-        
+
         //set other buttons to disabled
         studentsButtonLabel.setBackground(disabledButtonColor);
-        sectionsButtonLabel.setBackground(disabledButtonColor);
+
         attendanceButtonLabel.setBackground(disabledButtonColor);
-        
+
         studentsButtonLabel.setForeground(disabledButtonTextColor);
-        sectionsButtonLabel.setForeground(disabledButtonTextColor);
+
         attendanceButtonLabel.setForeground(disabledButtonTextColor);
-        
+
         webcam.close();
 
         mainpageCardLayout.show(cardPanel, "dashboardCard");
-        
-        
+
+
     }//GEN-LAST:event_dashboardButtonLabelActionPerformed
 
     private void attendanceButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonLabelActionPerformed
         // set the button to enabled
         attendanceButtonLabel.setBackground(enabledButtonColor);
         attendanceButtonLabel.setForeground(enabledButtonTextColor);
-        
+
         //set other buttons to disabled
         dashboardButtonLabel.setBackground(disabledButtonColor);
         studentsButtonLabel.setBackground(disabledButtonColor);
-        sectionsButtonLabel.setBackground(disabledButtonColor);
-        
+
+
         dashboardButtonLabel.setForeground(disabledButtonTextColor);
         studentsButtonLabel.setForeground(disabledButtonTextColor);
-        sectionsButtonLabel.setForeground(disabledButtonTextColor);
-        
+
+
         mainpageCardLayout.show(cardPanel, "attendanceCard");
         initWebcam();
 //          QRScanner qrAttendance = new QRScanner();
@@ -1674,27 +1540,12 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
 //          this.dispose();
     }//GEN-LAST:event_attendanceButtonLabelActionPerformed
 
-    private void sectionsButtonLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionsButtonLabelActionPerformed
-        // set the button to enabled
-        sectionsButtonLabel.setBackground(enabledButtonColor);
-        sectionsButtonLabel.setForeground(enabledButtonTextColor);
-        
-        //set other buttons to disabled
-        dashboardButtonLabel.setBackground(disabledButtonColor);
-        studentsButtonLabel.setBackground(disabledButtonColor);
-        attendanceButtonLabel.setBackground(disabledButtonColor);
-        
-        dashboardButtonLabel.setForeground(disabledButtonTextColor);
-        studentsButtonLabel.setForeground(disabledButtonTextColor);
-        attendanceButtonLabel.setForeground(disabledButtonTextColor);
-    }//GEN-LAST:event_sectionsButtonLabelActionPerformed
-
     private void qrConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qrConfirmButtonActionPerformed
         String qrStudentNum = qrStudentNumber.getText();
         String qrStudentSec = qrStudentSection.getText().replace("-", "_");
         String selectedSubject = (String) qrSubjectSelectionRecord.getSelectedItem();
-        
-        
+
+
         try {
             String checkDataQuery = "SELECT Student_First_Name, Student_Last_Name, Grade_and_Section FROM "+qrStudentSec+" WHERE Student_Number = ?";
             pst = studentConn.prepareStatement(checkDataQuery);
@@ -1705,14 +1556,14 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 String studentFirstName = rs.getString("Student_First_Name");
                 String studentLastName = rs.getString("Student_Last_Name");
                 String gradeAndSection = rs.getString("Grade_And_Section");
-                
+
                 Date tempDate = new Date();
                 SimpleDateFormat mainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                 String timeInDate = mainDateFormat.format(tempDate);
-                
+                String timeInDate = mainDateFormat.format(tempDate);
+
                 String timeInRecord = timeInLabel.getText();
                 String attendanceStatus = getSelectedButtonText(buttonGroup1);
-                
+
                 if (buttonGroup1.getSelection() != null && selectedSubject != "SELECT SUBJECT") {
                     try {
                     String checkRepeatLogQuery = "SELECT Date_Log, Subject FROM " + qrStudentSec + "_Logs WHERE Student_Number = ? AND Date_Log = ? AND Subject = ?";
@@ -1737,6 +1588,36 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                         pst.execute();
                         Notifications.getInstance().setJFrame(this);
                         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT, "Attendance Record Success");
+
+//                        try {
+//                            String addAttendedQuery = "UPDATE "+qrStudentSec+" SET Attended_Classes = COALESCE(Attended_Classes, 0) + 1 WHERE Student_Number = ?";
+//                            pst = studentConn.prepareStatement(addAttendedQuery);
+//                            pst.setString(1, qrStudentNum);
+//                            pst.execute();
+//                            System.out.println("Added Value Successfuly");
+//                        } catch (Exception e) {
+//                            JOptionPane.showMessageDialog(null, e);
+//                        }
+                        
+                        try {
+                            String fetchAttendanceIntData = "SELECT COUNT(*) AS subject_count FROM "+qrStudentSec+"_Logs WHERE Subject = ? AND Student_Number = ?";
+                            pst = studentConn.prepareStatement(fetchAttendanceIntData);
+                            pst.setString(1, selectedSubject);
+                            pst.setString(2, qrStudentNum);
+                            rs = pst.executeQuery();
+                            if (rs.next()) {
+                                int attendedClassesValue = rs.getInt("subject_count");
+                                
+                                double totalAttendancePercent = ((double) attendedClassesValue / 9) * 100;
+                                double monthlyAttendancePercent = ((double) attendedClassesValue / 4) * 100;
+                                int attendancePercentageInt = (int) Math.round(totalAttendancePercent);
+                                int monthlyAttendancePercentageInt = (int) Math.round(monthlyAttendancePercent);
+                                qrOverallAttendanceGauge.setValueWithAnimation(attendancePercentageInt);
+                                qrMonthlyAttendanceGauge.setValueWithAnimation(monthlyAttendancePercentageInt);
+                            }
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e);
+                        }
                     } else {
                         // Record already exists
                         MessageAlerts.getInstance().showMessage("Duplicate Record Detected", "Unable to record, make sure that there are no duplicate entries", MessageAlerts.MessageType.WARNING);
@@ -1748,8 +1629,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     Notifications.getInstance().setJFrame(this);
                     Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, "Please select a valid attendance status.");
                 }
-                
-                
+
+
             } else {
                 System.out.println("Failed check");
             }
@@ -1757,6 +1638,223 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             MessageAlerts.getInstance().showMessage("Invalid Entry", "Please Please make sure to scan properly.", MessageAlerts.MessageType.WARNING);
         }
     }//GEN-LAST:event_qrConfirmButtonActionPerformed
+
+    private void customizedButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizedButton3ActionPerformed
+        DefaultTableModel ob = (DefaultTableModel) studentsCardStudentsTable.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(ob);
+        studentsCardStudentsTable.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(studentsCardStudentsSearchField.getText()));
+    }//GEN-LAST:event_customizedButton3ActionPerformed
+
+    private void customizedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizedButton1ActionPerformed
+        String selectedSection = (String) studentsCardStudentsCombobox.getSelectedItem();
+
+        if ("ICT_12D".equals(selectedSection)) {
+            try {
+                String sqlQuery = "SELECT * FROM ICT_12D";
+                st = studentConn.createStatement();
+                rs = st.executeQuery(sqlQuery);
+
+                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
+                studentsTableModel.setRowCount(0);
+
+                while (rs.next()) {
+                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
+                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
+                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
+                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
+
+                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
+                    studentsTableModel.addRow(studentTbData);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+
+            //        if("ICT 12 A".equals(selectedSection)) {
+                ////            System.out.println("Hello A");
+                //            try {
+                    //                String sqlQuery = "SELECT * FROM ICT_12A";
+                    //                st = studentConn.createStatement();
+                    //                rs = st.executeQuery(sqlQuery);
+                    //
+                    //                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
+                    //                studentsTableModel.setRowCount(0);
+                    //
+                    //                while (rs.next()) {
+                        //                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
+                        //                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
+                        //                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
+                        //                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
+                        //
+                        //                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
+                        //                    studentsTableModel.addRow(studentTbData);
+                        //                }
+                    //            } catch (SQLException e) {
+                    //                JOptionPane.showMessageDialog(null, e);
+                    //            }
+                //        }
+            //        else if("ICT 12 B".equals(selectedSection)) {
+                ////            System.out.println("Hello B");
+                //            try {
+                    //                String sqlQuery = "SELECT * FROM ICT_12B";
+                    //                st = studentConn.createStatement();
+                    //                rs = st.executeQuery(sqlQuery);
+                    //
+                    //                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
+                    //                studentsTableModel.setRowCount(0);
+                    //
+                    //                while (rs.next()) {
+                        //                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
+                        //                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
+                        //                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
+                        //                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
+                        //
+                        //                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
+                        //                    studentsTableModel.addRow(studentTbData);
+                        //                }
+                    //            } catch (SQLException e) {
+                    //                JOptionPane.showMessageDialog(null, e);
+                    //            }
+                //        }
+            //        else if("ICT 12 C".equals(selectedSection)) {
+                ////            System.out.println("Hello C");
+                //            try {
+                    //                String sqlQuery = "SELECT * FROM ICT_12C";
+                    //                st = studentConn.createStatement();
+                    //                rs = st.executeQuery(sqlQuery);
+                    //
+                    //                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
+                    //                studentsTableModel.setRowCount(0);
+                    //
+                    //                while (rs.next()) {
+                        //                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
+                        //                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
+                        //                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
+                        //                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
+                        //
+                        //                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
+                        //                    studentsTableModel.addRow(studentTbData);
+                        //                }
+                    //            } catch (SQLException e) {
+                    //                JOptionPane.showMessageDialog(null, e);
+                    //            }
+                //        }
+            //        else if ("ICT_12D".equals(selectedSection)) {
+                ////            System.out.println("Hello D");
+                //            try {
+                    //                String sqlQuery = "SELECT * FROM ICT_12D";
+                    //                st = studentConn.createStatement();
+                    //                rs = st.executeQuery(sqlQuery);
+                    //
+                    //                DefaultTableModel studentsTableModel = (DefaultTableModel)studentsCardStudentsTable.getModel();
+                    //                studentsTableModel.setRowCount(0);
+                    //
+                    //                while (rs.next()) {
+                        //                    String studentFirstName = String.valueOf(rs.getString("Student_First_Name"));
+                        //                    String studentLastName = String.valueOf(rs.getString("Student_Last_Name"));
+                        //                    String studentNumber = String.valueOf(rs.getString("Student_Number"));
+                        //                    String studentGradeLevel = String.valueOf(rs.getString("Grade_and_Section"));
+                        //
+                        //                    String studentTbData[] = {studentFirstName, studentLastName, studentNumber, studentGradeLevel};
+                        //                    studentsTableModel.addRow(studentTbData);
+                        //                }
+                    //            } catch (SQLException e) {
+                    //                JOptionPane.showMessageDialog(null, e);
+                    //            }
+            }
+    }//GEN-LAST:event_customizedButton1ActionPerformed
+
+    private void studentsCardSendEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsCardSendEmailButtonActionPerformed
+        studentsCardEmailRecepient = studentsCardRecipientTextField.getText();
+        studentsCardEmailSubject = studentsCardSubjectTextField.getText();
+        studentsCardEmailContent = studentsCardEmailContentField.getText();
+        MessageAlerts.getInstance().showMessage("Confirm Email", "This email will be sent to the email specified. Are you sure you want to continue?", MessageAlerts.MessageType.DEFAULT, MessageAlerts.OK_CANCEL_OPTION, new PopupCallbackAction() {
+            @Override
+            public void action(PopupController pc, int i) {
+                if (i==MessageAlerts.OK_OPTION) {
+                    System.out.println("OK pressed");
+                    SpringApplication.run(SpringEmailApplication.class, new String [0]);
+                }
+            }
+        });
+    }//GEN-LAST:event_studentsCardSendEmailButtonActionPerformed
+
+    private void studentsCardStudentsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentsCardStudentsTableMouseClicked
+        // TODO add your handling code here:
+        int index = studentsCardStudentsTable.getSelectedRow();
+        TableModel  tableModel = studentsCardStudentsTable.getModel();
+        String firstNameValue = (String) tableModel.getValueAt(index, 0);
+        String lastNameValue = (String) tableModel.getValueAt(index, 1);
+        String studentNumberValue = (String) tableModel.getValueAt(index, 2);
+        String gradeLevelValue = (String) tableModel.getValueAt(index, 3);
+        String studentComboBoxSelection = (String) studentsCardStudentsCombobox.getSelectedItem();
+        String subjectSelection = (String) subjectSelectionBox.getSelectedItem();
+        
+        studentsCardStudentsNameLabel.setText(firstNameValue+" "+lastNameValue);
+        studentsCardStudentsNumberLabel.setText(studentNumberValue);
+        studentsCardStudentsSectionLabel.setText(gradeLevelValue);
+        
+        if (!subjectSelection.equals("Subject")) {
+            try {
+            String sqlQuery = "SELECT Attended_Classes, Total_Classes, Gender, Guardian_Email from "+studentComboBoxSelection+" where Student_Number = ?";
+            pst = studentConn.prepareStatement(sqlQuery);
+            pst.setString(1, studentNumberValue);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                int attendedClassesData = rs.getInt("Attended_Classes");
+                int totalClassesData = rs.getInt("Total_Classes");
+                String studentGender = rs.getString("Gender");
+                String guardianEmail = rs.getString("Guardian_Email");
+                if ("Female".equals(studentGender)) {
+                    studentsAvatarBorder.setImage(new ImageIcon(getClass().getResource("/mainPageIcons/GirlStudentIcon.png")));
+                } else if ("Male".equals(studentGender)) {
+                    studentsAvatarBorder.setImage(new ImageIcon(getClass().getResource("/mainPageIcons/StudentIcon.png")));
+                }
+                studentsCardRecipientTextField.setText(guardianEmail);
+                double totalAttendancePercent = ((double) attendedClassesData / totalClassesData) * 100;
+                double monthlyAttendancePercent = ((double) attendedClassesData / 4) * 100;
+                int attendancePercentageInt = (int) Math.round(totalAttendancePercent);
+                int monthlyAttendancePercentageInt = (int) Math.round(monthlyAttendancePercent);
+                studentsOverallAttendanceGauge.setValueWithAnimation(attendancePercentageInt);
+                studentsMonthlyAttendanceGauge.setValueWithAnimation(monthlyAttendancePercentageInt);
+                try {
+                    String fetchAttendanceIntData = "SELECT COUNT(*) AS subject_count FROM "+studentComboBoxSelection+"_Logs WHERE Subject = ? AND Student_Number = ?";
+                    pst = studentConn.prepareStatement(fetchAttendanceIntData);
+                    pst.setString(1, subjectSelection);
+                    pst.setString(2, studentNumberValue);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        int attendedClassesValue = rs.getInt("subject_count");
+                        
+                        double attendedClassPercent = ((double) attendedClassesValue / 4) * 100;
+                        double monthlyAttendedClassPercent = ((double) attendedClassesValue / 9) * 100;
+                        int attendedClassPercentInt = (int) Math.round(monthlyAttendedClassPercent);
+                        int monthlyAttendedClassPercentInt = (int) Math.round(attendedClassPercent);
+                        studentsMonthlyAttendanceGauge.setValueWithAnimation(monthlyAttendedClassPercentInt);
+                        studentsOverallAttendanceGauge.setValueWithAnimation(attendedClassPercentInt);
+                        
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            } else{
+                System.out.println("no");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            }
+        } else {
+            Notifications.getInstance().setJFrame(this);
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT, "Please select a subject");
+
+        }
+
+        
+
+        
+    }//GEN-LAST:event_studentsCardStudentsTableMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1766,7 +1864,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             }
         });
     }
-    
+
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
     for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
         AbstractButton button = buttons.nextElement();
@@ -1776,21 +1874,21 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     }
     return null;
 }
-    
+
     private void initWebcam() {
         Dimension size = WebcamResolution.QVGA.getSize();
         webcam = Webcam.getWebcams().get(0);
         webcam.setViewSize(size);
-        
+
         panel = new WebcamPanel(webcam);
         panel.setPreferredSize(size);
         panel.setFPSDisplayed(true);
-        
+
         cameraPanel.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,0,400,267));
-        
+
         executor.execute(this);
     }
-    
+
     @Override
     public void run(){
         do {
@@ -1799,42 +1897,42 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             } catch (InterruptedException ex) {
                 Logger.getLogger(QRScanner.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             Result result = null;
             BufferedImage image = null;
-            
+
             if (webcam.isOpen()) {
                 if((image = webcam.getImage()) == null) {
                     continue;
                 }
             }
-            
+
             LuminanceSource source = new BufferedImageLuminanceSource(image);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-            
-            try { 
+
+            try {
                 result = new MultiFormatReader().decode(bitmap);
             } catch (NotFoundException ex) {
                 Logger.getLogger(QRScanner.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             if(result != null) {
 //                result_field.setText(result.getText());
                 try {
                     String tryStudentNum = result.getText();
-                    
+
                     String sqlQuery = "SELECT Student_First_Name, Student_Last_Name, Gender, Grade_and_Section, Student_Image_Path FROM ICT_12D WHERE Student_Number = ?";
                     pst = studentConn.prepareStatement(sqlQuery);
                     pst.setString(1, tryStudentNum);
                     rs = pst.executeQuery();
-                    
+
                     if (rs.next()) {
                         String qrFetchedStudentFirstName = rs.getString("Student_First_Name");
                         String qrFetchedStudentLastName = rs.getString("Student_Last_Name");
                         String qrFetchedStudentGender = rs.getString("Gender");
                         String qrFetchedGradeAndSection = rs.getString("Grade_And_Section");
                         String qrFetchedStudentImagePath = rs.getString("Student_Image_Path");
-                        
+
                         qrStudentName.setText(qrFetchedStudentFirstName + " " + qrFetchedStudentLastName);
                         qrStudentSection.setText(qrFetchedGradeAndSection);
                         qrStudentNumber.setText(tryStudentNum);
@@ -1849,10 +1947,10 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 SimpleDateFormat timeInFormat = new SimpleDateFormat("hh:mm:ss a");
                 String timeInTime = timeInFormat.format(timeInDate);
                 timeInLabel.setText(timeInTime);
-                
+
                 LocalTime currentTime = LocalTime.now(ZoneId.of("Asia/Manila"));
 //                System.out.println(currentTime);
-                
+
                 String[] cellTimeRanges = {
                     "7:00AM-7:30AM",
                     "7:30AM-8:00AM",
@@ -1877,11 +1975,11 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     "5:00PM-5:30PM",
                     "10:00PM-11:30PM",
                 };
-                
+
                  for (String cellTimeRange : cellTimeRanges) {
-            String[] times = cellTimeRange.split("-");
-            LocalTime startTime = parseTime(times[0]);
-            LocalTime endTime = parseTime(times[1]);
+                    String[] times = cellTimeRange.split("-");
+                    LocalTime startTime = parseTime(times[0]);
+                    LocalTime endTime = parseTime(times[1]);
 
             if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
                 long minutesDifference = ChronoUnit.MINUTES.between(currentTime, endTime);
@@ -1889,7 +1987,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     System.out.println("Present");
                     presentRadioButton.setSelected(true);
                     lateRadioButton.setSelected(false);
-                    
+
                 } else {
                     System.out.println("Late");
                     lateRadioButton.setSelected(true);
@@ -1903,24 +2001,24 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
             }
         } while (true);
     }
-    
+
     @Override
     public Thread newThread(Runnable r) {
         Thread t = new Thread(r, "My Thread");
         t.setDaemon(true);
         return t;
     }
-    
+
     public void updateSchedTable(String section) {
         String newSec = section.replace("-", "_");
         try {
             String fetchSchedQuery = "SELECT Time, M, T, W, Th, F FROM "+newSec+"_SCHEDULE";
             pst = studentConn.prepareStatement(fetchSchedQuery);
             rs = pst.executeQuery();
-            
+
             DefaultTableModel scheduleTableModel = (DefaultTableModel)schedTable.getModel();
             scheduleTableModel.setRowCount(0);
-            
+
             while (rs.next()) {
 //                String time = String.valueOf(rs.getString("Time"));
 //                String monday = String.valueOf(rs.getString("M"));
@@ -1934,22 +2032,22 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                 String wednesday = rs.getString("W") != null ? rs.getString("W") : "";
                 String thursday = rs.getString("Th") != null ? rs.getString("Th") : "";
                 String friday = rs.getString("F") != null ? rs.getString("F") : "";
-                
+
                 String schedTbData[] = {time, monday, tuesday, wednesday, thursday, friday};
                 scheduleTableModel.addRow(schedTbData);
-                
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     private static LocalTime parseTime(String timeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma");
         return LocalTime.parse(timeString, formatter);
     }
 
-        
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private CustomizedElements.CustomizedButton attendanceButtonLabel;
     private javax.swing.JPanel attendancePanel;
@@ -1966,14 +2064,12 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private CustomizedElements.CustomizedButton customizedButton1;
     private CustomizedElements.CustomizedButton customizedButton3;
     private CustomizedElements.CustomizedButton dashboardButtonLabel;
+    private CustomizedElements.GaugeChart dashboardLategauge;
     private javax.swing.JPanel dashboardPanel;
+    private CustomizedElements.GaugeChart dashboardPresentGauge;
     private javax.swing.JLabel dashboardTotalFemaleCount;
     private javax.swing.JLabel dashboardTotalMaleCount;
     private javax.swing.JLabel dateLabel;
-    private CustomizedElements.GaugeChart gaugeChart1;
-    private CustomizedElements.GaugeChart gaugeChart2;
-    private CustomizedElements.GaugeChart gaugeChart3;
-    private CustomizedElements.GaugeChart gaugeChart4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2009,6 +2105,8 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private javax.swing.JButton logoutButton;
     private javax.swing.JRadioButton presentRadioButton;
     private javax.swing.JButton qrConfirmButton;
+    private CustomizedElements.GaugeChart qrMonthlyAttendanceGauge;
+    private CustomizedElements.GaugeChart qrOverallAttendanceGauge;
     private CustomizedElements.AvatarBorder qrStudentImage;
     private javax.swing.JLabel qrStudentName;
     private javax.swing.JLabel qrStudentNumber;
@@ -2027,7 +2125,6 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private CustomizedElements.RoundedPanel roundedPanel8;
     private CustomizedElements.RoundedPanel roundedPanel9;
     private javax.swing.JTable schedTable;
-    private CustomizedElements.CustomizedButton sectionsButtonLabel;
     private CustomizedElements.GradientPanel sidePanel;
     private CustomizedElements.AvatarBorder studentsAvatarBorder;
     private CustomizedElements.CustomizedButton studentsButtonLabel;
@@ -2046,6 +2143,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private CustomizedElements.GaugeChart studentsMonthlyAttendanceGauge;
     private CustomizedElements.GaugeChart studentsOverallAttendanceGauge;
     private javax.swing.JPanel studentsPanel;
+    private javax.swing.JComboBox<String> subjectSelectionBox;
     private CustomizedElements.AvatarBorder teacherAvatarBorder;
     private javax.swing.JLabel timeInLabel;
     private javax.swing.JLabel timeInPointerLabel;
