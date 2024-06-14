@@ -22,6 +22,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -281,6 +284,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         studentsMonthlyAttendanceGauge = new CustomizedElements.GaugeChart();
         studentsOverallAttendanceGauge = new CustomizedElements.GaugeChart();
         jLabel1 = new javax.swing.JLabel();
+        generateQrButton = new CustomizedElements.CustomizedButton();
         studentsCardSendEmailPanel = new CustomizedElements.RoundedPanel();
         studentsCardRecipientTextField = new CustomizedElements.LoginCustomTextfield();
         jSeparator1 = new javax.swing.JSeparator();
@@ -917,40 +921,51 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     jLabel1.setForeground(new java.awt.Color(161, 88, 183));
     jLabel1.setText("Overall Attendance");
 
+    generateQrButton.setBackground(new java.awt.Color(119, 119, 176));
+    generateQrButton.setForeground(new java.awt.Color(204, 204, 204));
+    generateQrButton.setText("Gen QR");
+    generateQrButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            generateQrButtonActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout studentsCardStudentsInfoPanelLayout = new javax.swing.GroupLayout(studentsCardStudentsInfoPanel);
     studentsCardStudentsInfoPanel.setLayout(studentsCardStudentsInfoPanelLayout);
     studentsCardStudentsInfoPanelLayout.setHorizontalGroup(
         studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-            .addContainerGap()
             .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jSeparator3)
                 .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addComponent(studentsAvatarBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addContainerGap()
                     .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator3)
                         .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(studentsCardStudentsSectionLabel)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                            .addComponent(studentsCardStudentsNameLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(studentsCardStudentsNumberLabel)
-                            .addGap(9, 9, 9)))))
+                            .addComponent(studentsAvatarBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(studentsCardStudentsSectionLabel)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                                    .addComponent(studentsCardStudentsNameLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                                    .addComponent(studentsCardStudentsNumberLabel)
+                                    .addGap(9, 9, 9))))))
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addGap(28, 28, 28)
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addGap(24, 24, 24)
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(generateQrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(14, 14, 14)))
             .addContainerGap())
-        .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-            .addGap(54, 54, 54)
-            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addComponent(jLabel4)
-                    .addGap(83, 83, 83)
-                    .addComponent(jLabel1))
-                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(77, 77, 77)
-                    .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(0, 69, Short.MAX_VALUE))
     );
     studentsCardStudentsInfoPanelLayout.setVerticalGroup(
         studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -968,16 +983,20 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                     .addComponent(studentsAvatarBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGap(18, 18, 18)
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
-                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(25, Short.MAX_VALUE))
+                    .addGap(5, 5, 5)
+                    .addGroup(studentsCardStudentsInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(studentsOverallAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(studentsMonthlyAttendanceGauge, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(studentsCardStudentsInfoPanelLayout.createSequentialGroup()
+                    .addGap(29, 29, 29)
+                    .addComponent(generateQrButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(19, Short.MAX_VALUE))
     );
 
     studentsCardSendEmailPanel.setBackground(new java.awt.Color(119, 119, 176));
@@ -1126,7 +1145,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         .addGroup(studentsPanelLayout.createSequentialGroup()
             .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(studentsPanelLayout.createSequentialGroup()
-                    .addContainerGap(27, Short.MAX_VALUE)
+                    .addContainerGap(28, Short.MAX_VALUE)
                     .addComponent(studentsCardStudentsInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(studentsCardSendEmailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1856,6 +1875,24 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
         
     }//GEN-LAST:event_studentsCardStudentsTableMouseClicked
 
+    private void generateQrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateQrButtonActionPerformed
+        String studentName = studentsCardStudentsNameLabel.getText();
+        String studentNum = studentsCardStudentsNumberLabel.getText();
+        try {
+            ByteArrayOutputStream out = net.glxn.qrgen.QRCode.from(studentNum).to(net.glxn.qrgen.image.ImageType.PNG).stream();
+            String f_name = studentName+"_"+studentNum;
+            String Path_name = "C:\\newQr\\ICT_12D\\";
+            FileOutputStream fout = new FileOutputStream(new File(Path_name + (f_name + ".PNG")));
+            fout.write(out.toByteArray());
+            fout.flush();
+            Notifications.getInstance().setJFrame(this);
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT, "QR Generation Successful");
+            
+        } catch (Exception e) {
+            Logger.getLogger(QRMaker.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_generateQrButtonActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1936,12 +1973,16 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
                         qrStudentName.setText(qrFetchedStudentFirstName + " " + qrFetchedStudentLastName);
                         qrStudentSection.setText(qrFetchedGradeAndSection);
                         qrStudentNumber.setText(tryStudentNum);
-                        qrStudentImage.setImage(new ImageIcon(getClass().getResource(qrFetchedStudentImagePath)));
+                        if (qrFetchedStudentImagePath != null && !qrFetchedStudentImagePath.isEmpty()) {
+                            qrStudentImage.setImage(new ImageIcon(getClass().getResource(qrFetchedStudentImagePath)));
+                        }
+                        
                         updateSchedTable(qrFetchedGradeAndSection);
                     } else {
                         System.out.println("no");
                     }
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
                 }
                 Date timeInDate = new Date();
                 SimpleDateFormat timeInFormat = new SimpleDateFormat("hh:mm:ss a");
@@ -2070,6 +2111,7 @@ public class MainPage extends javax.swing.JFrame implements Runnable, ThreadFact
     private javax.swing.JLabel dashboardTotalFemaleCount;
     private javax.swing.JLabel dashboardTotalMaleCount;
     private javax.swing.JLabel dateLabel;
+    private CustomizedElements.CustomizedButton generateQrButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

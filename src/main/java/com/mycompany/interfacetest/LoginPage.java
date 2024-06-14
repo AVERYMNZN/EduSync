@@ -61,8 +61,6 @@ public class LoginPage extends javax.swing.JFrame {
             // Set font for UI **BELOW**
             edusyncTitle.setFont(Font.createFont(Font.TRUETYPE_FONT, importEduSyncTitleFont).deriveFont(14f));
             loginTitle.setFont(Font.createFont(Font.TRUETYPE_FONT, importLoginTItleFont).deriveFont(48f));
-            dontHaveAccountLabel.setFont(Font.createFont(Font.TRUETYPE_FONT, importBodyTextFont).deriveFont(12f));
-            signupHyperlink.setFont(Font.createFont(Font.TRUETYPE_FONT, importBodyTextFont).deriveFont(12f));
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,8 +82,6 @@ public class LoginPage extends javax.swing.JFrame {
         edusyncTitle = new javax.swing.JLabel();
         loginTitle = new javax.swing.JLabel();
         loginConfirmButton = new CustomizedElements.CustomizedButton();
-        dontHaveAccountLabel = new javax.swing.JLabel();
-        signupHyperlink = new javax.swing.JLabel();
         passwordPanel = new CustomizedElements.RoundedPanel();
         jLabel3 = new javax.swing.JLabel();
         loginPasswordField = new CustomizedElements.LoginCustomPasswordfield();
@@ -118,20 +114,6 @@ public class LoginPage extends javax.swing.JFrame {
         loginConfirmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginConfirmButtonActionPerformed(evt);
-            }
-        });
-
-        dontHaveAccountLabel.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        dontHaveAccountLabel.setForeground(new java.awt.Color(216, 199, 216));
-        dontHaveAccountLabel.setText("Don't have an account?");
-
-        signupHyperlink.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        signupHyperlink.setForeground(new java.awt.Color(216, 199, 216));
-        signupHyperlink.setText("<html>\n<u>Sign up here</u>\n</html>");
-        signupHyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        signupHyperlink.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                signupHyperlinkMouseClicked(evt);
             }
         });
 
@@ -232,15 +214,9 @@ public class LoginPage extends javax.swing.JFrame {
                                 .addGroup(backgroundPanelLayout.createSequentialGroup()
                                     .addContainerGap()
                                     .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                        .addGap(103, 103, 103)
-                                        .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                        .addGap(139, 139, 139)
-                                        .addComponent(dontHaveAccountLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                    .addGap(103, 103, 103)
+                                    .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(edusyncLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,10 +253,6 @@ public class LoginPage extends javax.swing.JFrame {
                 .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(loginConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dontHaveAccountLabel)
-                    .addComponent(signupHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -345,13 +317,6 @@ public class LoginPage extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_loginConfirmButtonActionPerformed
 
-    private void signupHyperlinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupHyperlinkMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        newSignupPage signupPage = new newSignupPage();
-        signupPage.setVisible(true);
-    }//GEN-LAST:event_signupHyperlinkMouseClicked
-
     private void loginUsernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginUsernameFieldKeyPressed
         String loginFieldValue = loginUsernameField.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER && loginFieldValue.isEmpty() == false) {
@@ -404,7 +369,6 @@ public class LoginPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JLabel dontHaveAccountLabel;
     private javax.swing.JLabel edusyncLogo;
     private javax.swing.JLabel edusyncTitle;
     private javax.swing.JLabel jLabel1;
@@ -415,7 +379,6 @@ public class LoginPage extends javax.swing.JFrame {
     private CustomizedElements.LoginCustomTextfield loginUsernameField;
     private CustomizedElements.RoundedPanel passwordPanel;
     private javax.swing.JLabel sidepanelArt;
-    private javax.swing.JLabel signupHyperlink;
     private CustomizedElements.RoundedPanel usernamePanel;
     // End of variables declaration//GEN-END:variables
 
